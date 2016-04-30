@@ -23,6 +23,7 @@ class Restapi extends Rest
 
 		if (file_exists($fileName)){
 			require_once(__DIR__."/".$fileName);
+	
 			$controller = new $cont;
 
 			if((int) method_exists($controller, $func) > 0){
@@ -31,10 +32,7 @@ class Restapi extends Rest
 			}else{
 				$this->response('Function Not Found', 404);
 			}
-
 		}
-
-		
 		else
 			$this->response('Page Not Found: '.$cont,404);
 	}
