@@ -15,12 +15,14 @@ Proud of your sneaker collection? ShoeTaku allows you to post your collection pu
 8. allows users to interact each other with real-time chat supported by Socket.io OR Slack 
  
 ShoeTaku was developed using following stack:
-FrontEnd: jQuery
-BackEnd: PHP
-DB: MySQL
-Server: Apache
+
+* FrontEnd: jQuery
+* BackEnd: PHP
+* DB: MySQL
+* Server: Apache
 
 Brought to you by:
-Edward Choi
-Anthony Chen
-Peter Chung
+
+* Edward Choi
+* Anthony Chen
+* Peter Chung
