@@ -1,6 +1,8 @@
 <?php
 
-class REST 
+require_once(__DIR__.'/database.php');
+
+class REST extends Database
 {
 	
 	public $_allow = array();
