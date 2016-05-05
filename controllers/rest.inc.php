@@ -12,22 +12,26 @@ class REST extends Database
 	private $_method = "";		
 	private $_code = 200;
 	
-	public function __construct(){
+	public function __construct()
+	{
 
 	}
 	
-	public function get_referer(){
+	public function get_referer()
+	{
 		return $_SERVER['HTTP_REFERER'];
 	}
 	
-	public function response($data,$status){
+	public function response($data,$status)
+	{
 		$this->_code = ($status)?$status:200;
 		$this->set_headers();
 		echo json_encode($data);
 		exit;
 	}
 	// For a list of http codes checkout http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
-	private function get_status_message(){
+	private function get_status_message()
+	{
 		$status = array(
 					200 => 'OK',
 					201 => 'Created',  
@@ -41,7 +45,8 @@ class REST extends Database
 		return ($status[$this->_code])?$status[$this->_code]:$status[500];
 	}
 	
-	private function set_headers(){
+	private function set_headers()
+	{
 		header("HTTP/1.1 ".$this->_code." ".$this->get_status_message());
 		header("Content-Type: ".$this->_content_type);
 	}
