@@ -2,7 +2,9 @@
 <p><fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></p>
 <p>OR</p>
 <p>Log into our App without Facebook</p>
-<p><button type="button">Login</button></p>
+<p><button id="loginNotFB">Login</button></p>
+
+
  
 <!-- 
 AJAX is a developer's dream, because you can:
@@ -14,6 +16,38 @@ Send data to a server - in the background
  -->
  
 <script  type="text/javascript">
+
+// http://andwecode.com/create-popup-login-and-signup-form/
+
+//note need to make sure app id is private
+//set up fb sdk for javascript
+window.fbAsyncInit = function () {
+    "use strict";
+
+    FB.init({
+        appId      : '1540489982923433',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v2.0'
+    });
+
+    checkLoginState();
+
+};
+
+//set up fb sdk for javascript
+(function (d, s, id) {
+    "use strict";
+
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {
+        return;
+    }
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
 
 /*
 Do AJAX call
@@ -30,8 +64,7 @@ function appPropagation() {
         url: '/login/login.php',
         dataType: 'json',
         success: function (data) {
-            console.log(data);
-            console.log("login.html: AJAX call success");
+            console.log("login.html: " + data);
                 // do whatever you want.
                 // data.status: bool, true => login
                 // [data.message: string]
@@ -91,35 +124,5 @@ function checkLoginState() {
         loginStatusChangeCallback(response);
     });
 }
-
-//note need to make sure app id is private
-//set up fb sdk for javascript
-window.fbAsyncInit = function () {
-    "use strict";
-
-    FB.init({
-        appId      : '1540489982923433',
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v2.0'
-    });
-
-    checkLoginState();
-
-};
-
-//set up fb sdk for javascript
-(function (d, s, id) {
-    "use strict";
-
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {
-        return;
-    }
-    js = d.createElement(s);
-    js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
 
 </script>
