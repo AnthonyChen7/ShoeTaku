@@ -24,39 +24,58 @@
 	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
-			<form action="/controllers/shoe/1" method="POST">
-				<!-- <div class="modal-body">
+			<form action="/controllers/shoe" method="POST">
+				<div class="modal-body">
 					<div class="form-group">
-						<label for="url">Art Url:</label>
+						<label for="url">Shoe Url:</label>
 						<div class="input-group col-xs-12">
-						  <input class="form-control" name="url" type="text" id="url">
+						  <input class="form-control" name="imageUrl" type="text" id="url">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="category">Where to upload:</label>
 						<div class="dropdown">
 							<input class="form-control btn btn-default dropdown-toggle" id="category" name="category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" placeholder="Choose Category">
-							<ul class="dropdown-menu" id="categories" name="categories" aria-labelledby="category"></ul>
+							<ul class="dropdown-menu" id="isWanted" name="categories" aria-labelledby="category"></ul>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="title">Title:</label>
-						<input class="form-control" type="text" name="title" id="title" maxlength="50">
+						<label for="url">Shoe Brand:</label>
+						<div class="input-group col-xs-12">
+						  <input class="form-control" name="brand" type="text" id="url">
+						</div>
 					</div>
 					<div class="form-group">
-						<label for="description">Description:</label>
-						<textarea class="form-control" rows="5" maxlength="500" name="description" id="description"></textarea>
+						<label for="url">Shoe Model:</label>
+						<div class="input-group col-xs-12">
+						  <input class="form-control" name="model" type="text" id="url">
+						</div>
 					</div>
 					<div class="form-group">
-						<label for="description">Tag:</label>
-						<input class="form-control" name="tag" placeholder="divide multiple tags by #"></input>
+						<label for="url">Shoe Size:</label>
+						<div class="input-group col-xs-12">
+						  <input class="form-control" name="size" type="text" id="url">
+						</div>
 					</div>
-				</div> -->
+					<div class="form-group">
+						<label for="url">Shoe Condition:</label>
+						<div class="input-group col-xs-12">
+						  <input class="form-control" name="itemCondition" type="text" id="url">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="url">Shoe Description:</label>
+						<div class="input-group col-xs-12">
+						  <input class="form-control" name="description" type="text" id="url">
+						</div>
+					</div>
+				</div>
+
 				<div class="modal-footer">
 					<button type="button" class="btn btn-blog pull-left" data-dismiss="modal">
 					Close
 					</button>
-					<button type="submit" class="btn btn-blog pull-right" id="uploadGallery">
+					<button type="submit" class="btn btn-blog pull-right">
 					Upload
 					</button>
 				</div>
@@ -64,3 +83,28 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function(){
+	
+	$("#test").click(function(){
+		var url = "/controllers/testing/tests";
+		
+		var param = JSON.stringify({test:test});
+		$.ajax({
+			url: url,
+			data: param,
+			dataType: "json",
+			success: function(data, textStatus, jqXHR){
+				console.log(data);
+			},
+			error: function(jqXHR, textStatus, error){
+				//debug.log(textStatus + ":" + error);
+			},
+			complete: function(jqXHR, textStatus){
+				//debug.log("ajax call complete");
+			}
+		})
+	});
+});
+</script>
