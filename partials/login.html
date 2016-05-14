@@ -1,4 +1,8 @@
-<fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+<p>Log into our App with Facebook</p>
+<p><fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></p>
+<p>OR</p>
+<p>Log into our App without Facebook</p>
+<p><button type="button">Login</button></p>
  
 <!-- 
 AJAX is a developer's dream, because you can:
@@ -15,6 +19,9 @@ Send data to a server - in the background
 Do AJAX call
 No data is passed because all we need is a cookie
 which we set in another part of code
+
+If you want to use cookie, you can pass
+B session string as POST data
 */
 function appPropagation() {
     "use strict";
@@ -24,6 +31,7 @@ function appPropagation() {
         dataType: 'json',
         success: function (data) {
             console.log(data);
+            console.log("login.html: AJAX call success");
                 // do whatever you want.
                 // data.status: bool, true => login
                 // [data.message: string]
@@ -35,8 +43,9 @@ function appPropagation() {
 /*
 Called when user authenticates via FB
 ALlows FB to retrieve requested permission
-acessToken gets fb session string
-then call ajax call to register user into sytem
+FB.getAuthResponse().accessToken gets the facebook session string
+We create cookie that will expire when user closes browser
+Then we do AJAX call which register user in the system
 */
 function login() {
     "use strict";
@@ -48,6 +57,7 @@ function login() {
 /*
 Logs user out
 Destroys the cookie by making it expired
+Make AJAX call to unset session, logging you out from system
 */
 function logout() {
     "use strict";
@@ -98,6 +108,7 @@ window.fbAsyncInit = function () {
 
 };
 
+//set up fb sdk for javascript
 (function (d, s, id) {
     "use strict";
 
