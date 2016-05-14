@@ -1,18 +1,114 @@
-<button id="fb-login">FaceBook Login</button>
+<fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
  
- 
+<!-- 
+AJAX is a developer's dream, because you can:
+
+Update a web page without reloading the page
+Request data from a server - after the page has loaded 
+Receive data from a server - after the page has loaded
+Send data to a server - in the background
+ -->
  
 <script  type="text/javascript">
-//runs everything inside when whole document is ready
-$(document).ready(function(){
-	
-	$("#fb-login").click(function(){
-		
-		window.alert("You clicked on a button!");
-	});
-	
-});
-	
 
+/*
+Do AJAX call
+No data is passed because all we need is a cookie
+which we set in another part of code
+*/
+function appPropagation() {
+    "use strict";
+
+    $.ajax({
+        url: '/login/login.php',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+                // do whatever you want.
+                // data.status: bool, true => login
+                // [data.message: string]
+                // [data.more: string]
+        }
+    });
+}
+
+/*
+Called when user authenticates via FB
+ALlows FB to retrieve requested permission
+acessToken gets fb session string
+then call ajax call to register user into sytem
+*/
+function login() {
+    "use strict";
+
+    document.cookie = 'fb_token=' + FB.getAuthResponse().accessToken;
+    appPropagation();
+}
+
+/*
+Logs user out
+Destroys the cookie by making it expired
+*/
+function logout() {
+    "use strict";
+
+    document.cookie = 'fb_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    appPropagation();
+}
+
+/*
+Fired everytime user changes fb login status
+*/
+function loginStatusChangeCallback(response) {
+    "use strict";
+
+    if (response.status === 'connected') {
+        login();
+    } else {
+        logout();
+    }
+}	
+
+
+/*
+check login status
+called once per page load
+*/
+function checkLoginState() {
+    "use strict";
+
+    FB.getLoginStatus(function (response) {
+        loginStatusChangeCallback(response);
+    });
+}
+
+//note need to make sure app id is private
+//set up fb sdk for javascript
+window.fbAsyncInit = function () {
+    "use strict";
+
+    FB.init({
+        appId      : '1540489982923433',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v2.0'
+    });
+
+    checkLoginState();
+
+};
+
+(function (d, s, id) {
+    "use strict";
+
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {
+        return;
+    }
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
 
 </script>
