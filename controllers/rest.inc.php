@@ -1,8 +1,8 @@
 <?php
 
-require_once(__DIR__.'/database.php');
+require_once(__DIR__.'/sql-builder.php');
 
-class REST extends Database
+class REST extends SqlQueryBuilder
 {
 	
 	public $_allow = array();
