@@ -26,6 +26,10 @@ use Facebook\GraphObject;
 use Facebook\GraphUser;
 
 // used to return json-encoded data
+/*
+stdClass is PHP's generic empty class, kind of like Object in Java or object in Python
+It is useful for anonymous objects, dynamic properties, etc.
+*/
 $obj = new StdClass();
 
 
@@ -115,6 +119,8 @@ $user->locale = $me->getProperty('locale');
 
 // insert here the object in your database (insert on key exists update, for example)
 // PDO, MySQLi, MongoClient...
+
+//TODO
 
 // insert the user data in the session
 // you can alternatively serialise the object and save it all in one $_SESSION variable
