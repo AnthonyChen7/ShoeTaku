@@ -17,19 +17,14 @@ class Shoe extends Restapi
 		$method = $_SERVER['REQUEST_METHOD'];
 		$requestArray = explode("/", $_REQUEST['x']);
 		$length = count($requestArray);
-
-		$sql = $this->prepareInsertSql($table, $columns);
 		
 		if ($method == 'POST'){
-			
 			// Base case: /controllers/shoe   Create a new Shoe
-			if ($length == 1)
-			{
-				$result = $this->createShoe();
-				if ($length == 2){
+			if ($length == 1) $result = $this->createShoe();
+			if ($length == 2){
 				$id = $requestArray[1];
 				if (is_int($id) && $id >= 0){
-					$result = $this->editShoe($id);}
+					$result = $this->editShoe($id);
 				}
 			}
 		}
@@ -73,7 +68,7 @@ class Shoe extends Restapi
 		$itemCnd = $_POST["itemCondition"];
 		$description = $_POST["description"];
 		$imageUrl = $_POST["imageUrl"];
-		$ownerId = 1;//$_POST["ownerId"];
+		$ownerId = 0;//$_POST["ownerId"];
 		$isWanted = $_POST["isWanted"];
 
 		$columns = array("brand", "model", "size", "itemCondition", "description", "imageUrl", "ownerId", "isWanted");
@@ -87,8 +82,11 @@ class Shoe extends Restapi
 			$stmt = $this->conn->prepare($sql);
 			$result = $stmt->execute($values);
 
+			$this->redirect($_SERVER['SERVER_NAME']);
+
 		} catch (Exception $e) {
 			$result = FALSE;
+			//$this->redirect($_SERVER['SERVER_NAME']);
 		}
 
 		return $result;

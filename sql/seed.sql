@@ -19,6 +19,8 @@ city VARCHAR(10) NOT NULL,
 countryCode VARCHAR(10) NOT NULL
 );
 
+INSERT INTO User (email, password, firstName, lastName, age, city, countryCode) VALUES ("edwardchoi90@gmail.com","test","FN","LN",20,"Vancouver","CA");
+
 CREATE TABLE Shoe (
 shoeId INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 brand VARCHAR(20) NOT NULL,
