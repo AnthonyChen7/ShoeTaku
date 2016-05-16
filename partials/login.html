@@ -57,13 +57,19 @@ If you want to use cookie, you can pass
 B session string as POST data
 */
 function appPropagation() {
-    "use strict";
-
+    
+    console.log("in appPropagation");
+    
     $.ajax({
         url: '/login/login.php',
         dataType: 'json',
         success: function (data) {
-            console.log("login.html: " + data);
+            
+            console.log("data.status " + data.status);
+            console.log("data.message " + data.message);
+
+            //window.location = "http://www.google.com";
+            
                 // do whatever you want.
                 // data.status: bool, true => login
                 // [data.message: string]
@@ -105,8 +111,10 @@ function loginStatusChangeCallback(response) {
     "use strict";
 
     if (response.status === 'connected') {
+        console.log("response status is connected");
         login();
     } else {
+        console.log("response status is not connected");
         logout();
     }
 }	
@@ -118,7 +126,9 @@ called once per page load
 */
 function checkLoginState() {
     "use strict";
-
+    
+    console.log("in checkLoginState");
+    
     FB.getLoginStatus(function (response) {
         loginStatusChangeCallback(response);
     });
