@@ -19,6 +19,7 @@ Send data to a server - in the background
  -->
  
 <script  type="text/javascript">
+//https://developers.facebook.com/docs/facebook-login/web
 
 //note need to make sure app id is private
 //set up fb sdk for javascript
@@ -33,11 +34,11 @@ window.fbAsyncInit = function () {
     });
     
     /**
-     * Retreives login stats:
+     * Retreives login status:
      * 
      * 1. logged into app ; 'connected'
      * 2. logged into fb but not app; 'not_authorized'
-     * 3. not logged into fb and not sure if logged into app
+     * 3. not logged into fb and not sure if logged into app; unknown
      */
      FB.getLoginStatus(function (response) {
         loginStatusChangeCallback(response);
@@ -55,8 +56,10 @@ function loginStatusChangeCallback(response) {
     console.log("response is " + response);
     
     /**
-     * reponse is a status fielde that lets app know
+     * reponse is a status field that lets app know
      * current login status of the person.
+     * 
+     * 
      */
     
     if(response.status === 'connected'){
@@ -93,9 +96,13 @@ function testAPI(){
    FB.api('/me', function(response){
        console.log('Successful login for: ' + response.name);
        document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
+        'Thanks for logging in, ' + response.name +
+        +response.email + '!';
+        
+        //window.location="/partials/loginSuccess.html";
    }); 
 }
+
 
 //set up fb sdk for javascript
 //loads sdk asynchronously
