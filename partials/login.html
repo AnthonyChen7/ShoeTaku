@@ -1,8 +1,12 @@
-<p>Log into our App with Facebook</p>
+<p>
+<div id="status">
+</div>
+</p>
 <p><fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></p>
 <p>OR</p>
 <p>Log into our App without Facebook</p>
 <p><button id="loginNotFB">Login</button></p>
+
 
  
 <!-- 
@@ -16,8 +20,6 @@ Send data to a server - in the background
  
 <script  type="text/javascript">
 
-// http://andwecode.com/create-popup-login-and-signup-form/
-
 //note need to make sure app id is private
 //set up fb sdk for javascript
 window.fbAsyncInit = function () {
@@ -25,16 +27,78 @@ window.fbAsyncInit = function () {
 
     FB.init({
         appId      : '1540489982923433',
-        cookie     : true,
-        xfbml      : true,
+        cookie     : true, //allow server to access session
+        xfbml      : true, //parse social plugin on page
         version    : 'v2.0'
     });
-
-    checkLoginState();
+    
+    /**
+     * Retreives login stats:
+     * 
+     * 1. logged into app ; 'connected'
+     * 2. logged into fb but not app; 'not_authorized'
+     * 3. not logged into fb and not sure if logged into app
+     */
+     FB.getLoginStatus(function (response) {
+        loginStatusChangeCallback(response);
+    });
 
 };
 
+/*
+Fired everytime user changes fb login status
+Call with results from FB.getLoginStatus()
+*/
+function loginStatusChangeCallback(response) {
+    console.log('in loginStatusChangeCallback');
+    
+    console.log("response is " + response);
+    
+    /**
+     * reponse is a status fielde that lets app know
+     * current login status of the person.
+     */
+    
+    if(response.status === 'connected'){
+        //Person is logged into FB but not app
+        document.getElementById('status').innerHTML = 'Please log ' +'into this app.';
+        testAPI();
+    }else{
+        /**
+         * Person is not logged into FB, so we r not sure
+         * if they r logged into this app or not
+         */
+        document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+}	
+
+/*
+Called when someone finishes wit the login button
+*/
+function checkLoginState() {    
+    console.log("in checkLoginState");
+    
+    FB.getLoginStatus(function (response) {
+        loginStatusChangeCallback(response);
+    });
+}
+
+/**
+ * Runs a test of Graph API after login is successful.
+ */
+function testAPI(){
+   console.log("Welcome! Fetching your information....");
+   
+   FB.api('/me', function(response){
+       console.log('Successful login for: ' + response.name);
+       document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+   }); 
+}
+
 //set up fb sdk for javascript
+//loads sdk asynchronously
 (function (d, s, id) {
     "use strict";
 
@@ -47,91 +111,5 @@ window.fbAsyncInit = function () {
     js.src = "//connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
-
-/*
-Do AJAX call
-No data is passed because all we need is a cookie
-which we set in another part of code
-
-If you want to use cookie, you can pass
-B session string as POST data
-*/
-function appPropagation() {
-    
-    console.log("in appPropagation");
-    
-    $.ajax({
-        url: '/login/login.php',
-        dataType: 'json',
-        success: function (data) {
-            
-            console.log("data.status " + data.status);
-            console.log("data.message " + data.message);
-
-            //window.location = "http://www.google.com";
-            
-                // do whatever you want.
-                // data.status: bool, true => login
-                // [data.message: string]
-                // [data.more: string]
-        }
-    });
-}
-
-/*
-Called when user authenticates via FB
-ALlows FB to retrieve requested permission
-FB.getAuthResponse().accessToken gets the facebook session string
-We create cookie that will expire when user closes browser
-Then we do AJAX call which register user in the system
-*/
-function login() {
-    "use strict";
-
-    document.cookie = 'fb_token=' + FB.getAuthResponse().accessToken;
-    appPropagation();
-}
-
-/*
-Logs user out
-Destroys the cookie by making it expired
-Make AJAX call to unset session, logging you out from system
-*/
-function logout() {
-    "use strict";
-
-    document.cookie = 'fb_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    appPropagation();
-}
-
-/*
-Fired everytime user changes fb login status
-*/
-function loginStatusChangeCallback(response) {
-    "use strict";
-
-    if (response.status === 'connected') {
-        console.log("response status is connected");
-        login();
-    } else {
-        console.log("response status is not connected");
-        logout();
-    }
-}	
-
-
-/*
-check login status
-called once per page load
-*/
-function checkLoginState() {
-    "use strict";
-    
-    console.log("in checkLoginState");
-    
-    FB.getLoginStatus(function (response) {
-        loginStatusChangeCallback(response);
-    });
-}
 
 </script>
