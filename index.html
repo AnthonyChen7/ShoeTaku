@@ -9,17 +9,21 @@
     <script src="./components/bootstrap-3.3.6-dist 2/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 
     <title>ShoeTaku</title>
-    
-    <script> 
-    $(function(){
-      $("#login").load("/partials/login.html"); 
-    });
-    </script> 
 
 </head>
-<body>
 
-<div id="login"></div>
+<body>
+    
+<p>
+<div id="status">
+</div>
+</p>
+<p><fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></p>
+<p>OR</p>
+<p>Log into our App without Facebook</p>
+<p><button id="loginNotFB">Login</button></p>
+ 
+<script src="./partials/login-controller.js" type="text/javascript" charset="utf-8"></script>
 <!--
 
 <nav class="navbar navbar-default">
