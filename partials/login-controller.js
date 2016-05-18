@@ -22,46 +22,66 @@ window.fbAsyncInit = function () {
      FB.getLoginStatus(function (response) {
         loginStatusChangeCallback(response);
     });
+    
+    FB.Event.subscribe('auth.login', login_event);
+FB.Event.subscribe('auth.logout', logout_event);
 
 };
+
+// In your JavaScript code:
+var login_event = function(response) {
+
+  
+   if (response.status === 'connected') {
+       // Logged into your app and Facebook.
+  console.log("login_event");
+  
+  console.log(response);
+  window.location="/partials/main-page.html";
+  
+  }
+  
+}
+
+var logout_event = function(response) {
+    if (response.status === 'unknown') {
+       console.log("logout_event");
+  
+  console.log(response); 
+  window.location="/index.html";
+    }
+  
+}
 
 /*
 Fired everytime user changes fb login status
 Call with results from FB.getLoginStatus()
 */
-function loginStatusChangeCallback(response) {
-    console.log('in loginStatusChangeCallback');
-    
-    console.log("response is " + response);
-    
+function loginStatusChangeCallback(response) {    
     /**
      * reponse is a status field that lets app know
      * current login status of the person.
-     * 
-     * 
      */
+     
+    if (response.status === 'connected') {
+    // Logged into your app and Facebook.
     
-    if(response.status === 'connected'){
-        //Person is logged into FB but not app
-        //document.getElementById('status').innerHTML = 'Please log ' +'into this app.';
-        testAPI();
-    }else{
-        /**
-         * Person is not logged into FB, so we r not sure
-         * if they r logged into this app or not
-         */
-        // document.getElementById('status').innerHTML = 'Please log ' +
-        // 'into Facebook.';
-        //window.location="/index.html";
-    }
+        //testAPI();
+  } else if (response.status === 'not_authorized') {
+    // The person is logged into Facebook, but not your app.
+  } else {
+    // The person is not logged into Facebook, so we're not sure if
+    // they are logged into this app or not.
+    
+    //window.location="/index.html";
+  }
 }	
 
 /*
 Called when someone finishes wit the login button
 */
 function checkLoginState() {    
-    console.log("in checkLoginState");
-    
+
     FB.getLoginStatus(function (response) {
         loginStatusChangeCallback(response);
     });
@@ -71,13 +91,10 @@ function checkLoginState() {
  * Runs a test of Graph API after login is successful.
  */
 function testAPI(){
-   console.log("Welcome! Fetching your information....");
    
    FB.api('/me', function(response){
-       console.log('Successful login for: ' + response.name);
-    //    document.getElementById('status').innerHTML =
-    //     'Thanks for logging in, ' + response.name +
-    //     +response.email + '!';
+       
+       //console.log('Successful login for: ' + response.name);
         
         //window.location="/partials/main-page.html";
    }); 
