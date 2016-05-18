@@ -43,15 +43,16 @@ function loginStatusChangeCallback(response) {
     
     if(response.status === 'connected'){
         //Person is logged into FB but not app
-        document.getElementById('status').innerHTML = 'Please log ' +'into this app.';
+        //document.getElementById('status').innerHTML = 'Please log ' +'into this app.';
         testAPI();
     }else{
         /**
          * Person is not logged into FB, so we r not sure
          * if they r logged into this app or not
          */
-        document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
+        // document.getElementById('status').innerHTML = 'Please log ' +
+        // 'into Facebook.';
+        //window.location="/index.html";
     }
 }	
 
@@ -74,11 +75,11 @@ function testAPI(){
    
    FB.api('/me', function(response){
        console.log('Successful login for: ' + response.name);
-       document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name +
-        +response.email + '!';
+    //    document.getElementById('status').innerHTML =
+    //     'Thanks for logging in, ' + response.name +
+    //     +response.email + '!';
         
-        window.location="/partials/main-page.html";
+        //window.location="/partials/main-page.html";
    }); 
 }
 
