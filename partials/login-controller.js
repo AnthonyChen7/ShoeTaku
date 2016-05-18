@@ -78,7 +78,7 @@ function testAPI(){
         'Thanks for logging in, ' + response.name +
         +response.email + '!';
         
-        //window.location="/partials/loginSuccess.html";
+        window.location="/partials/main-page.html";
    }); 
 }
 
