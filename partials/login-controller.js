@@ -19,36 +19,28 @@ window.fbAsyncInit = function () {
      * 2. logged into fb but not app; 'not_authorized'
      * 3. not logged into fb and not sure if logged into app; unknown
      */
-     FB.getLoginStatus(function (response) {
-        loginStatusChangeCallback(response);
-    });
-    
-    FB.Event.subscribe('auth.login', login_event);
+
+       checkLoginState(); 
+FB.Event.subscribe('auth.login', login_event);
 FB.Event.subscribe('auth.logout', logout_event);
 
 };
 
-// In your JavaScript code:
 var login_event = function(response) {
 
-  
-   if (response.status === 'connected') {
-       // Logged into your app and Facebook.
+  if (response.status === 'connected') {
   console.log("login_event");
-  
   console.log(response);
   window.location="/partials/main-page.html";
-  
   }
   
 }
 
 var logout_event = function(response) {
     if (response.status === 'unknown') {
-       console.log("logout_event");
-  
-  console.log(response); 
-  window.location="/index.html";
+        console.log("logout_event");
+        console.log(response); 
+        window.location="/index.html";
     }
   
 }
@@ -64,16 +56,20 @@ function loginStatusChangeCallback(response) {
      */
      
     if (response.status === 'connected') {
-    // Logged into your app and Facebook.
-    
-        //testAPI();
+    // Logged into your app and Facebook.     
+     console.log("connected");
+      if(window.location.href.indexOf("/partials/main-page.html") <= -1) {
+       window.location="/partials/main-page.html";
+    }     
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
   } else {
     // The person is not logged into Facebook, so we're not sure if
     // they are logged into this app or not.
-    
-    //window.location="/index.html";
+    console.log("unknown");
+    if(window.location.href.indexOf("/index.html") <= -1) {
+       window.location="/index.html";
+    }   
   }
 }	
 
@@ -82,8 +78,8 @@ Called when someone finishes wit the login button
 */
 function checkLoginState() {    
 
-    FB.getLoginStatus(function (response) {
-        loginStatusChangeCallback(response);
+    FB.getLoginStatus(function(response) {
+      loginStatusChangeCallback(response);
     });
 }
 
