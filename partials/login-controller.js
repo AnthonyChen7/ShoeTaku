@@ -4,6 +4,8 @@
 //set up fb sdk for javascript
 window.fbAsyncInit = function () {
     "use strict";
+    
+    var url = "/partials/app-info.php";
 
     FB.init({
         appId      : '1540489982923433',
@@ -104,3 +106,4 @@ function checkLoginState() {
     js.src = "//connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
+
