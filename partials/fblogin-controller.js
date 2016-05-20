@@ -2,10 +2,10 @@
 
 //note need to make sure app id is private
 //set up fb sdk for javascript
+
+  
 window.fbAsyncInit = function () {
     "use strict";
-    
-    var url = "/partials/app-info.php";
 
     FB.init({
         appId      : '1540489982923433',
