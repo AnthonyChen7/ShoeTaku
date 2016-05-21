@@ -2,7 +2,15 @@
 
 //note need to make sure app id is private
 //set up fb sdk for javascript
-
+function fbLogout() {
+    FB.getLoginStatus(function(response) {
+        if (response && response.status === 'connected') {
+            FB.logout(function(response) {
+                document.location.reload();
+            });
+        }
+    });
+}
   
 window.fbAsyncInit = function () {
     "use strict";
