@@ -1,3 +1,8 @@
+/**
+ * Handles the login dialog box popping p
+ * when the login buttin is pressed
+ */
+
 $(document).ready(function(){
 	$("#show_login").click(function(){
 		showPopUp();

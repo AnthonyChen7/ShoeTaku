@@ -1,7 +1,5 @@
 //https://developers.facebook.com/docs/facebook-login/web
 
-//note need to make sure app id is private
-//set up fb sdk for javascript
 function fbLogout() {
     FB.getLoginStatus(function(response) {
         if (response && response.status === 'connected') {
@@ -11,7 +9,9 @@ function fbLogout() {
         }
     });
 }
-  
+
+//note need to make sure app id is private
+//set up fb sdk for javascript  
 window.fbAsyncInit = function () {
     "use strict";
 
