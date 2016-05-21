@@ -67,13 +67,48 @@ class Shoe extends Restapi
 		$size = $_POST["size"];
 		$itemCnd = $_POST["itemCondition"];
 		$description = $_POST["description"];
-		$imageUrl = $_POST["imageUrl"];
 		$ownerId = 0;//$_POST["ownerId"];
 		$isWanted = $_POST["isWanted"];
+		$url;
+		
+		if(isset($_POST["image"]))
+		{
+			$img = $_POST["image"];
+
+			if (isset($_POST['submit'])){ 
+				if($img['name']==''){  
+					echo "<h2>An Image Please.</h2>";
+				}else{
+					$filename = $img['tmp_name'];
+					$client_id = /*imgur client id*/; 
+					$handle = fopen($filename, "r");
+					$data = fread($handle, filesize($filename));
+					$pvars   = array('image' => base64_encode($data));
+					$timeout = 30;
+					
+					$curl = curl_init();
+					curl_setopt($curl, CURLOPT_URL, 'https://api.imgur.com/3/image.json');
+					curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
+					curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Client-ID ' . $client_id));
+					curl_setopt($curl, CURLOPT_POST, 1);
+					curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+					curl_setopt($curl, CURLOPT_POSTFIELDS, $pvars);
+					$out = curl_exec($curl);
+					curl_close ($curl);
+					$pms = json_decode($out, true);
+					$url = $pms['data']['link'];
+			 	}
+			}
+		}else if(isset($_POST["url"])){
+			$url = $_POST["url"];
+
+		}else{
+			// No $url is set
+			// error!!!
+		}
 
 		$columns = array("brand", "model", "size", "itemCondition", "description", "imageUrl", "ownerId", "isWanted");
-		$values = array($brand, $model, $size, $itemCnd, $description, $imageUrl, $ownerId, $isWanted);
-
+		$values = array($brand, $model, $size, $itemCnd, $description, $url, $ownerId, $isWanted);
 		$sql = $this->prepareInsertSql($table, $columns);
 
 		try
@@ -86,7 +121,7 @@ class Shoe extends Restapi
 
 		} catch (Exception $e) {
 			$result = FALSE;
-			//$this->redirect($_SERVER['SERVER_NAME']);
+			//c$this->redirect($_SERVER['SERVER_NAME']);
 		}
 
 		return $result;

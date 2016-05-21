@@ -1,3 +1,22 @@
 .center{
 	text-align: center;
 }
+
+.glyphicon-big{
+  font-size: 5em;
+}
+
+.btn-glyphicon{
+  min-width: 40%;
+}
+
+.center{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.btn-file{
+	position: relative;
+    overflow: hidden;
+}
