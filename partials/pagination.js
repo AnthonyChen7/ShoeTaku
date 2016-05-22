@@ -16,15 +16,16 @@ $('#pagination').on('click', function(e) { // When click on a 'a' element of the
 	
 	var data = {page: page, per_page: 3}; // Create JSON which will be sent via Ajax
 	// We set up the per_page var at 4. You may change to any number you need.
-	
+	alert(data);
 	$.ajax({ // jQuery Ajax
 		type: 'POST',
 		url: url, // URL to the PHP file which will insert new value in the database
-		data: data, // We send the data string
+		data: JSON.stringify(data), // We send the data string
 		dataType: 'json', // Json format
 		timeout: 3000,
 		success: function(data) {
-			alert(data);
+			alert("success");
+			console.log(data);
 		},
 		error: function(data) {
 			alert("123");

@@ -82,7 +82,7 @@ class SqlQueryBuilder extends Database
 		$columnSql = implode($this->COMMA, $columns);
 		$whereSql = $this->prepareWhereSql($where);
 
-		$limitOffsetSql = (empty($limitOffsetArr))? "" : "LIMIT ". $limitOffset[0] . " OFFSET " . $limitOffset[1];
+		$limitOffsetSql = (empty($limitOffsetArr))? "" : " LIMIT ". $limitOffset[0] . " OFFSET " . $limitOffset[1];
 		$sql = $this->SELECT . $columnSql . $this->FROM . $table . $whereSql . $limitOffsetSql;
 
 		return $sql;
