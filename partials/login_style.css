@@ -13,11 +13,41 @@
    display:none;
 }
 
-#loginForm #close_login
+/*#loginForm #closeButton
 {
    position:absolute;
    top:140px;
    left:735px;
    width:15px;
    height:15px;
+}*/
+
+#loginForm #uid
+{
+   width:250px;
+   height:40px;
+   border:2px solid silver;
+   border-radius:3px;
+   padding:5px;
+}
+#loginForm #password
+{
+   margin-top:5px;
+   width:250px;
+   height:40px;
+   border:2px solid silver;
+   border-radius:3px;
+   padding:5px;
+}
+#loginForm #login
+{
+   margin-left:-5px;
+   margin-top:10px;
+   width:250px;
+   height:40px;
+   border:none;
+   border-radius:3px;
+   color:#E6E6E6;
+   background-color:grey;
+   font-size:20px;
 }
