@@ -17,15 +17,19 @@ class Shoe extends Restapi
 		$method = $_SERVER['REQUEST_METHOD'];
 		$requestArray = explode("/", $_REQUEST['x']);
 		$length = count($requestArray);
+		$json = file_get_contents("php://input");
+		$data;
+		if ($json)
+			$data = json_decode($json, TRUE);
 		
 		if ($method == 'POST'){
 			// Base case: /controllers/shoe   Create a new Shoe
 			if ($length == 1){
-				if(isset($_POST['page'])){
-					$result = $this->paginationShoe();
-				}else{
+				if(isset($data))
+					$result = $this->paginationShoe($data);
+				else
 			 		$result = $this->createShoe();
-				}
+				
 				$this->response($result, 200);
 			}
 			if ($length == 2){
@@ -67,23 +71,24 @@ class Shoe extends Restapi
 
 	}
 
-	private function paginationShoe()
-	{
-		$page = $_POST["page"]; // Current page number
-		$per_page = $_POST["per_page"]; // Articles per page
-		if ($page != 1) 
-		{
-			$start = ($page-1) * $per_page;
-		} else {
-			$start=0;
-		}
+	private function paginationShoe($data)
+	{	
+		$page = $data["page"]; // Current page number
+		$per_page = $data["per_page"]; // Articles per page
+		
+		$table = "Shoe";
+		$columns = array("*");
+		$where = array();
+		$limOff = array($per_page, $page-1);
 
-		$sql = 'SELECT * FROM Shoe LIMIT '.$start.', '.$per_page.''; // Select article list from $start
+		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff); // Select article list from $start
+		
 		$this->connect();
 		$stmt = $this->conn->prepare($sql);
-		$result = $stmt->execute();
+		$stmt->execute();
+		$result = $stmt->fetchAll();
 		$this->disconnect();
-		var_dump($result);
+		
 		return $result;
 	}
 
