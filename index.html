@@ -37,13 +37,18 @@ Used to group HTML elements together to format them with CSS-->
      <!-- 
      <input> specifies input field where user can enter data
      id is for javascript and css
-     name is for posting to webserver   
+     name is for posting to webserver 
+     
+     <label>
+      for : element_id ; specifies which form element a label is bound to  
      -->
      <input type="button" id="closeButton" value="x" name="closeButton">
      <br>
-     <input type="text" id="uid" placeholder="User" name="uid">
+     <label  for="userLabel">Username:</label>
+     <input type="text" id="uid" placeholder="" name="uid">
      <br>
-     <input type="password" id="password" placeholder="Password" name="password">
+     <label  for="passwordLabel">Password:</label>
+     <input type="password" id="password" placeholder="" name="password">
      <br>
      <input type="submit" id="login" value="Login">
      <br>
