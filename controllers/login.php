@@ -31,14 +31,14 @@ class Login extends Restapi{
 		
 		$result = $sql;
 		
-		// $this->connect();
+		$this->connect();
 		
-		// $stmt = $this->conn->prepare($sql);
+		$stmt = $this->conn->prepare($sql);
 		
-		// $stmt->execute($values);
+		$stmt->execute($values);
 		
-		// $result = $stmt->fetchAll();
-		// $this->disconnect();
+		$result = $stmt->fetchAll();
+		$this->disconnect();
 		
 		$this->response($result, 200);
 	}
