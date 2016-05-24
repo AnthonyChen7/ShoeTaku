@@ -19,22 +19,26 @@ class Login extends Restapi{
 		$email = $_POST["uid"];
 		$password = $_POST["password"];
 		
+		$result = $password;
+		
 		$table = "user";
 		$columns = array("*");
-		$where = array();
+		$where = array("email", "password");
 		$values = array($email, $password);
 		$limOff = array();
 		
 		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);
 		
-		$this->connect();
+		$result = $sql;
 		
-		$stmt = $this->conn->prepare($sql);
+		// $this->connect();
 		
-		$stmt->execute();
+		// $stmt = $this->conn->prepare($sql);
 		
-		$result = $stmt->fetchAll();
-		$this->disconnect();
+		// $stmt->execute($values);
+		
+		// $result = $stmt->fetchAll();
+		// $this->disconnect();
 		
 		$this->response($result, 200);
 	}
