@@ -1,5 +1,9 @@
 <?php 
 
+/**
+This class handles the non-FB authentication
+*/
+
 require_once(__DIR__.'/restapi.php');
 
 class Login extends Restapi{
@@ -12,36 +16,30 @@ class Login extends Restapi{
 	
 	private function doSomething(){
 		
+		$email = $_POST["uid"];
+		$password = $_POST["password"];
 		
-		$result = "method is ";
+		$table = "user";
+		$columns = array("*");
+		$where = array();
+		$values = array($email, $password);
+		$limOff = array();
+		
+		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);
+		
+		$this->connect();
+		
+		$stmt = $this->conn->prepare($sql);
+		
+		$stmt->execute();
+		
+		$result = $stmt->fetchAll();
+		$this->disconnect();
 		
 		$this->response($result, 200);
 	}
 	
 }
- 
-// $uid = $_POST["uid"];
-// $upass = $_POST["password"];
 
-// echo "uid is " + $uid;
-// echo "pass is " + $upass;
-
-// $host = 'localhost:8080';
-// $user = 'root';
-// $password = '';
-
-// //opens/connects to an sql server
-// $connection = mysqli_connect($host, $user, $password, 'shoetaku');
-
-// $query = "select email,password from user where email ="+ $uid+ " and password =" + $upass;
-// $result = mysqli_query($connection,$query);
-
-// if($result){
-// 	echo "Success";
-// }else{
-// 	echo "not success";
-// }
-
-// mysqli_close($connection);
 
 ?>
