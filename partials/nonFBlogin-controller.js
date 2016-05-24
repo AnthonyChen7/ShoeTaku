@@ -31,7 +31,7 @@
 // 	/**
 // 	 * Send data using AJAX call
 // 	 */
-// 	var data = {email: $("#uid").val(), password: $("#password").val()};
+// 	var data = {email: $("#email").val(), password: $("#password").val()};
 	
 // 	$.ajax({ // jQuery Ajax
 // 		type: 'POST',

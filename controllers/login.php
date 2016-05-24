@@ -16,7 +16,7 @@ class Login extends Restapi{
 	
 	private function doSomething(){
 		
-		$email = $_POST["uid"];
+		$email = $_POST["email"];
 		$password = $_POST["password"];
 		
 		$result = $password;
