@@ -42,7 +42,12 @@ INSERT INTO Shoe(brand, model, size, itemCondition, description, imageUrl, owner
 INSERT INTO Shoe(brand, model, size, itemCondition, description, imageUrl, ownerId, likeCount, isWanted) VALUES ("Nike4", "NikeShoes", 11, 1,"Mint", "example.com", 1, 0, 1);
 INSERT INTO Shoe(brand, model, size, itemCondition, description, imageUrl, ownerId, likeCount, isWanted) VALUES ("Nike5", "NikeShoes", 12, 1,"Mint", "example.com", 1, 0, 1);
 INSERT INTO Shoe(brand, model, size, itemCondition, description, imageUrl, ownerId, likeCount, isWanted) VALUES ("Nike6", "NikeShoes", 7, 1,"Mint", "example.com", 1, 0, 1);
-
+INSERT INTO Shoe(brand, model, size, itemCondition, description, imageUrl, ownerId, likeCount, isWanted) VALUES ("Nike7", "NikeShoes", 9, 1,"Mint", "example.com", 1, 0, 1);
+INSERT INTO Shoe(brand, model, size, itemCondition, description, imageUrl, ownerId, likeCount, isWanted) VALUES ("Nike8", "NikeShoes", 10, 1,"Mint", "example.com", 1, 0, 1);
+INSERT INTO Shoe(brand, model, size, itemCondition, description, imageUrl, ownerId, likeCount, isWanted) VALUES ("Nike9", "NikeShoes", 8, 1,"Mint", "example.com", 1, 0, 1);
+INSERT INTO Shoe(brand, model, size, itemCondition, description, imageUrl, ownerId, likeCount, isWanted) VALUES ("Nike10", "NikeShoes", 11, 1,"Mint", "example.com", 1, 0, 1);
+INSERT INTO Shoe(brand, model, size, itemCondition, description, imageUrl, ownerId, likeCount, isWanted) VALUES ("Nike11", "NikeShoes", 12, 1,"Mint", "example.com", 1, 0, 1);
+INSERT INTO Shoe(brand, model, size, itemCondition, description, imageUrl, ownerId, likeCount, isWanted) VALUES ("Nike12", "NikeShoes", 7, 1,"Mint", "example.com", 1, 0, 1);
 
 CREATE TABLE Wanted
 (
