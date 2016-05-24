@@ -9,7 +9,7 @@ $('document').ready(function() {
 	$("#pagination a").trigger('click'); // When page is loaded we trigger a click
 });
 
-$('#pagination').on('click', function(e) { // When click on a 'a' element of the pagination div
+$('#sellPage').on('click', function(e) { // When click on a 'a' element of the pagination div
 	var page = 1; // Page number is the id of the 'a' element
 	var pagination = ''; // Init pagination
 	var url = "/controllers/shoe";
@@ -26,6 +26,10 @@ $('#pagination').on('click', function(e) { // When click on a 'a' element of the
 		success: function(data) {
 			alert("success");
 			console.log(data);
+			console.log(data[0]['brand']);
+			console.log(data[1]['brand']);
+			console.log(data[2]['brand']);
+
 		},
 		error: function(data) {
 			alert("123");
