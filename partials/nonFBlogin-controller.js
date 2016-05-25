@@ -28,8 +28,14 @@ $("#form").submit(function(event){
 		dataType: 'json',
 		timeout: 3000,
 		success: function(data) {
-			alert("success");
+			//alert("success");
 			console.log(data);
+			
+			if(data.success === true){
+				document.getElementById('error').innerHTML = "";
+			}else{
+				document.getElementById('error').innerHTML = "Incorrect email/password!";
+			}
 		},
 		error: function(data) {
 			alert("error");
