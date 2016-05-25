@@ -40,6 +40,7 @@ class Login extends Restapi{
 		if(count($result)===1){
 			$data["success"] = true;
 			$data["email"] = $email;
+						
 		}else{
 			$data["success"] = false;
 		}

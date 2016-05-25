@@ -4,7 +4,8 @@ function fbLogout() {
     FB.getLoginStatus(function(response) {
         if (response && response.status === 'connected') {
             FB.logout(function(response) {
-                document.location.reload();
+                //document.location.reload();
+                window.location="/index.html";
             });
         }
     });
@@ -23,7 +24,7 @@ window.fbAsyncInit = function () {
     });
     
 
-checkLoginState(); 
+//checkLoginState(); 
 
 /**
  * Set up success login/login event
@@ -69,6 +70,7 @@ function loginStatusChangeCallback(response) {
      * 2. logged into fb but not app; 'not_authorized'
      * 3. not logged into fb and not sure if logged into app; unknown
      */
+     console.log("response.status is " + response.status);
      
     if (response.status === 'connected') {
     // Logged into your app and Facebook.

@@ -33,6 +33,7 @@ $("#form").submit(function(event){
 			
 			if(data.success === true){
 				document.getElementById('error').innerHTML = "";
+				window.location="/partials/main-page.html";
 			}else{
 				document.getElementById('error').innerHTML = "Incorrect email/password!";
 			}
