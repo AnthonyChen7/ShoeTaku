@@ -11,15 +11,15 @@ class Login extends Restapi{
 	function __construct()
 	{
 		parent::__construct();
-		$this->doSomething();
+		$this->checkCredentials();
 	}
 	
-	private function doSomething(){
+	private function checkCredentials(){
+		// array to pass back data
+		$data = array();      
 		
 		$email = $_POST["email"];
 		$password = $_POST["password"];
-		
-		$result = $password;
 		
 		$table = "user";
 		$columns = array("*");
@@ -27,10 +27,7 @@ class Login extends Restapi{
 		$values = array($email, $password);
 		$limOff = array();
 		
-		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);
-		
-		$result = $sql;
-		
+		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);		
 		$this->connect();
 		
 		$stmt = $this->conn->prepare($sql);
@@ -40,7 +37,17 @@ class Login extends Restapi{
 		$result = $stmt->fetchAll();
 		$this->disconnect();
 		
-		$this->response($result, 200);
+		if(count($result)===1){
+			$data["success"] = true;
+			$data["email"] = $email;
+		}else{
+			$data["success"] = false;
+		}
+		
+		
+		
+		// return all our data to an AJAX call
+    	echo json_encode($data);
 	}
 	
 }
