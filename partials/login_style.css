@@ -13,16 +13,32 @@
    display:none;
 }
 
+#registerForm
+{
+    width:500px;
+   height:350px;
+   margin-top:100px;
+   background-color:#FFF;
+   border-radius:3px;
+   box-shadow:0px 0px 10px 0px #424242;
+   padding:10px;
+   box-sizing:border-box;
+   font-family:helvetica;
+   visibility:hidden;
+   display:none; 
+    
+}
+
 /*#loginForm #closeButton
 {
-   position:absolute;
+   position:relative;
    top:140px;
    left:735px;
    width:15px;
    height:15px;
 }*/
 
-#loginForm #email
+#loginForm #email, #registerForm #email
 {
    width:250px;
    height:40px;
@@ -30,7 +46,7 @@
    border-radius:3px;
    padding:5px;
 }
-#loginForm #password
+#loginForm #password, #registerForm #password
 {
    margin-top:5px;
    width:250px;
@@ -39,7 +55,7 @@
    border-radius:3px;
    padding:5px;
 }
-#loginForm #login
+#loginForm #login, #registerForm  #register
 {
    margin-left:-5px;
    margin-top:10px;

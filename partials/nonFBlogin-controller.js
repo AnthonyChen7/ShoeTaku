@@ -2,7 +2,23 @@
  * Attach submit handler to Login button
  */
 $(document).ready(function() {
-
+	
+		/**
+ * Handles the login dialog box popping p
+ * when the login buttin is pressed
+ */
+	$("#show_login").click(function(){
+		showPopUp();
+	});
+	
+	$("#closeButton").click(function(){
+		closePopUp();
+	});
+	
+	$("#closeButtonRegister").click(function(){
+		closePopUpRegister();
+	});
+		
 $("#form").submit(function(event){
 	
 	//clear any existing error messages first
@@ -95,23 +111,10 @@ function hasWhiteSpace(s) {
 }
 
 function someFunction(){
-	alert("yolo")
+	//alert("yolo");
+	closePopUp();
+	showPopUpRegister();
 }
-
-/**
- * Handles the login dialog box popping p
- * when the login buttin is pressed
- */
-
-$(document).ready(function(){
-	$("#show_login").click(function(){
-		showPopUp();
-	});
-	
-	$("#closeButton").click(function(){
-		closePopUp();
-	});
-});
 
 function showPopUp(){
 	$("#loginForm").fadeIn();
@@ -121,4 +124,14 @@ function showPopUp(){
 function closePopUp(){
 	$("#loginForm").fadeOut();
 	$("#loginForm").css({"visibility":"hidden","display":"none"});
+}
+
+function showPopUpRegister(){
+	$("#registerForm").fadeIn();
+	$("#registerForm").css({"visibility":"visible","display":"block"});
+}
+
+function closePopUpRegister(){
+	$("#registerForm").fadeOut();
+	$("#registerForm").css({"visibility":"hidden","display":"none"});
 }
