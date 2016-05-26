@@ -93,3 +93,7 @@ function validateEmail(){
 function hasWhiteSpace(s) {
   return s.indexOf(' ') >= 0;
 }
+
+function someFunction(){
+	alert("yolo")
+}
