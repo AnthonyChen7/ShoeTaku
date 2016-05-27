@@ -33,7 +33,7 @@ Used to group HTML elements together to format them with CSS-->
     <!-- Creates HTML form for user input
     action: specify url where to send form-data when form is submitted
     method: get/post ; specify HTTP method to use when sending form data  -->
-    <form id="form" method = "post" action = "/controllers/login">
+    <form id="form" method = "post" action = "/controllers/login" onsubmit="return validateForm(true)">
         
      <!-- 
      <input> specifies input field where user can enter data
@@ -67,16 +67,16 @@ Used to group HTML elements together to format them with CSS-->
 </div>
 
 <div id="registerForm">
-    <form id="form2" method="post" action="">
+    <form id="form2" method="post" action = "/controllers/register">
      <input type="button" id="closeButtonRegister" value="x" name="closeButtonRegister">
      <br>
      
      <label  for="emailLabel">Email:</label>
-     <input type="text" id="email" name="email">
+     <input type="text" id="emailRegister" name="emailRegister">
      <br>
      
      <label  for="passwordLabel">Password:</label>
-     <input type="password" id="password" name="password">
+     <input type="password" id="passwordRegister" name="passwordRegister">
      <br>
      
      <label  for="confirmPasswordLabel">Confirm Password:</label>
@@ -92,7 +92,7 @@ Used to group HTML elements together to format them with CSS-->
      <br>
      
      <label  for="ageLabel">Age:</label>
-     <input type="number" id="age" name="age">
+     <input type="number" id="age" name="age" onkeypress="return isNumberKey(event)">
      <br>
      
      <label  for="cityLabel">City:</label>
@@ -105,6 +105,15 @@ Used to group HTML elements together to format them with CSS-->
      <br>
      
      <input type="submit" id="register" value="Register">
+     
+      <div id="error_emailRegister"></div>
+      <div id="error_passwordRegister"></div> 
+      <div id="error_confirmPassword"></div> 
+      <div id="error_firstName"></div> 
+      <div id="error_lastName"></div>
+      <div id="error_age"></div> 
+      <div id="error_city"></div>
+      
     </form>
 </div>
 

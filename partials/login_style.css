@@ -16,7 +16,7 @@
 #registerForm
 {
     width:500px;
-   height:450px;
+   height:630px;
    margin-top:100px;
    background-color:#FFF;
    border-radius:3px;
@@ -38,7 +38,7 @@
    height:15px;
 }*/
 
-#loginForm #email, #registerForm #email
+#loginForm #email, #registerForm #emailRegister
 {
    width:250px;
    height:40px;
@@ -46,7 +46,7 @@
    border-radius:3px;
    padding:5px;
 }
-#loginForm #password, #registerForm #password, #confirmPassword, #firstName, #lastName, #age, #city, #country
+#loginForm #password, #registerForm #passwordRegister, #confirmPassword, #firstName, #lastName, #age, #city, #country
 {
    margin-top:5px;
    width:250px;
