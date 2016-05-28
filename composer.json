@@ -1,5 +1,6 @@
 {
     "require": {
-        "facebook/php-sdk-v4": "^5.1"
+        "facebook/php-sdk-v4": "^5.1",
+        "firebase/php-jwt": "^3.0"
     }
 }

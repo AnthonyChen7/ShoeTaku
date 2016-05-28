@@ -1,28 +1,26 @@
 <?php 
 
 require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\autoload.php' );
-
 /**
 
 This class handles the non-FB authentication
 */
 
 require_once(__DIR__.'/restapi.php');
-require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\firebase\php-jwt\src\JWT.php');
 
-//use Firebase\JWT;
-//use \firebase\php-jwt;
+//use \Firebase\JWT\JWT;
+//use \firebase\jwt;
 //use \firebase\jwt\src;
 
-class Login extends Restapi{
+class Register extends Restapi{
 	
 	function __construct()
 	{
 		parent::__construct();
-		$this->checkCredentials();
+		$this->register();
 	}
 	
-	private function checkCredentials(){
+	private function register(){
 		// array to pass back data
 		$data = array();
 		
@@ -54,7 +52,7 @@ class Login extends Restapi{
 			$token["success"] = true;
 			$token["email"] = $email;
 			
-			JWT::encode($token, 'secret_server_key');
+			//JWT::encode($token, 'secret_server_key');
 						
 		}else{
 			$data["success"] = false;
