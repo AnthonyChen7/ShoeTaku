@@ -1,6 +1,8 @@
 {
     "require": {
         "facebook/php-sdk-v4": "^5.1",
-        "firebase/php-jwt": "^3.0"
+        "firebase/php-jwt": "^3.0",
+        "lcobucci/jwt": "^3.1",
+        "gamegos/jwt": "^0.1.1"
     }
 }

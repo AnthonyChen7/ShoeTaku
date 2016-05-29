@@ -7,6 +7,15 @@ namespace Composer\Autoload;
 class ComposerStaticInit1095f183304088346f14050d016db4eb
 {
     public static $prefixLengthsPsr4 = array (
+        'L' => 
+        array (
+            'Lcobucci\\JWT\\' => 13,
+        ),
+        'G' => 
+        array (
+            'Gamegos\\JWT\\' => 12,
+            'Gamegos\\JWS\\' => 12,
+        ),
         'F' => 
         array (
             'Firebase\\JWT\\' => 13,
@@ -15,6 +24,20 @@ class ComposerStaticInit1095f183304088346f14050d016db4eb
     );
 
     public static $prefixDirsPsr4 = array (
+        'Lcobucci\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/lcobucci/jwt/src',
+        ),
+        'Gamegos\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gamegos/jwt/src',
+            1 => __DIR__ . '/..' . '/gamegos/jwt/tests',
+        ),
+        'Gamegos\\JWS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gamegos/jws/src',
+            1 => __DIR__ . '/..' . '/gamegos/jws/tests',
+        ),
         'Firebase\\JWT\\' => 
         array (
             0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
