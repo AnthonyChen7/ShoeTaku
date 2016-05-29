@@ -138,6 +138,7 @@ function validateForm(isLoginForm){
 		document.getElementById('error_lastName').innerHTML = "";
 		document.getElementById('error_age').innerHTML = "";
 		document.getElementById('error_city').innerHTML = "";
+		document.getElementById('error_country').innerHTML = "";
 		
 		
 		if($("#emailRegister").val() === "" || !validateEmail($("#emailRegister").val()) || hasWhiteSpace($("#emailRegister").val()) ){
@@ -167,12 +168,17 @@ function validateForm(isLoginForm){
 		}
 		
 		if($("#age").val() === "" || $("#age").val() <= 0 ){
-			document.getElementById('error_age').innerHTML += "<p>Please provide a valid age!</p>";
+			document.getElementById('error_age').innerHTML += "<p>Age must be greater than 0!</p>";
 			isValid= false;
 		}
 		
 		if($("#city").val() === "" || hasWhiteSpace( $("#city").val())){
 			document.getElementById('error_city').innerHTML += "<p>Please provide a valid city!</p>";
+			isValid= false;
+		}
+		
+		if($("#country").val() === "" || hasWhiteSpace( $("#country").val())){
+			document.getElementById('error_country').innerHTML += "<p>Please provide a valid country!</p>";
 			isValid= false;
 		}
 	}else{
@@ -217,7 +223,6 @@ function validateEmail(input){
  * Returns true if there are white spaces
  */
 function hasWhiteSpace(s) {
-  //return s.indexOf(' ') >= 0;
   
   if (!/\S/.test(s)) {
     // string is not empty and not just whitespace
@@ -256,6 +261,7 @@ function showPopUpRegister(){
 		document.getElementById('error_lastName').innerHTML = "";
 		document.getElementById('error_age').innerHTML = "";
 		document.getElementById('error_city').innerHTML = "";
+		document.getElementById('error_country').innerHTML = "";
 	$("#registerForm").fadeIn();
 	$("#registerForm").css({"visibility":"visible","display":"block"});
 }
