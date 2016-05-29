@@ -151,11 +151,15 @@ function validateForm(isLoginForm){
 			isValid= false;
 		}
 		
-			
-			if($("#passwordRegister").val() !== $("#confirmPassword").val() ){
-				document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
+		if($("#passwordRegister").val().length <= 6){
+			document.getElementById('error_passwordRegister').innerHTML += "<p>Length of password must be > 6!</p>";
 			isValid= false;
-			}
+		}
+			
+		if($("#passwordRegister").val() !== $("#confirmPassword").val() ){
+				document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
+		isValid= false;
+		}
 			
 			if($("#firstName").val() === "" || hasWhiteSpace( $("#firstName").val())){
 			document.getElementById('error_firstName').innerHTML += "<p>Please provide a valid first name!</p>";
