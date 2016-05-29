@@ -79,21 +79,24 @@ $("#form2").submit(function(event){
 event.preventDefault();
 	var $form = $(this),
 	url = $form.attr('action');
-	
-	/**
-	 * Send data using AJAX call
-	 */
-	var data = {'email': $("#email").val(), 'password': $("#password").val()};
-	
+
 	if(validateForm(false) === true){
 		
 		console.log("form is valid");
-		
-	}else{
-		console.log("form is invalid");
-	}
-	
-	// $.ajax({
+		/**
+	 * Send data using AJAX call
+	 */
+	var data = {
+	'email': $("#emailRegister").val(), 
+	'password': $("#passwordRegister").val(),
+	'firstName':$('#firstName').val(),
+	'lastName':$('#lastName').val(),
+	'age':$('#age').val(),
+	'city':$('#city').val(),
+	'country': getKeyByValue($('#country').val()) //store as country code in db
+	};
+	console.log(data);	
+		// $.ajax({
 	// 	type: 'POST',
 	// 	url: url, 
 	// 	data: data, 
@@ -116,6 +119,10 @@ event.preventDefault();
 	// 		console.log(data);
 	// 	}
 	// });	
+		
+	}else{
+		console.log("form is invalid");
+	}
 });
 
 });
@@ -211,7 +218,6 @@ function validateForm(isLoginForm){
  * Returns true if valid email entered. False otherwise.
  */
 function validateEmail(input){
-	//var email = $("#email").val();
 	
 	atpos = input.indexOf("@");
 	dotpos = input.lastIndexOf(".");

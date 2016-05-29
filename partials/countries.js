@@ -1,6 +1,6 @@
-//List of countries
-
-$(document).ready(function() {
+/**
+ * Populates combo box with list of countries
+ */
 
 var isoCountries = {
     'AF' : 'Afghanistan',
@@ -258,20 +258,20 @@ function getCountryName (countryCode) {
     }
 }
 
-
+ function getKeyByValue ( value ) {
+    for( var prop in isoCountries ) {
+        if( isoCountries.hasOwnProperty( prop ) ) {
+             if( isoCountries[ prop ] === value )
+                 return prop;
+        }
+    }
+}
 
 var options = '';
 
-// for(var i = 0; i < isoCountries.length; i++){
-// 	options += '<option value="'+isoCountries(i))+'"/>';
-//     console.log(options);
-// }
-
 for(var key in isoCountries){
 	options += '<option value="'+getCountryName(key)+'"/>';
-    console.log(options);
 }
 
 document.getElementById("countryList").innerHTML = options;
 
-});
