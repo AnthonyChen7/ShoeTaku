@@ -95,30 +95,38 @@ event.preventDefault();
 	'city':$('#city').val(),
 	'country': getKeyByValue($('#country').val()) //store as country code in db
 	};
-	console.log(data);	
-		// $.ajax({
-	// 	type: 'POST',
-	// 	url: url, 
-	// 	data: data, 
-	// 	dataType: 'json',
-	// 	timeout: 3000,
-	// 	success: function(data) {
-	// 		//alert("success");
-	// 		console.log(data);
+		
+		$.ajax({
+		type: 'POST',
+		url: url, 
+		data: data, 
+		dataType: 'json',
+		timeout: 3000,
+		success: function(data) {
+			alert("success");
+			console.log(data);
 			
-	// 		if(data.success === true){
-	// 			document.getElementById('error_email').innerHTML = "";
-	// 			document.getElementById('error_password').innerHTML = "";
-	// 			window.location="/partials/main-page.html";
-	// 		}else{
-	// 			document.getElementById('error_email').innerHTML = "Incorrect email/password!";
-	// 		}
-	// 	},
-	// 	error: function(data) {
-	// 		alert("error");
-	// 		console.log(data);
-	// 	}
-	// });	
+			if(data.success === true){
+				
+				//clear any existing error messages first
+		document.getElementById('error_emailRegister').innerHTML = "";
+		document.getElementById('error_passwordRegister').innerHTML = "";
+		document.getElementById('error_confirmPassword').innerHTML = "";
+		document.getElementById('error_firstName').innerHTML = "";
+		document.getElementById('error_lastName').innerHTML = "";
+		document.getElementById('error_age').innerHTML = "";
+		document.getElementById('error_city').innerHTML = "";
+		document.getElementById('error_country').innerHTML = "";
+				// window.location="/partials/main-page.html";
+			}else{
+				document.getElementById('error_emailRegister').innerHTML = data.errorMsg;
+			}
+		},
+		error: function(data) {
+			alert("error");
+			//console.log(data);
+		}
+	});	
 		
 	}else{
 		console.log("form is invalid");

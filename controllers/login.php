@@ -3,7 +3,6 @@
 require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\autoload.php' );
 
 /**
-
 This class handles the non-FB authentication
 */
 

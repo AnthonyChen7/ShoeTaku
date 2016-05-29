@@ -24,45 +24,41 @@ class Register extends Restapi{
 		// array to pass back data
 		$data = array();
 		
-		$token = array();      
+		//$token = array();      
 		
 		$email = $_POST["email"];
 		$password = $_POST["password"];
+		$firstName = $_POST["firstName"];
+		$lastName = $_POST["lastName"];
+		$age = $_POST["age"];
+		$city = $_POST["city"];
+		$country = $_POST["country"];
 		
 		$table = "user";
-		$columns = array("*");
-		$where = array("email", "password");
-		$values = array($email, $password);
+		$columns = array("email","password","firstName","lastName","age","city", "countryCode");
+		$where = array();
+		$values = array($email, $password, $firstName, $lastName, $age, $city, $country);
 		$limOff = array();
 		
-		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);		
-		$this->connect();
+		$sql = $this->prepareInsertSql($table, $columns, $where, $limOff);
 		
+		try{
+				
+		$this->connect();
 		$stmt = $this->conn->prepare($sql);
 		
-		$stmt->execute($values);
+		$result = $stmt->execute($values);
 		
-		$result = $stmt->fetchAll();
-		$this->disconnect();
+		$data["success"] = true;
 		
-		if(count($result)===1){
-			$data["success"] = true;
-			$data["email"] = $email;
+		}catch (Exception $e) {
+			$data["success"]=false;
+			$data["errorMsg"] = $email . " already exists. Please select specify another email!";
 			
-			$token["success"] = true;
-			$token["email"] = $email;
-			
-			//JWT::encode($token, 'secret_server_key');
-						
-		}else{
-			$data["success"] = false;
-			
-			$token["success"] = false;
-			$token["email"] = "";
 		}
-		
-		
-		
+
+		$this->disconnect();
+
 		// return all our data to an AJAX call
     	echo json_encode($data);
 	}
