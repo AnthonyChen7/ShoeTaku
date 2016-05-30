@@ -38,11 +38,11 @@ class Login extends Restapi{
 		
 		$email = $_POST["email"];
 		$password = $_POST["password"];
-		
+				
 		$table = "user";
-		$columns = array("*");
-		$where = array("email", "password");
-		$values = array($email, $password);
+		$columns = array("email","password");
+		$where = array("email");
+		$values = array($email);
 		$limOff = array();
 		
 		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);		
@@ -53,45 +53,62 @@ class Login extends Restapi{
 		$stmt->execute($values);
 		
 		$result = $stmt->fetchAll();
-		$this->disconnect();
 		
 		if(count($result)===1){
+		
+		/**
+		Since email is a unique key
+		we would expect there to be only 1 result
+		**/
+			
+		$object = $result[0];
+		
+		//check if password needs re-hashing first
+		if(password_needs_rehash($object['password'],PASSWORD_BCRYPT)){
+			
+			$hash= password_hash($password, PASSWORD_BCRYPT);
+			
+			$values = array($hash,$object['email']);
+			//update with new hashed password in db
+			$columns = array("password");
+			$sql = $this->prepareUpdateSql($table,$columns,$where);
+			
+			$stmt = $this->conn->prepare($sql);
+			$stmt->execute($values);
+			
+			//check if newly-hashed password matches inputted password
+			if($email === $object['email'] && password_verify($object['password'],$hash)){
 			$data["success"] = true;
 			$data["email"] = $email;
 			
-			$token["success"] = true;
-			$token["email"] = $email;
-			
-			
-
-// $token = (new Builder())->setIssuer('http://example.com') // Configures the issuer (iss claim)
-//                         ->setAudience('http://example.org') // Configures the audience (aud claim)
-//                         ->setId('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
-//                         ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
-//                         ->setNotBefore(time() + 60) // Configures the time that the token can be used (nbf claim)
-//                         ->setExpiration(time() + 3600) // Configures the expiration time of the token (nbf claim)
-//                         ->set('uid', 1) // Configures a new claim, called "uid"
-//                         ->getToken(); // Retrieves the generated token
-
-
-// $token->getHeaders(); // Retrieves the token headers
-// $token->getClaims(); // Retrieves the token claims
-			
-			//JWT::encode($token, 'secret_server_key');
-			//$config = new Configuration(); // This object helps to simplify the creation of the dependencies
-                               // instead of using "?:" on constructors.
-						
-		}else{
+			}else{
 			$data["success"] = false;
+			}
 			
-			$token["success"] = false;
-			$token["email"] = "";
+		}else{
+			
+			if($email === $object['email'] && password_verify($password,$object['password'])){
+			$data["success"] = true;
+			$data["email"] = $email;
+			
+			}else{
+			$data["success"] = false;
+			}
+			
+	}
+	
+		}else{
+			
+		$data["success"] = false;
+			
 		}
 		
-		
-		
+		$this->disconnect();
+
 		// return all our data to an AJAX call
-    	echo json_encode($data);
+    	
+		echo json_encode($data);
+		//$this->response($data,200);
 	}
 	
 }

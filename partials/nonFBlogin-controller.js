@@ -30,7 +30,7 @@ $("#form").submit(function(event){
 	
 	/**
 	 * Handle form validation first.
-	 * If it contains valid field, we make AJAX call
+	 * If it contains valid fields, we make AJAX call
 	 */
 	
 	/**
@@ -59,20 +59,20 @@ $("#form").submit(function(event){
 			if(data.success === true){
 				document.getElementById('error_email').innerHTML = "";
 				document.getElementById('error_password').innerHTML = "";
-				window.location="/partials/main-page.html";
+				 window.location="/partials/main-page.html";
 			}else{
 				document.getElementById('error_email').innerHTML = "Incorrect email/password!";
 			}
 		},
 		error: function(data) {
 			alert("error");
-			console.log(data);
 		}
 	});
 	
 	 }
 
-});
+}
+);
 
 
 $("#form2").submit(function(event){
@@ -117,14 +117,14 @@ event.preventDefault();
 		document.getElementById('error_age').innerHTML = "";
 		document.getElementById('error_city').innerHTML = "";
 		document.getElementById('error_country').innerHTML = "";
-				// window.location="/partials/main-page.html";
+		window.location="/partials/main-page.html";
 			}else{
 				document.getElementById('error_emailRegister').innerHTML = data.errorMsg;
 			}
 		},
 		error: function(data) {
 			alert("error");
-			//console.log(data);
+			
 		}
 	});	
 		
@@ -145,7 +145,7 @@ function validateForm(isLoginForm){
 		
 		if(isLoginForm === false){
 			
-							//clear any existing error messages first
+		//clear any existing error messages first
 		document.getElementById('error_emailRegister').innerHTML = "";
 		document.getElementById('error_passwordRegister').innerHTML = "";
 		document.getElementById('error_confirmPassword').innerHTML = "";
@@ -166,10 +166,10 @@ function validateForm(isLoginForm){
 			isValid= false;
 		}
 		
-		// if($("#passwordRegister").val().length <= 6){
-		// 	document.getElementById('error_passwordRegister').innerHTML += "<p>Length of password must be > 6!</p>";
-		// 	isValid= false;
-		// }
+		if($("#passwordRegister").val().length <= 6){
+			document.getElementById('error_passwordRegister').innerHTML += "<p>Length of password must be > 6!</p>";
+			isValid= false;
+		}
 			
 		if($("#passwordRegister").val() !== $("#confirmPassword").val() ){
 				document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
@@ -252,7 +252,6 @@ return false;
 }
 
 function someFunction(){
-	//alert("yolo");
 	closePopUp();
 	showPopUpRegister();
 }
