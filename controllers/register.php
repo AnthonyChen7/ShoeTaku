@@ -27,7 +27,12 @@ class Register extends Restapi{
 		//$token = array();      
 		
 		$email = $_POST["email"];
+		
 		$password = $_POST["password"];
+		
+		//hash the password using bcrypt method
+		$password = password_hash($password,PASSWORD_BCRYPT);
+		
 		$firstName = $_POST["firstName"];
 		$lastName = $_POST["lastName"];
 		$age = $_POST["age"];
@@ -54,7 +59,6 @@ class Register extends Restapi{
 		}catch (Exception $e) {
 			$data["success"]=false;
 			$data["errorMsg"] = $email . " already exists. Please select specify another email!";
-			
 		}
 
 		$this->disconnect();

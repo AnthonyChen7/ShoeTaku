@@ -166,10 +166,10 @@ function validateForm(isLoginForm){
 			isValid= false;
 		}
 		
-		if($("#passwordRegister").val().length <= 6){
-			document.getElementById('error_passwordRegister').innerHTML += "<p>Length of password must be > 6!</p>";
-			isValid= false;
-		}
+		// if($("#passwordRegister").val().length <= 6){
+		// 	document.getElementById('error_passwordRegister').innerHTML += "<p>Length of password must be > 6!</p>";
+		// 	isValid= false;
+		// }
 			
 		if($("#passwordRegister").val() !== $("#confirmPassword").val() ){
 				document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
