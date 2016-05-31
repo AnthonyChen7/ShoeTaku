@@ -25,9 +25,9 @@ class Login extends Restapi{
 	
 	private function checkCredentials(){
 		// array to pass back data
-		$data = array();
+		// $data = array();
 		
-		$token = array();      
+		$token = NULL;      
 		
 		$email = $_POST["email"];
 		$password = $_POST["password"];
@@ -71,46 +71,32 @@ class Login extends Restapi{
 			
 			//check if newly-hashed password matches inputted password
 			if($email === $object['email'] && password_verify($object['password'],$hash)){
-			$data["success"] = true;
-			$data["email"] = $email;
+			// $data["success"] = true;
+			// $data["email"] = $email;
 			
 			}else{
-			$data["success"] = false;
+			// $data["success"] = false;
 			}
 			
 		}else{
 			
 			if($email === $object['email'] && password_verify($password,$object['password'])){
-			$data["success"] = true;
-			$data["email"] = $email;
+			// $data["success"] = true;
+			// $data["email"] = $email;
 			
 			}else{
-			$data["success"] = false;
+			// $data["success"] = false;
 			}
 			
 	}
 	
 		}else{
 			
-		$data["success"] = false;
+		// $data["success"] = false;
 			
 		}
 		
 		$this->disconnect();
-		
-		$token = (new Builder())->setIssuer('http://example.com') // Configures the issuer (iss claim)
-                        ->setAudience('http://example.org') // Configures the audience (aud claim)
-                        ->setId('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
-                        ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
-                        ->setNotBefore(time() + 60) // Configures the time that the token can be used (nbf claim)
-                        ->setExpiration(time() + 3600) // Configures the expiration time of the token (nbf claim)
-                        ->set('uid', 1) // Configures a new claim, called "uid"
-                        ->getToken(); // Retrieves the generated token
-
-
-$token->getHeaders(); // Retrieves the token headers
-$token->getClaims(); // Retrieves the token claims
-
 
 		// return all our data to an AJAX call
     	
