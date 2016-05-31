@@ -7,14 +7,8 @@ This class handles the non-FB authentication
 */
 
 require_once(__DIR__.'/restapi.php');
-//require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\firebase\php-jwt\src\JWT.php');
-//require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\lcobucci\jwt\src\Configuration.php');
-//require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\gamegos\jwt\src\Token.php');
-//require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\gamegos\jwt\src\Encoder.php');
 
-//use Firebase\JWT;
-//use \firebase\php-jwt;
-//use \firebase\jwt\src;
+//require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\lcobucci\jwt\src\Configuration.php');
 
 
 use Lcobucci\JWT\Builder;
@@ -25,7 +19,6 @@ class Login extends Restapi{
 	{
 		parent::__construct();
 
-		
 		$this->checkCredentials();
 		
 	}
@@ -104,11 +97,26 @@ class Login extends Restapi{
 		}
 		
 		$this->disconnect();
+		
+		$token = (new Builder())->setIssuer('http://example.com') // Configures the issuer (iss claim)
+                        ->setAudience('http://example.org') // Configures the audience (aud claim)
+                        ->setId('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
+                        ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
+                        ->setNotBefore(time() + 60) // Configures the time that the token can be used (nbf claim)
+                        ->setExpiration(time() + 3600) // Configures the expiration time of the token (nbf claim)
+                        ->set('uid', 1) // Configures a new claim, called "uid"
+                        ->getToken(); // Retrieves the generated token
+
+
+$token->getHeaders(); // Retrieves the token headers
+$token->getClaims(); // Retrieves the token claims
+
 
 		// return all our data to an AJAX call
     	
-		echo json_encode($data);
-		//$this->response($data,200);
+		//echo json_encode($data);
+		// $this->response($data,200);
+		$this->response($token,200);
 	}
 	
 }

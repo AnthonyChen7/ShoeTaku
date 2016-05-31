@@ -1,28 +1,45 @@
 [
     {
-        "name": "firebase/php-jwt",
-        "version": "v3.0.0",
-        "version_normalized": "3.0.0.0",
+        "name": "lcobucci/jwt",
+        "version": "3.1.1",
+        "version_normalized": "3.1.1.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/firebase/php-jwt.git",
-            "reference": "fa8a06e96526eb7c0eeaa47e4f39be59d21f16e1"
+            "url": "https://github.com/lcobucci/jwt.git",
+            "reference": "afea8e682e911a21574fd8519321b32522fa25b5"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/firebase/php-jwt/zipball/fa8a06e96526eb7c0eeaa47e4f39be59d21f16e1",
-            "reference": "fa8a06e96526eb7c0eeaa47e4f39be59d21f16e1",
+            "url": "https://api.github.com/repos/lcobucci/jwt/zipball/afea8e682e911a21574fd8519321b32522fa25b5",
+            "reference": "afea8e682e911a21574fd8519321b32522fa25b5",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.3.0"
+            "ext-openssl": "*",
+            "php": ">=5.5"
         },
-        "time": "2015-07-22 18:31:08",
+        "require-dev": {
+            "mdanter/ecc": "~0.3",
+            "mikey179/vfsstream": "~1.5",
+            "phpmd/phpmd": "~2.2",
+            "phpunit/php-invoker": "~1.1",
+            "phpunit/phpunit": "~4.5",
+            "squizlabs/php_codesniffer": "~2.3"
+        },
+        "suggest": {
+            "mdanter/ecc": "Required to use Elliptic Curves based algorithms."
+        },
+        "time": "2016-03-24 22:46:13",
         "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.1-dev"
+            }
+        },
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "Firebase\\JWT\\": "src"
+                "Lcobucci\\JWT\\": "src"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -31,18 +48,16 @@
         ],
         "authors": [
             {
-                "name": "Neuman Vong",
-                "email": "neuman+pear@twilio.com",
-                "role": "Developer"
-            },
-            {
-                "name": "Anant Narayanan",
-                "email": "anant@php.net",
+                "name": "Luís Otávio Cobucci Oblonczyk",
+                "email": "lcobucci@gmail.com",
                 "role": "Developer"
             }
         ],
-        "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
-        "homepage": "https://github.com/firebase/php-jwt"
+        "description": "A simple library to work with JSON Web Token and JSON Web Signature",
+        "keywords": [
+            "JWS",
+            "jwt"
+        ]
     },
     {
         "name": "facebook/php-sdk-v4",
@@ -102,46 +117,29 @@
         ]
     },
     {
-        "name": "lcobucci/jwt",
-        "version": "3.1.1",
-        "version_normalized": "3.1.1.0",
+        "name": "firebase/php-jwt",
+        "version": "v3.0.0",
+        "version_normalized": "3.0.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/lcobucci/jwt.git",
-            "reference": "afea8e682e911a21574fd8519321b32522fa25b5"
+            "url": "https://github.com/firebase/php-jwt.git",
+            "reference": "fa8a06e96526eb7c0eeaa47e4f39be59d21f16e1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/lcobucci/jwt/zipball/afea8e682e911a21574fd8519321b32522fa25b5",
-            "reference": "afea8e682e911a21574fd8519321b32522fa25b5",
+            "url": "https://api.github.com/repos/firebase/php-jwt/zipball/fa8a06e96526eb7c0eeaa47e4f39be59d21f16e1",
+            "reference": "fa8a06e96526eb7c0eeaa47e4f39be59d21f16e1",
             "shasum": ""
         },
         "require": {
-            "ext-openssl": "*",
-            "php": ">=5.5"
+            "php": ">=5.3.0"
         },
-        "require-dev": {
-            "mdanter/ecc": "~0.3",
-            "mikey179/vfsstream": "~1.5",
-            "phpmd/phpmd": "~2.2",
-            "phpunit/php-invoker": "~1.1",
-            "phpunit/phpunit": "~4.5",
-            "squizlabs/php_codesniffer": "~2.3"
-        },
-        "suggest": {
-            "mdanter/ecc": "Required to use Elliptic Curves based algorithms."
-        },
-        "time": "2016-03-24 22:46:13",
+        "time": "2015-07-22 18:31:08",
         "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.1-dev"
-            }
-        },
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "Lcobucci\\JWT\\": "src"
+                "Firebase\\JWT\\": "src"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -150,16 +148,18 @@
         ],
         "authors": [
             {
-                "name": "Luís Otávio Cobucci Oblonczyk",
-                "email": "lcobucci@gmail.com",
+                "name": "Neuman Vong",
+                "email": "neuman+pear@twilio.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Anant Narayanan",
+                "email": "anant@php.net",
                 "role": "Developer"
             }
         ],
-        "description": "A simple library to work with JSON Web Token and JSON Web Signature",
-        "keywords": [
-            "JWS",
-            "jwt"
-        ]
+        "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+        "homepage": "https://github.com/firebase/php-jwt"
     },
     {
         "name": "gamegos/jws",
