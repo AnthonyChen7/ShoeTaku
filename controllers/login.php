@@ -12,6 +12,12 @@ require_once(__DIR__.'/restapi.php');
 
 
 use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
+
+define("USE_TIME", 60);
+define("EXPIRATION_TIME", 3600);
+define("RANDOM_STRING", '70bpyytrEVHXNC99PvjKfNcgHLwByB2B9eGExqiBYSG6LdnjdT2q9nARwCKWVNy');
+define("INVALID_ID", -1);
 
 class Login extends Restapi{
 	
@@ -24,16 +30,16 @@ class Login extends Restapi{
 	}
 	
 	private function checkCredentials(){
-		// array to pass back data
-		// $data = array();
 		
-		$token = NULL;      
+		$token = NULL;
+		      
+		$signer = new Sha256();
 		
 		$email = $_POST["email"];
 		$password = $_POST["password"];
 				
 		$table = "user";
-		$columns = array("email","password");
+		$columns = array("userId","email","password");
 		$where = array("email");
 		$values = array($email);
 		$limOff = array();
@@ -71,38 +77,94 @@ class Login extends Restapi{
 			
 			//check if newly-hashed password matches inputted password
 			if($email === $object['email'] && password_verify($object['password'],$hash)){
-			// $data["success"] = true;
-			// $data["email"] = $email;
+			
+			
+			
+			$token = (new Builder())
+						//->setIssuer('http://example.com') // Configures the issuer (iss claim)
+                        //->setAudience('http://example.org') // Configures the audience (aud claim)
+                        //->setId('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
+                        ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
+                        ->setNotBefore(time() + USE_TIME) // Configures the time that the token can be used (nbf claim)
+                        ->setExpiration(time() + EXPIRATION_TIME) // Configures the expiration time of the token (nbf claim)
+                        ->set('userId', $object['userId']) // Configures a new claim, called "uid"
+						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
+                        ->getToken(); // Retrieves the generated token
+
 			
 			}else{
-			// $data["success"] = false;
+				
+				
+				
+				$token = (new Builder())
+						//->setIssuer('http://example.com') // Configures the issuer (iss claim)
+                        //->setAudience('http://example.org') // Configures the audience (aud claim)
+                        //->setId('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
+                        ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
+                        ->setNotBefore(time() + USE_TIME) // Configures the time that the token can be used (nbf claim)
+                        ->setExpiration(time() + EXPIRATION_TIME) // Configures the expiration time of the token (nbf claim)
+                        ->set('userId', INVALID_ID) // Configures a new claim, called "uid"
+						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
+                        ->getToken(); // Retrieves the generated token
+			
 			}
 			
 		}else{
 			
 			if($email === $object['email'] && password_verify($password,$object['password'])){
-			// $data["success"] = true;
-			// $data["email"] = $email;
+
+			
+			$token = (new Builder())
+						//->setIssuer('http://example.com') // Configures the issuer (iss claim)
+                        //->setAudience('http://example.org') // Configures the audience (aud claim)
+                        //->setId('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
+                        ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
+                        ->setNotBefore(time() + USE_TIME) // Configures the time that the token can be used (nbf claim)
+                        ->setExpiration(time() + EXPIRATION_TIME) // Configures the expiration time of the token (nbf claim)
+                        ->set('userId', $object['userId']) // Configures a new claim, called "uid"
+						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
+                        ->getToken(); // Retrieves the generated token
 			
 			}else{
-			// $data["success"] = false;
+				
+				$token = (new Builder())
+						//->setIssuer('http://example.com') // Configures the issuer (iss claim)
+                        //->setAudience('http://example.org') // Configures the audience (aud claim)
+                        //->setId('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
+                        ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
+                        ->setNotBefore(time() + USE_TIME) // Configures the time that the token can be used (nbf claim)
+                        ->setExpiration(time() + EXPIRATION_TIME) // Configures the expiration time of the token (nbf claim)
+                        ->set('userId', INVALID_ID) // Configures a new claim, called "uid"
+						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
+                        ->getToken(); // Retrieves the generated token
+			
 			}
 			
 	}
 	
 		}else{
 			
-		// $data["success"] = false;
+			$token = (new Builder())
+						//->setIssuer('http://example.com') // Configures the issuer (iss claim)
+                        //->setAudience('http://example.org') // Configures the audience (aud claim)
+                        //->setId('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
+                        ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
+                        ->setNotBefore(time() + USE_TIME) // Configures the time that the token can be used (nbf claim)
+                        ->setExpiration(time() + EXPIRATION_TIME) // Configures the expiration time of the token (nbf claim)
+                        ->set('userId', INVALID_ID) // Configures a new claim, called "uid"
+						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
+                        ->getToken(); // Retrieves the generated token
+		
 			
 		}
 		
 		$this->disconnect();
 
 		// return all our data to an AJAX call
-    	
-		//echo json_encode($data);
-		// $this->response($data,200);
-		$this->response($token,200);
+
+		 //$this->response($result,200);
+		//$this->response($token,200);
+		echo $token->getClaim('userId');
 	}
 	
 }
