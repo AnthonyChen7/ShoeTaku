@@ -5,7 +5,7 @@ $(document).ready(function() {
 	
 	
 	
-		/**
+/**
  * Handles the login dialog box popping p
  * when the login buttin is pressed
  */
@@ -21,58 +21,57 @@ $(document).ready(function() {
 		closePopUpRegister();
 	});
 		
-// $("#form").submit(function(event){
+$("#form").submit(function(event){
 	
-// 	/**
-// 	 * Stop from submitting normally
-// 	 */
-// 	event.preventDefault();
+	/**
+	 * Stop from submitting normally
+	 */
+	event.preventDefault();
 	
-// 	/**
-// 	 * Handle form validation first.
-// 	 * If it contains valid fields, we make AJAX call
-// 	 */
+	/**
+	 * Handle form validation first.
+	 * If it contains valid fields, we make AJAX call
+	 */
 	
-// 	/**
-// 	 * Retrieve action attribute;URL to send it to
-// 	 */
-// 	var $form = $(this),
-// 	url = $form.attr('action');
+	/**
+	 * Retrieve action attribute;URL to send it to
+	 */
+	var $form = $(this),
+	url = $form.attr('action');
 	
-// 	/**
-// 	 * Send data using AJAX call
-// 	 */
-// 	var data = {'email': $("#email").val(), 'password': $("#password").val()};
+	/**
+	 * Send data using AJAX call
+	 */
+	var data = {'email': $("#email").val(), 'password': $("#password").val()};
 	
-// 	 if(validateForm(true) === true){
+	 if(validateForm(true) === true){
 	
-// 	$.ajax({
-// 		type: 'POST',
-// 		url: url, 
-// 		data: data, 
-// 		dataType: 'json',
-// 		timeout: 3000,
-// 		success: function(data) {
-// 			//alert("success");
-// 			console.log(data);
+	$.ajax({
+		type: 'POST',
+		url: url, 
+		data: data, 
+		timeout: 3000,
+		success: function(data) {
+			console.log(data);
 			
-// 			if(data.success === true){
-// 				document.getElementById('error_email').innerHTML = "";
-// 				document.getElementById('error_password').innerHTML = "";
-// 				 window.location="/partials/main-page.html";
-// 			}else{
-// 				document.getElementById('error_email').innerHTML = "Incorrect email/password!";
-// 			}
-// 		},
-// 		error: function(data) {
-// 			alert("error");
-// 		}
-// 	});
+			if(data != null){
+				document.getElementById('error_email').innerHTML = "";
+				document.getElementById('error_password').innerHTML = "";
+				 window.location="/partials/main-page.html";
+			}else{
+				document.getElementById('error_email').innerHTML = "Incorrect email/password!";
+			}
+		},
+		error: function(data) {
+			alert("error");
+			console.log(data);
+		}
+	});
 	
-// 	 }
+	 }
 
-// }
-// );
+}
+);
 
 
 $("#form2").submit(function(event){
@@ -108,7 +107,7 @@ event.preventDefault();
 			
 			if(data.success === true){
 				
-				//clear any existing error messages first
+		//clear any existing error messages first
 		document.getElementById('error_emailRegister').innerHTML = "";
 		document.getElementById('error_passwordRegister').innerHTML = "";
 		document.getElementById('error_confirmPassword').innerHTML = "";
@@ -251,15 +250,26 @@ return false;
 
 }
 
-function someFunction(){
+/**
+ * Closes login dialog
+ * Opens registration dialog
+ */
+function showRegistrationPopUp(){
 	closePopUp();
 	showPopUpRegister();
 }
 
+// var showPopUp = (function(){
+// 	// 	//clear any existing error messages first
+// 	document.getElementById('error_email').innerHTML = "";
+// 	document.getElementById('error_password').innerHTML = "";
+// 	$("#loginForm").fadeIn();
+// 	$("#loginForm").css({"visibility":"visible","display":"block"});
+// })();
 function showPopUp(){
-		//clear any existing error messages first
-		document.getElementById('error_email').innerHTML = "";
-		document.getElementById('error_password').innerHTML = "";
+	//clear any existing error messages first
+	document.getElementById('error_email').innerHTML = "";
+	document.getElementById('error_password').innerHTML = "";
 	$("#loginForm").fadeIn();
 	$("#loginForm").css({"visibility":"visible","display":"block"});
 }
