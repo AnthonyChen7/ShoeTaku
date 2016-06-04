@@ -49,17 +49,20 @@ $("#form").submit(function(event){
 	$.ajax({
 		type: 'POST',
 		url: url, 
-		data: data, 
+		data: data,
+		//dataType: 'json', 
 		timeout: 3000,
 		success: function(data) {
-			console.log(data);
+			
 			
 			if(data != null){
+				console.log(data);
 				document.getElementById('error_email').innerHTML = "";
 				document.getElementById('error_password').innerHTML = "";
-				 window.location="/partials/main-page.html";
+				//window.location="/partials/main-page.html";
 			}else{
 				document.getElementById('error_email').innerHTML = "Incorrect email/password!";
+				console.log(data);
 			}
 		},
 		error: function(data) {
@@ -116,7 +119,7 @@ event.preventDefault();
 		document.getElementById('error_age').innerHTML = "";
 		document.getElementById('error_city').innerHTML = "";
 		document.getElementById('error_country').innerHTML = "";
-		window.location="/partials/main-page.html";
+		//window.location="/partials/main-page.html";
 			}else{
 				document.getElementById('error_emailRegister').innerHTML = data.errorMsg;
 			}
@@ -165,10 +168,10 @@ function validateForm(isLoginForm){
 			isValid= false;
 		}
 		
-		if($("#passwordRegister").val().length <= 6){
-			document.getElementById('error_passwordRegister').innerHTML += "<p>Length of password must be > 6!</p>";
-			isValid= false;
-		}
+		// if($("#passwordRegister").val().length <= 6){
+		// 	document.getElementById('error_passwordRegister').innerHTML += "<p>Length of password must be > 6!</p>";
+		// 	isValid= false;
+		// }
 			
 		if($("#passwordRegister").val() !== $("#confirmPassword").val() ){
 				document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
@@ -280,15 +283,15 @@ function closePopUp(){
 }
 
 function showPopUpRegister(){
-								//clear any existing error messages first
-		document.getElementById('error_emailRegister').innerHTML = "";
-		document.getElementById('error_passwordRegister').innerHTML = "";
-		document.getElementById('error_confirmPassword').innerHTML = "";
-		document.getElementById('error_firstName').innerHTML = "";
-		document.getElementById('error_lastName').innerHTML = "";
-		document.getElementById('error_age').innerHTML = "";
-		document.getElementById('error_city').innerHTML = "";
-		document.getElementById('error_country').innerHTML = "";
+	//clear any existing error messages first
+	document.getElementById('error_emailRegister').innerHTML = "";
+	document.getElementById('error_passwordRegister').innerHTML = "";
+	document.getElementById('error_confirmPassword').innerHTML = "";
+	document.getElementById('error_firstName').innerHTML = "";
+	document.getElementById('error_lastName').innerHTML = "";
+	document.getElementById('error_age').innerHTML = "";
+	document.getElementById('error_city').innerHTML = "";
+	document.getElementById('error_country').innerHTML = "";
 	$("#registerForm").fadeIn();
 	$("#registerForm").css({"visibility":"visible","display":"block"});
 }

@@ -28,6 +28,9 @@ class Login extends Restapi{
 	
 	private function checkCredentials(){
 		
+		//store data inside the array to pass back
+		
+		
 		$token = NULL;
 		      
 		$signer = new Sha256();
@@ -87,7 +90,8 @@ class Login extends Restapi{
                         ->set('userId', $object['userId']) // Configures a new claim, called "uid"
 						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
                         ->getToken(); // Retrieves the generated token
-
+			
+			
 			
 			}else{
 			
@@ -108,7 +112,7 @@ class Login extends Restapi{
                         ->set('userId', $object['userId']) // Configures a new claim, called "uid"
 						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
                         ->getToken(); // Retrieves the generated token
-			
+						
 			}else{
 			
 			}
@@ -122,11 +126,8 @@ class Login extends Restapi{
 		$this->disconnect();
 
 		// return all our data to an AJAX call
-
-		 //$this->response($result,200);
-		//$this->response($token,200);
-		//echo $token->getClaim('userId');
 		echo $token;
+		
 	}
 	
 }

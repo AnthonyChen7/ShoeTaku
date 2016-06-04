@@ -20,7 +20,10 @@ class ViewController
 			if (isset($data))
 			{
 				$page = $data['page'];
-				$this->html = $this->ROOT."/partials/".$page.".html";
+				if ($page == "")
+					$this->html = $this->ROOT."/index.html";
+				else
+					$this->html = $this->ROOT."/partials/".$page.".html";
 			}
 		}
 

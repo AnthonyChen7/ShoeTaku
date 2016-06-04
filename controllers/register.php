@@ -8,9 +8,6 @@ This class handles the non-FB authentication
 
 require_once(__DIR__.'/restapi.php');
 
-//use \Firebase\JWT\JWT;
-//use \firebase\jwt;
-//use \firebase\jwt\src;
 
 class Register extends Restapi{
 	
@@ -22,10 +19,9 @@ class Register extends Restapi{
 	
 	private function register(){
 		// array to pass back data
+		//store token inside this array
 		$data = array();
-		
-		//$token = array();      
-		
+				
 		$email = $_POST["email"];
 		
 		$password = $_POST["password"];

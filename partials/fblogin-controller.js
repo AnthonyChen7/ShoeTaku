@@ -5,7 +5,7 @@ function fbLogout() {
         if (response && response.status === 'connected') {
             FB.logout(function(response) {
                 //document.location.reload();
-                window.location="/index.html";
+                // window.location="/";
             });
         }
     });
@@ -53,7 +53,7 @@ var logout_event = function(response) {
     
     if (response.status === 'unknown') {
         console.log(response); 
-        window.location="/index.html";
+        window.location="/";
     }
   
 }
@@ -86,8 +86,8 @@ function loginStatusChangeCallback(response) {
     // they are logged into this app or not.
     
      //Ensures page will not attempt to keep re-loading   
-    if(window.location.href.indexOf("/index.html") <= -1) {
-       window.location="/index.html";
+    if(window.location.href.indexOf("/testhahhhahaha.html") <= -1) {
+       window.location="/";
     }   
   }
 }	
