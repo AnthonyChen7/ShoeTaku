@@ -102,14 +102,14 @@ event.preventDefault();
 		type: 'POST',
 		url: url, 
 		data: data, 
-		dataType: 'json',
+		//dataType: 'json',
 		timeout: 3000,
 		success: function(data) {
-			alert("success");
-			console.log(data);
+			//alert("success");
+			//console.log(data);
 			
-			if(data.success === true){
-				
+			if(data != "error"){
+			console.log(data);	
 		//clear any existing error messages first
 		document.getElementById('error_emailRegister').innerHTML = "";
 		document.getElementById('error_passwordRegister').innerHTML = "";
@@ -121,7 +121,8 @@ event.preventDefault();
 		document.getElementById('error_country').innerHTML = "";
 		//window.location="/partials/main-page.html";
 			}else{
-				document.getElementById('error_emailRegister').innerHTML = data.errorMsg;
+				// document.getElementById('error_emailRegister').innerHTML = data.errorMsg;
+				document.getElementById('error_emailRegister').innerHTML = $("#emailRegister").val() + " already exists!";
 			}
 		},
 		error: function(data) {
