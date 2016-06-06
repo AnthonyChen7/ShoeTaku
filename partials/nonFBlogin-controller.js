@@ -13,6 +13,10 @@ $(document).ready(function() {
 		showPopUp();
 	});
 	
+	$("#show_register").click(function(){
+		showPopUpRegister();
+	});
+	
 	$("#closeButton").click(function(){
 		closePopUp();
 	});

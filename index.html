@@ -18,12 +18,16 @@
 <center>    
 <p>Welcome to ShoeTaku!</p>
 <p>An application to buy/sell shoes!</p>   
-<p><fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></p>
+<!--<p><fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></p>-->
 <p><input type="button" id="show_login" value="Login"></p>
+<p><input type="button" id="show_register" value="Register"></p>
 <!-- Defines a division or section in HTML document
 Used to group HTML elements together to format them with CSS-->
 <div id="loginForm">
     
+    <input type="button" id="closeButton" value="x" name="closeButton">
+    
+    <p><fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></p>
     <!-- Creates HTML form for user input
     action: specify url where to send form-data when form is submitted
     method: get/post ; specify HTTP method to use when sending form data  -->
@@ -37,7 +41,7 @@ Used to group HTML elements together to format them with CSS-->
      <label>
       for : element_id ; specifies which form element a label is bound to  
      -->
-     <input type="button" id="closeButton" value="x" name="closeButton">
+     <!--<input type="button" id="closeButton" value="x" name="closeButton">-->
      <br>
      
      <label  for="emailLabel">Email:</label>
