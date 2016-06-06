@@ -121,7 +121,7 @@ event.preventDefault();
 		document.getElementById('error_country').innerHTML = "";
 		//window.location="/partials/main-page.html";
 			}else{
-				// document.getElementById('error_emailRegister').innerHTML = data.errorMsg;
+				
 				document.getElementById('error_emailRegister').innerHTML = $("#emailRegister").val() + " already exists!";
 			}
 		},
