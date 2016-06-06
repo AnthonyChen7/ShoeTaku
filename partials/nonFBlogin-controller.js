@@ -9,21 +9,21 @@ $(document).ready(function() {
  * Handles the login dialog box popping p
  * when the login buttin is pressed
  */
-	$("#show_login").click(function(){
-		showPopUp();
-	});
+	// $("#show_login").click(function(){
+	// 	showPopUp();
+	// });
 	
-	$("#show_register").click(function(){
-		showPopUpRegister();
-	});
+	// $("#show_register").click(function(){
+	// 	showPopUpRegister();
+	// });
 	
-	$("#closeButton").click(function(){
-		closePopUp();
-	});
+	// $("#closeButton").click(function(){
+	// 	closePopUp();
+	// });
 	
-	$("#closeButtonRegister").click(function(){
-		closePopUpRegister();
-	});
+	// $("#closeButtonRegister").click(function(){
+	// 	closePopUpRegister();
+	// });
 		
 $("#form").submit(function(event){
 	
@@ -262,49 +262,43 @@ return false;
  * Closes login dialog
  * Opens registration dialog
  */
-function showRegistrationPopUp(){
-	closePopUp();
-	showPopUpRegister();
-}
+// function showRegistrationPopUp(){
+// 	closePopUp();
+// 	showPopUpRegister();
+// }
 
-// var showPopUp = (function(){
-// 	// 	//clear any existing error messages first
+
+// function showPopUp(){
+// 	//clear any existing error messages first
 // 	document.getElementById('error_email').innerHTML = "";
 // 	document.getElementById('error_password').innerHTML = "";
 // 	$("#loginForm").fadeIn();
 // 	$("#loginForm").css({"visibility":"visible","display":"block"});
-// })();
-function showPopUp(){
-	//clear any existing error messages first
-	document.getElementById('error_email').innerHTML = "";
-	document.getElementById('error_password').innerHTML = "";
-	$("#loginForm").fadeIn();
-	$("#loginForm").css({"visibility":"visible","display":"block"});
-}
+// }
 
-function closePopUp(){
-	$("#loginForm").fadeOut();
-	$("#loginForm").css({"visibility":"hidden","display":"none"});
-}
+// function closePopUp(){
+// 	$("#loginForm").fadeOut();
+// 	$("#loginForm").css({"visibility":"hidden","display":"none"});
+// }
 
-function showPopUpRegister(){
-	//clear any existing error messages first
-	document.getElementById('error_emailRegister').innerHTML = "";
-	document.getElementById('error_passwordRegister').innerHTML = "";
-	document.getElementById('error_confirmPassword').innerHTML = "";
-	document.getElementById('error_firstName').innerHTML = "";
-	document.getElementById('error_lastName').innerHTML = "";
-	document.getElementById('error_age').innerHTML = "";
-	document.getElementById('error_city').innerHTML = "";
-	document.getElementById('error_country').innerHTML = "";
-	$("#registerForm").fadeIn();
-	$("#registerForm").css({"visibility":"visible","display":"block"});
-}
+// function showPopUpRegister(){
+// 	//clear any existing error messages first
+// 	document.getElementById('error_emailRegister').innerHTML = "";
+// 	document.getElementById('error_passwordRegister').innerHTML = "";
+// 	document.getElementById('error_confirmPassword').innerHTML = "";
+// 	document.getElementById('error_firstName').innerHTML = "";
+// 	document.getElementById('error_lastName').innerHTML = "";
+// 	document.getElementById('error_age').innerHTML = "";
+// 	document.getElementById('error_city').innerHTML = "";
+// 	document.getElementById('error_country').innerHTML = "";
+// 	$("#registerForm").fadeIn();
+// 	$("#registerForm").css({"visibility":"visible","display":"block"});
+// }
 
-function closePopUpRegister(){
-	$("#registerForm").fadeOut();
-	$("#registerForm").css({"visibility":"hidden","display":"none"});
-}
+// function closePopUpRegister(){
+// 	$("#registerForm").fadeOut();
+// 	$("#registerForm").css({"visibility":"hidden","display":"none"});
+// }
 
 function isNumberKey(evt)
       {
@@ -338,7 +332,7 @@ $(function(){
 	});
 	
 	//Go back to social forms
-	$('#login_form').click(function(){
+	$('.back_btn').click(function(){
 		$(".social_login").show();
 		$(".user_register").hide();
 		$(".user_login").hide();
