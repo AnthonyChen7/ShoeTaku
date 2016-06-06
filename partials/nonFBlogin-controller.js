@@ -314,3 +314,35 @@ function isNumberKey(evt)
 
          return true;
       }
+	  
+$("#modal_trigger").leanModal({
+	top: 100,
+	overlay: 0.6,
+	closeButton: ".modal_close"
+});
+
+$(function(){
+	//Call Login Form
+	$('#login_form').click(function(){
+		$(".social_login").hide();
+		$(".user_login").show();
+		return false;
+	});
+	
+	//Call Register Form
+	$('#register_form').click(function(){
+		$(".social_login").hide();
+		$(".user_register").show();
+		$(".header_title").text('Register');
+		return false;
+	});
+	
+	//Go back to social forms
+	$('#login_form').click(function(){
+		$(".social_login").show();
+		$(".user_register").hide();
+		$(".user_login").hide();
+		$(".header_title").text('Login');
+		return false;
+	});
+});

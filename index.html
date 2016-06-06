@@ -23,6 +23,138 @@
 <p><input type="button" id="show_login" value="Login"></p>
 <p><input type="button" id="show_register" value="Register"></p>
 
+<!--Modal trigger; a login button that will open a modal when clicked-->
+<p> <a id="modal_trigger" href='#modal' class="btn">Click here to Login or Register!</a> </p>
+
+<!-- Modal Container (Popup Box) -->
+<div id="modal" class="popupContainer" style="display:none;">
+
+<header class="popupHeader">
+    
+    <span class="header_title">Login</span>
+    <span class="modal_close"><i class="fa fa-times"></i></span>
+ 
+</header>
+
+<section class="popupBody">
+    
+    <!-- Markup for "Connect with Facebook" -->
+    <div class="social_login">
+        
+        <div class="clearfix">
+        <a class="social_box fb" href="#"><span class="icon_title">Login With Facebook</span></a>
+        </div>
+        
+        <div class="centeredText">
+            <span>Or Login with ShoeTaku</span>
+        </div>
+
+        <div class="action_btns">
+            
+            <div class="one_half">
+                <a class="btn" href="#" id="login_form" name="login_form">Login</a>
+            </div>
+            
+            <div class="one_half last">
+                <a class="btn" href="#" id="register_form" name="register_form">Sign up</a>
+            </div>
+            
+            
+        </div>
+        
+    </div>
+    
+    <div class="user_login">
+        
+       <form id="form" method = "post" action = "/controllers/login" onsubmit="return validateForm(true)">
+     <br>
+     
+     <label>Email:</label>
+     <input type="text" id="email" name="email">
+     <br>
+     
+     <label>Password:</label>
+     <input type="password" id="password" name="password">
+     <br>
+     
+     <div class="action_btns">
+         
+         <div class="one_half">
+             <a class="btn back_btn" href="#">Back</a>
+         </div>
+         
+         <div class="one_half last">
+             <a class="btn btn_red" href="#">Login</a>
+         </div>
+         
+     </div>
+     
+    </form> 
+        <a class="forgot_password" href="#">Forgot password?</a>
+    </div>
+    
+    <div class="user_register">
+        
+      <form id="form2" method="post" action = "/controllers/register">
+     <input type="button" id="closeButtonRegister" value="x" name="closeButtonRegister">
+     <br>
+     
+     <label  for="emailLabel">Email:</label>
+     <input type="text" id="emailRegister" name="emailRegister">
+     <br>
+     
+     <label  for="passwordLabel">Password:</label>
+     <input type="password" id="passwordRegister" name="passwordRegister">
+     <br>
+     
+     <label  for="confirmPasswordLabel">Confirm Password:</label>
+     <input type="password" id="confirmPassword" name="confirmPassword">
+     <br>
+     
+     <label  for="firstNameLabel">First Name:</label>
+     <input type="text" id="firstName" name="firstName">
+     <br>
+     
+     <label  for="lastNameLabel">Last Name:</label>
+     <input type="text" id="lastName" name="lastName">
+     <br>
+     
+     <label  for="ageLabel">Age:</label>
+     <input type="number" id="age" name="age" onkeypress="return isNumberKey(event)">
+     <br>
+     
+     <label  for="cityLabel">City:</label>
+     <input type="text" id="city" name="city">
+     <br>
+     
+     <label  for="countryLabel">Country:</label>
+     <input type="text" id="country" name="country" list="countryList">
+     <datalist id="countryList">
+     <option value="A">
+     </datalist>
+     <br>
+     
+     <div class="action_btns">
+         
+         <div class="one_half">
+             <a class="btn back_btn" href="#">Back</a>
+         </div>
+         
+         <div class="one_half last">
+             <a class="btn btn_red" href="#">Register</a>
+         </div>
+         
+     </div>
+           
+    </form>
+
+        
+    </div>
+    
+</section>
+
+</div>
+
 <div id="loginForm">
     
     <input type="button" id="closeButton" value="x" name="closeButton">
