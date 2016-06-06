@@ -38,7 +38,7 @@
    height:15px;
 }*/
 
-#loginForm #email, #registerForm #emailRegister
+/*#loginForm #email, #registerForm #emailRegister
 {
    width:250px;
    height:40px;
@@ -68,6 +68,14 @@
    font-size:20px;
 }*/
 
+/* Importing Google Webfonts */
+/*@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic);
+
+body {
+    font-family: 'Source Sans Pro', sans-serif; 
+    font-size: 14px; 
+    color: #666;
+}*/
 
 
 /*Styles for overlay and popup box/modal */
@@ -97,8 +105,8 @@
 /* Style for buttons and 2 column grid that contains the login and sign up button */
 
 #modal_trigger  {
-    margin: 100px auto;
-     width: 100px;
+    /*margin: 100px auto;*/
+     width: 250px;
      display: block;
 }
 
@@ -285,6 +293,8 @@ By default, register form is hidden */
 /* User Register Form */
 .user_register  {
     display:  none;
+    overflow: auto;
+    height:800px;
 }
 
 .user_register label  {
