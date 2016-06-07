@@ -199,7 +199,7 @@ a.btn_red  {
      overflow:  hidden;
 }
 
-.forgot_password  {
+.forgot_password{
     display: block;
      margin:  20px 0 10px;
      clear:  both;
@@ -250,4 +250,9 @@ By default, register form is hidden */
      float: left;
      position: relative;
        top: 2px;
+ }
+ 
+ #error_email, #error_password, #error_emailRegister,#error_passwordRegister, #error_confirmPassword,
+ #error_firstName, #error_lastName, #error_age, #error_city, #error_country  {
+     color: red;
  }
