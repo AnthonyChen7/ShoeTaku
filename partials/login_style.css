@@ -246,7 +246,16 @@ By default, register form is hidden */
  
  #error_email, #error_password, #error_emailRegister,#error_passwordRegister, #error_confirmPassword,
  #error_firstName, #error_lastName, #error_age, #error_city, #error_country  {
+     float: right;
+     position: relative;
      color: red;
      width: 50%;
  }
  
+ .alignleft {
+	float: left;
+}
+
+.alignright {
+	float: right;
+}
