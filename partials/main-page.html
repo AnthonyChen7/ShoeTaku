@@ -9,8 +9,8 @@
     <script src="/components/bootstrap-3.3.6-dist 2/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
     
     <script src="/partials/fblogin-controller.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/partials/nonFBlogin-controller.js" type="text/javascript" charset="utf-8"></script>  
-    
+    <script src="/partials/nonFBlogin-controller.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/partials/authentication.js" type="text/javascript" charset="utf-8"></script>
 
     <title>ShoeTaku</title>
 
@@ -59,7 +59,8 @@
                     </ul>
                 </li>
 
-                <li><a id="wantedPage" class="page" onclick="fbLogout()">Logout</a></li>
+                <!--<li><a id="wantedPage" class="page" onclick="fbLogout()">Logout</a></li>-->
+                <li><a id="wantedPage" class="page" onclick="authentication.logout()">Logout</a></li>
             </ul>
         </div> <!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

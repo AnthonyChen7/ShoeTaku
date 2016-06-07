@@ -31,6 +31,8 @@
 <!--Modal trigger; a login button that will open a modal when clicked-->
 <p> <a id="modal_trigger" href='#modal' class="btn">Click here to Login or Register!</a> </p>
 
+</center>
+
 <!-- Modal Container (Popup Box) -->
 <div id="modal" class="popupContainer" style="display:none;">
 
@@ -185,94 +187,6 @@
 </section>
 
 </div>
-
-<!--<div id="loginForm">
-    
-    <input type="button" id="closeButton" value="x" name="closeButton">
-    
-    <p><fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></p>
-
-    <form id="form" method = "post" action = "/controllers/login" onsubmit="return validateForm(true)">
-     <br>
-     
-     <label  for="emailLabel">Email:</label>
-     <input type="text" id="email" name="email">
-     <br>
-     
-     <label  for="passwordLabel">Password:</label>
-     <input type="password" id="password" name="password">
-     <br>
-     
-     <input type="submit" id="login" value="Login">
-     <br>
-     
-     <a id="registerLink" onclick="showRegistrationPopUp(); return false;" onmouseover="" style="cursor: pointer;">Not a member? Create an account!</a>
-     <br>
-     
-      <div id="error_email"></div>
-      <div id="error_password"></div>  
-    </form>
-
-</div>-->
-
-<!--<div id="registerForm">
-    <form id="form2" method="post" action = "/controllers/register">
-     <input type="button" id="closeButtonRegister" value="x" name="closeButtonRegister">
-     <br>
-     
-     <label  for="emailLabel">Email:</label>
-     <input type="text" id="emailRegister" name="emailRegister">
-     <br>
-     
-     <label  for="passwordLabel">Password:</label>
-     <input type="password" id="passwordRegister" name="passwordRegister">
-     <br>
-     
-     <label  for="confirmPasswordLabel">Confirm Password:</label>
-     <input type="password" id="confirmPassword" name="confirmPassword">
-     <br>
-     
-     <label  for="firstNameLabel">First Name:</label>
-     <input type="text" id="firstName" name="firstName">
-     <br>
-     
-     <label  for="lastNameLabel">Last Name:</label>
-     <input type="text" id="lastName" name="lastName">
-     <br>
-     
-     <label  for="ageLabel">Age:</label>
-     <input type="number" id="age" name="age" onkeypress="return isNumberKey(event)">
-     <br>
-     
-     <label  for="cityLabel">City:</label>
-     <input type="text" id="city" name="city">
-     <br>
-     
-     <label  for="countryLabel">Country:</label>
-     <input type="text" id="country" name="country" list="countryList">
-     <datalist id="countryList">
-     <option value="A">
-     </datalist>
-     <br>
-     
-     <input type="submit" id="register" value="Register">
-     
-      <div id="error_emailRegister"></div>
-      <div id="error_passwordRegister"></div> 
-      <div id="error_confirmPassword"></div> 
-      <div id="error_firstName"></div> 
-      <div id="error_lastName"></div>
-      <div id="error_age"></div> 
-      <div id="error_city"></div>
-      <div id="error_country"></div>
-      
-    </form>
-</div>-->
-
-
-
-</center>
-<!--<link rel="stylesheet" type="text/css" href="/partials/login_style.css">-->
 <script src="./partials/countries.js" type="text/javascript" charset="utf-8"></script>
 <script src="./partials/fblogin-controller.js" type="text/javascript" charset="utf-8"></script>
 <script src="./partials/nonFBlogin-controller.js" type="text/javascript" charset="utf-8"></script>

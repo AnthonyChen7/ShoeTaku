@@ -41,7 +41,7 @@ $("#form").submit(function(event){
 				console.log(data);
 				document.getElementById('error_email').innerHTML = "";
 				document.getElementById('error_password').innerHTML = "";
-				//window.location="/partials/main-page.html";
+				window.location="/partials/main-page.html";
 			}else{
 				document.getElementById('error_email').innerHTML = "Incorrect email/password!";
 				console.log(data);
