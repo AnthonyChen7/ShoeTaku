@@ -101,7 +101,7 @@ event.preventDefault();
 		document.getElementById('error_age').innerHTML = "";
 		document.getElementById('error_city').innerHTML = "";
 		document.getElementById('error_country').innerHTML = "";
-		//window.location="/partials/main-page.html";
+		window.location="/partials/main-page.html";
 			}else{
 				
 				document.getElementById('error_emailRegister').innerHTML = $("#emailRegister").val() + " already exists!";
@@ -276,3 +276,10 @@ $(function(){
 		return false;
 	});
 });
+
+/**
+ * Temporary function to get logout working
+ */
+function logout(){
+	window.location="/";
+}
