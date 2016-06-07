@@ -60,8 +60,7 @@
         <div class="clearfix">
         <a class="social_box fb">
             <span class="icon_title">Login With Facebook </span>
-            
-            <span class="fb_login" style="float: right;"> 
+                <span class="fb_login">
            <fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
             </span>
             
@@ -94,9 +93,15 @@
        <form id="form" method = "post" action = "/controllers/login" onsubmit="return validateForm(true)">
      <br>
      
+     <span class="stay_left">
      <label>Email</label>
      <input type="text" id="email" name="email">
+     </span>
+     
+     <span class="stay_right">
      <div id="error_email"></div>
+     </span>
+     
      <br>
      
      <label>Password</label>
