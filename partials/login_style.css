@@ -1,3 +1,10 @@
+#login_page_message{
+    position: relative;
+    top: 300px;
+    font-size: 50px;
+}
+
+
 /*Styles for overlay and popup box/modal */
 
 /* Overlay when Modal is open */
@@ -28,6 +35,7 @@
     /*margin: 100px auto;*/
      width: 250px;
      display: block;
+     font-size: 25px;
 }
 
 .btn  {
