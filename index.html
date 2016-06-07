@@ -10,6 +10,11 @@
     <link href="./components/bootstrap-3.3.6-dist 2/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="./components/layout.css" rel="stylesheet">
     <script src="./components/bootstrap-3.3.6-dist 2/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="/partials/login_style.css">
+
+
     <title>ShoeTaku</title>
 
 </head>
@@ -20,8 +25,8 @@
 <p>Welcome to ShoeTaku!</p>
 <p>An application to buy/sell shoes!</p>   
 
-<p><input type="button" id="show_login" value="Login"></p>
-<p><input type="button" id="show_register" value="Register"></p>
+<!--<p><input type="button" id="show_login" value="Login"></p>
+<p><input type="button" id="show_register" value="Register"></p>-->
 
 <!--Modal trigger; a login button that will open a modal when clicked-->
 <p> <a id="modal_trigger" href='#modal' class="btn">Click here to Login or Register!</a> </p>
@@ -42,7 +47,7 @@
     <div class="social_login">
         
         <div class="clearfix">
-        <a class="social_box fb" href="#"><span class="icon_title">Login With Facebook</span></a>
+        <a class="social_box fb" href="#"><span class="icon_title">Login With Facebook <fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></span></a>
         </div>
         
         <div class="centeredText">
@@ -260,7 +265,7 @@
 
 
 </center>
-<link rel="stylesheet" type="text/css" href="/partials/login_style.css">
+<!--<link rel="stylesheet" type="text/css" href="/partials/login_style.css">-->
 <script src="./partials/countries.js" type="text/javascript" charset="utf-8"></script>
 <script src="./partials/fblogin-controller.js" type="text/javascript" charset="utf-8"></script>
 <script src="./partials/nonFBlogin-controller.js" type="text/javascript" charset="utf-8"></script>
