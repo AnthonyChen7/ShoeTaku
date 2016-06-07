@@ -83,11 +83,11 @@ class Login extends Restapi{
 			$token = (new Builder())
 						->setIssuer(ISSUER) // Configures the issuer (iss claim)
                         //->setAudience('http://example.org') // Configures the audience (aud claim)
-                        //->setId('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
+                        ->setId($object['userId'], true) // Configures the id (jti claim), replicating as a header item
                         ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
                         ->setNotBefore(time() + USE_TIME) // Configures the time that the token can be used (nbf claim)
                         ->setExpiration(time() + EXPIRATION_TIME) // Configures the expiration time of the token (nbf claim)
-                        ->set('userId', $object['userId']) // Configures a new claim, called "uid"
+                        //->set('userId', $object['userId']) // Configures a new claim, called "uid"
 						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
                         ->getToken(); // Retrieves the generated token
 			
@@ -105,11 +105,11 @@ class Login extends Restapi{
 			$token = (new Builder())
 						->setIssuer(ISSUER) // Configures the issuer (iss claim)
                         //->setAudience('http://example.org') // Configures the audience (aud claim)
-                        //->setId('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
+                        ->setId($object['userId'], true) // Configures the id (jti claim), replicating as a header item
                         ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
                         ->setNotBefore(time() + USE_TIME) // Configures the time that the token can be used (nbf claim)
                         ->setExpiration(time() + EXPIRATION_TIME) // Configures the expiration time of the token (nbf claim)
-                        ->set('userId', $object['userId']) // Configures a new claim, called "uid"
+                        //->set('userId', $object['userId']) // Configures a new claim, called "uid"
 						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
                         ->getToken(); // Retrieves the generated token
 						
