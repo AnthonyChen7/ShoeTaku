@@ -230,7 +230,7 @@ By default, register form is hidden */
      margin-bottom: 5px;
 }
 
-.user_register input[type="text"],  .user_register input[type="email"],  .user_register input[type="password"]  {
+.user_register input[type="text"], .user_register input[type="number"],  .user_register input[type="email"],  .user_register input[type="password"]  {
     display:  block;
      width: 90%;
      padding:  10px;
