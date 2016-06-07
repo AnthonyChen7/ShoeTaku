@@ -232,7 +232,7 @@ By default, register form is hidden */
 
 .user_register input[type="text"], .user_register input[type="number"],  .user_register input[type="email"],  .user_register input[type="password"]  {
     display:  block;
-     width: 90%;
+     width: 50%;
      padding:  10px;
      border: 1px solid #DDD;
      color: #666;
