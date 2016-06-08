@@ -223,7 +223,7 @@ By default, register form is hidden */
 .user_register  {
     display:  none;
     overflow: auto;
-    height:800px;
+    height:710px;
 }
 
 .user_register label  {
