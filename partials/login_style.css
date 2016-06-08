@@ -227,7 +227,7 @@ By default, register form is hidden */
 }
 
 .user_register label  {
-    display:  block;
+     display:  block;
      margin-bottom: 5px;
 }
 
