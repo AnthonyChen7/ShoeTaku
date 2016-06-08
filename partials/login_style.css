@@ -223,15 +223,16 @@ By default, register form is hidden */
 .user_register  {
     display:  none;
     overflow: auto;
-    height:710px;
+    height:700px;
 }
 
-.user_register label  {
+.user_register label, .user_setting label  {
      display:  block;
      margin-bottom: 5px;
 }
 
-.user_register input[type="text"], .user_register input[type="number"],  .user_register input[type="email"],  .user_register input[type="password"]  {
+.user_register input[type="text"], .user_register input[type="number"],  .user_register input[type="email"],  .user_register input[type="password"]
+.user_setting input[type="text"], .user_setting input[type="number"],  .user_setting input[type="email"],  .user_setting input[type="password"]  {
     margin-top: 0.5%;
     margin-bottom: 2%;
      width: 45%;
@@ -256,4 +257,19 @@ By default, register form is hidden */
      width: 50%;
  }
  
- 
+ /*
+ Styles for account setting form
+ */
+ .user_setting  {
+    overflow: auto;
+    height:auto;
+}
+
+.user_setting input[type="text"], .user_setting input[type="number"], .user_setting input[type="password"]{
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+     width: 45%;
+     padding:  10px;
+     border: 1px solid #DDD;
+     color: #666; 
+}
