@@ -67,7 +67,7 @@ a.btn_red  {
 }
 
 .one_half  {
-    width: 50%;
+    width: 45%;
      display:  block;
      float: left;
 }
@@ -184,8 +184,9 @@ a.btn_red  {
 }
 
 .user_login input[type="text"],  .user_login input[type="email"],  .user_login input[type="password"]  {
-    display:  block;
-     width: 90%;
+     margin-top: 0.5%;
+    margin-bottom: 2%;
+     width: 45%;
      padding:  10px;
      border: 1px solid #DDD;
      color: #666;
@@ -231,10 +232,9 @@ By default, register form is hidden */
 }
 
 .user_register input[type="text"], .user_register input[type="number"],  .user_register input[type="email"],  .user_register input[type="password"]  {
-    /*display:  block;*/
     margin-top: 0.5%;
     margin-bottom: 2%;
-     width: 50%;
+     width: 45%;
      padding:  10px;
      border: 1px solid #DDD;
      color: #666;
@@ -248,16 +248,12 @@ By default, register form is hidden */
  
  #error_email, #error_password, #error_emailRegister,#error_passwordRegister, #error_confirmPassword,
  #error_firstName, #error_lastName, #error_age, #error_city, #error_country  {
+     margin-top: 3%;
+     margin-left: 1px;
      float: right;
      position: relative;
      color: red;
      width: 50%;
  }
  
- .alignleft {
-	float: left;
-}
-
-.alignright {
-	float: right;
-}
+ 
