@@ -187,11 +187,11 @@ function validateForm(isLoginForm){
 		}
 	}else{
 		
-				//clear any existing error messages first
+		//clear any existing error messages first
 		document.getElementById('error_email').innerHTML = "";
 		document.getElementById('error_password').innerHTML = "";
 		
-				if($("#email").val() === "" || !validateEmail($("#email").val()) || hasWhiteSpace($("#email").val()) ){
+		if($("#email").val() === "" || !validateEmail($("#email").val()) || hasWhiteSpace($("#email").val()) ){
 			document.getElementById('error_email').innerHTML = "<p>Please provide a valid email!</p>";
 			isValid = false;
 		}
