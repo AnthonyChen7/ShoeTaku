@@ -232,6 +232,8 @@ By default, register form is hidden */
 
 .user_register input[type="text"], .user_register input[type="number"],  .user_register input[type="email"],  .user_register input[type="password"]  {
     /*display:  block;*/
+    margin-top: 0.5%;
+    margin-bottom: 2%;
      width: 50%;
      padding:  10px;
      border: 1px solid #DDD;
