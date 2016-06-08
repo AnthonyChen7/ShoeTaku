@@ -232,7 +232,7 @@ By default, register form is hidden */
 }
 
 .user_register input[type="text"], .user_register input[type="number"],  .user_register input[type="email"],  .user_register input[type="password"]
-.user_setting input[type="text"], .user_setting input[type="number"],  .user_setting input[type="email"],  .user_setting input[type="password"]  {
+{
     margin-top: 0.5%;
     margin-bottom: 2%;
      width: 45%;
@@ -266,10 +266,19 @@ By default, register form is hidden */
 }
 
 .user_setting input[type="text"], .user_setting input[type="number"], .user_setting input[type="password"]{
-    margin-top: 0.5%;
-    margin-bottom: 0.5%;
+    /*margin-top: 0.5%;
+    margin-bottom: 0.5%;*/
      width: 45%;
      padding:  10px;
      border: 1px solid #DDD;
      color: #666; 
+}
+
+.account_error{
+     /*margin-top: 3%;
+     margin-left: 1px;*/
+     /*float: right;*/
+     /*position: relative;*/
+     color: red;
+     width: 50%;
 }
