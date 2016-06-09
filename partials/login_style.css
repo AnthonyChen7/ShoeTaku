@@ -226,7 +226,7 @@ By default, register form is hidden */
     height:700px;
 }
 
-.user_register label, .user_setting label  {
+.user_register label {
      display:  block;
      margin-bottom: 5px;
 }
@@ -263,15 +263,28 @@ By default, register form is hidden */
  .user_setting  {
     overflow: auto;
     height:auto;
+
+    margin-left: 37%;
+}
+
+user_setting label  {
+     display:  block;
+     margin-bottom: 5px;
+
 }
 
 .user_setting input[type="text"], .user_setting input[type="number"], .user_setting input[type="password"]{
     /*margin-top: 0.5%;
     margin-bottom: 0.5%;*/
-     width: 45%;
+    display:  block;
+     width: 40%;
      padding:  10px;
      border: 1px solid #DDD;
-     color: #666; 
+     color: #666;
+     
+     /*margin: 0 auto;*/
+     
+ 
 }
 
 .account_error{
@@ -281,4 +294,6 @@ By default, register form is hidden */
      /*position: relative;*/
      color: red;
      width: 50%;
+     
+
 }
