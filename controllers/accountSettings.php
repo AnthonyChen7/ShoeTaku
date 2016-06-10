@@ -11,7 +11,7 @@ class AccountSettings extends Restapi{
 		
 		$method = $_SERVER['REQUEST_METHOD'];
 		
-		echo $method;
+		echo $_GET["token"];
 	}
 }
 

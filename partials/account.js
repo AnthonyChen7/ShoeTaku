@@ -6,7 +6,7 @@ $(document).ready(function(){
     {
         type: 'GET',
         url:"/controllers/accountSettings",
-        data: localStorage.getItem("token"),
+        data: {"token":localStorage.getItem("token")},
         success: function(data){
            console.log(data); 
         },
