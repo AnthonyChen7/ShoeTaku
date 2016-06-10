@@ -1,7 +1,9 @@
+
+
 /**
  * Attach submit handler to Login button
  */
-$(document).ready(function() {
+ $(document).ready(function() {
 		
 $("#form").submit(function(event){
 	
@@ -41,14 +43,21 @@ $("#form").submit(function(event){
 				document.getElementById('error_email').innerHTML = "";
 				document.getElementById('error_password').innerHTML = "";
 				window.location="/partials/main-page.html";
+				
+				localStorage.setItem("token",data);
+				
 			}else{
 				document.getElementById('error_email').innerHTML = "Incorrect email/password!";
 				console.log(data);
+				
+				localStorage.setItem("token",null);
 			}
 		},
 		error: function(data) {
 			alert("error");
 			console.log(data);
+			localStorage.setItem("token",null);
+			
 		}
 	});
 	
@@ -86,7 +95,10 @@ event.preventDefault();
 		timeout: 3000,
 		success: function(data) {			
 			if(data != "error"){
-			console.log(data);	
+			console.log(data);
+			
+			localStorage.setItem("token",data);
+				
 		//clear any existing error messages first
 		document.getElementById('error_emailRegister').innerHTML = "";
 		document.getElementById('error_passwordRegister').innerHTML = "";
@@ -96,14 +108,16 @@ event.preventDefault();
 		document.getElementById('error_age').innerHTML = "";
 		document.getElementById('error_city').innerHTML = "";
 		document.getElementById('error_country').innerHTML = "";
-		window.location="/partials/main-page.html";
+		//window.location="/partials/main-page.html";
 			}else{
-				
+				localStorage.setItem("token",null);
 				document.getElementById('error_emailRegister').innerHTML = $("#emailRegister").val() + " already exists!";
 			}
 		},
 		error: function(data) {
 			alert("error");
+			
+			localStorage.setItem("token",null);
 			
 		}
 	});	
@@ -113,7 +127,7 @@ event.preventDefault();
 	}
 });
 
-});
+ });
 
 /**
  * Validates form
@@ -277,4 +291,5 @@ $(function(){
  */
 function logout(){
 	window.location="/";
+	localStorage.setItem("token",null);
 }
