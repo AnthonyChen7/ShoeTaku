@@ -31,8 +31,7 @@ $("#form").submit(function(event){
 	$.ajax({
 		type: 'POST',
 		url: url, 
-		data: data,
-		//dataType: 'json', 
+		data: data, 
 		timeout: 3000,
 		success: function(data) {
 			
@@ -84,12 +83,8 @@ event.preventDefault();
 		type: 'POST',
 		url: url, 
 		data: data, 
-		//dataType: 'json',
 		timeout: 3000,
-		success: function(data) {
-			//alert("success");
-			//console.log(data);
-			
+		success: function(data) {			
 			if(data != "error"){
 			console.log(data);	
 		//clear any existing error messages first
