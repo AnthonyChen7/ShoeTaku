@@ -26,21 +26,7 @@ class AccountSettings extends Restapi{
 	function retrieveInfo(){
 		$token = $_GET["token"];
 		
-		//parse the token
-		$token = (new Parser())->parse((string)$token);
-		
-		//validate & verify token first...
-		$signer = new Sha256();
-		
-		$data = new ValidationData();
-		$data->setIssuer(ISSUER);
-		//$data->setId($token->getClaim('jti'));
-		
-		if($token->verify($signer,RANDOM_STRING) && $token->validate($data)){
-			
-			echo "true";
-			
-		}
+		$table = "user";
 	}
 }
 

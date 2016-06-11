@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    
     //make ajax call to populate fields in account.html
     
     $.ajax(

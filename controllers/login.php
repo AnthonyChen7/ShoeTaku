@@ -12,7 +12,7 @@ use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 
 define("USE_TIME", 60);
-define("EXPIRATION_TIME", 3600);
+define("EXPIRATION_TIME", 60);
 define("RANDOM_STRING", '70bpyytrEVHXNC99PvjKfNcgHLwByB2B9eGExqiBYSG6LdnjdT2q9nARwCKWVNy');
 define("ISSUER", 'ShoeTaku');
 

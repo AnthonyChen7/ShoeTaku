@@ -1,4 +1,4 @@
-
+console.log(localStorage.getItem("token"));
 
 /**
  * Attach submit handler to Login button
@@ -83,7 +83,7 @@ event.preventDefault();
 	'password': $("#passwordRegister").val(),
 	'firstName':$('#firstName').val(),
 	'lastName':$('#lastName').val(),
-	'age':$('#age').val(),
+	// 'age':$('#age').val(),
 	'city':$('#city').val(),
 	'country': getKeyByValue($('#country').val()) //store as country code in db
 	};
@@ -105,7 +105,7 @@ event.preventDefault();
 		document.getElementById('error_confirmPassword').innerHTML = "";
 		document.getElementById('error_firstName').innerHTML = "";
 		document.getElementById('error_lastName').innerHTML = "";
-		document.getElementById('error_age').innerHTML = "";
+		// document.getElementById('error_age').innerHTML = "";
 		document.getElementById('error_city').innerHTML = "";
 		document.getElementById('error_country').innerHTML = "";
 		//window.location="/partials/main-page.html";
@@ -145,7 +145,7 @@ function validateForm(isLoginForm){
 		document.getElementById('error_confirmPassword').innerHTML = "";
 		document.getElementById('error_firstName').innerHTML = "";
 		document.getElementById('error_lastName').innerHTML = "";
-		document.getElementById('error_age').innerHTML = "";
+		// document.getElementById('error_age').innerHTML = "";
 		document.getElementById('error_city').innerHTML = "";
 		document.getElementById('error_country').innerHTML = "";
 		
@@ -180,10 +180,10 @@ function validateForm(isLoginForm){
 			isValid= false;
 		}
 		
-		if($("#age").val() === "" || $("#age").val() <= 0 ){
-			document.getElementById('error_age').innerHTML += "<p>Age must be greater than 0!</p>";
-			isValid= false;
-		}
+		// if($("#age").val() === "" || $("#age").val() <= 0 ){
+		// 	document.getElementById('error_age').innerHTML += "<p>Age must be greater than 0!</p>";
+		// 	isValid= false;
+		// }
 		
 		if($("#city").val() === "" || hasWhiteSpace( $("#city").val())){
 			document.getElementById('error_city').innerHTML += "<p>Please provide a valid city!</p>";

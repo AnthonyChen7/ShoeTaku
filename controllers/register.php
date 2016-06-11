@@ -42,14 +42,16 @@ class Register extends Restapi{
 		
 		$firstName = $_POST["firstName"];
 		$lastName = $_POST["lastName"];
-		$age = $_POST["age"];
+		// $age = $_POST["age"];
 		$city = $_POST["city"];
 		$country = $_POST["country"];
 		
 		$table = "user";
-		$columns = array("email","password","firstName","lastName","age","city", "countryCode");
+		// $columns = array("email","password","firstName","lastName","age","city", "countryCode");
+		$columns = array("email","password","firstName","lastName","city", "countryCode");
 		$where = array();
-		$values = array($email, $password, $firstName, $lastName, $age, $city, $country);
+		// $values = array($email, $password, $firstName, $lastName, $age, $city, $country);
+		$values = array($email, $password, $firstName, $lastName, $city, $country);
 		$limOff = array();
 		
 		$sql = $this->prepareInsertSql($table, $columns, $where, $limOff);
@@ -86,17 +88,13 @@ class Register extends Restapi{
                         ->getToken(); // Retrieves the generated token
 		
 		}catch (Exception $e) {
-			// $data["success"]=false;
-			// $data["errorMsg"] = $email . " already exists. Please select specify another email!";
 			$token = "error";
 		}
 
 		$this->disconnect();
 		
 		// return all our data to an AJAX call
-    	//echo json_encode($result);
 		echo $token;
-		//echo $result[0];
 	}
 	
 }
