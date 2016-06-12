@@ -21,6 +21,10 @@ class AccountSettings extends Restapi{
 		if($method == 'GET'){
 			$this->retrieveInfo();
 		}
+		else if($method == 'POST'){
+			$this->updateInfo();
+			
+		}
 	}
 	
 	function retrieveInfo(){
@@ -50,6 +54,28 @@ class AccountSettings extends Restapi{
 		}
 		
 		echo json_encode($result);
+	}
+	
+	function updateInfo(){
+		
+		$email = $_POST['emailRegister'];
+		$firstName = $_POST['firstName'];
+		$lastName = $_POST['lastName'];
+		$city = $_POST['city'];
+		$country = $_POST['country'];
+		
+		// $token = $_POST["token"];
+		// $token = (new Parser())->parse((string) $token); // Parses from a string
+		
+		$table = "user";
+		$columns = array("email","firstName","lastName","city","countryCode");
+		$where=array('userId');
+		// $values = array($token->getHeader('jti'));
+		
+		$sql = $this->prepareUpdateSql($table,$columns,$where);
+		
+		$this->response($sql,200);
+		
 	}
 }
 

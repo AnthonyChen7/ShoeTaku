@@ -1,6 +1,5 @@
 $(document).ready(function(){
     //make ajax call to populate fields in account.html
-    
     $.ajax(
     {
         type: 'GET',
@@ -28,4 +27,40 @@ $(document).ready(function(){
     }
     );
     
+//button handler for "Save Changes"
+// $("#account_setting_form").submit(function(event){
+//     event.preventDefault();
+    
+//     var $form = $(this);
+//     var url = $form.attr('action');
+//     var method = $form.attr('method').toUpperCase();
+    
+//     var data = {
+//     'email': $("#emailRegister").val(), 
+// 	// 'password': $("#passwordRegister").val(),
+// 	'firstName':$('#firstName').val(),
+// 	'lastName':$('#lastName').val(),
+// 	'city':$('#city').val(),
+// 	'country': getKeyByValue($('#country').val()), //store as country code in db   
+//     "token":localStorage.getItem("token")
+//     };
+            
+//     $.ajax({
+// 		type: 'POST',
+// 		url: url, 
+// 		data: data, 
+// 		timeout: 3000,
+// 		success: function(data) {			
+// 			console.log(data);
+// 		},
+// 		error: function(data) {
+// 			alert("error");
+	
+// 		}
+// 	});	
+    
+       
+// });
+    
 });
+
