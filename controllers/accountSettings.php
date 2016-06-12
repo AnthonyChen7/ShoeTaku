@@ -25,8 +25,31 @@ class AccountSettings extends Restapi{
 	
 	function retrieveInfo(){
 		$token = $_GET["token"];
+		$token = (new Parser())->parse((string) $token); // Parses from a string
 		
 		$table = "user";
+		$columns = array("email","firstName","lastName","city","countryCode");
+		$where=array('userId');
+		$values = array($token->getHeader('jti'));
+		$limOff = array();
+		
+		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
+		
+		$this->connect();
+		
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute($values);
+		$result = $stmt->fetchAll();
+		
+		$this->disconnect();
+		
+		if(count($result)==1){
+			$result = $result[0];
+		}else{
+			$result = null;
+		}
+		
+		echo json_encode($result);
 	}
 }
 
