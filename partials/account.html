@@ -4,6 +4,7 @@
 <head>
 
    <link rel="stylesheet" href="/partials/login_style.css">
+   <script src="/partials/countries.js" type="text/javascript" charset="utf-8"></script> 
    <script src="/partials/nonFBlogin-controller.js" type="text/javascript" charset="utf-8"></script>
    <script src="/partials/account.js" type="text/javascript" charset="utf-8"></script> 
 </head>
@@ -22,7 +23,6 @@
      <br>
      
      <label  for="passwordLabel">Password</label>
-     <!--<input type="password" id="passwordRegister" name="passwordRegister" disabled>-->
      <input type="button" value="Change Password" class="btn btn_red">
      
      <br>
@@ -40,12 +40,6 @@
 
      <br>
      
-     <label  for="ageLabel">Age</label>
-     <input type="number" id="age" name="age" onkeypress="return isNumberKey(event)">
-     <div id="age_account_error" class="account_error"></div> 
-
-     <br>
-     
      <label  for="cityLabel">City</label>
      <input type="text" id="city" name="city">
      <div id="city_account_error" class="account_error"></div>
@@ -55,7 +49,6 @@
      <label  for="countryLabel">Country</label>
      <input type="text" id="country" name="country" list="countryList">
      <datalist id="countryList">
-     <option value="A">
      </datalist>
            <div id="country_account_error" class="account_error"></div>
      <br>

@@ -42,15 +42,12 @@ class Register extends Restapi{
 		
 		$firstName = $_POST["firstName"];
 		$lastName = $_POST["lastName"];
-		// $age = $_POST["age"];
 		$city = $_POST["city"];
 		$country = $_POST["country"];
 		
 		$table = "user";
-		// $columns = array("email","password","firstName","lastName","age","city", "countryCode");
 		$columns = array("email","password","firstName","lastName","city", "countryCode");
 		$where = array();
-		// $values = array($email, $password, $firstName, $lastName, $age, $city, $country);
 		$values = array($email, $password, $firstName, $lastName, $city, $country);
 		$limOff = array();
 		
