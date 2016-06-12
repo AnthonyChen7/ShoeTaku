@@ -14,13 +14,9 @@ email VARCHAR(50) NOT NULL UNIQUE,
 password VARCHAR(64) NOT NULL,
 firstName VARCHAR(50) NOT NULL,
 lastName VARCHAR(50) NOT NULL,
--- age INT(4) NOT NULL,
 city VARCHAR(10) NOT NULL,
 countryCode VARCHAR(10) NOT NULL
 );
-
--- INSERT INTO User (email, password, firstName, lastName, age, city, countryCode) VALUES ("edwardchoi90@gmail.com","test","FN","LN",20,"Vancouver","CA");
--- INSERT INTO User (email, password, firstName, lastName, age, city, countryCode) VALUES ("test@test.com","test","FN","LN",20,"Vancouver","CA");
 
 INSERT INTO User (email, password, firstName, lastName, city, countryCode) VALUES ("edwardchoi90@gmail.com","test","FN","LN","Vancouver","CA");
 INSERT INTO User (email, password, firstName, lastName, city, countryCode) VALUES ("test@test.com","test","FN","LN","Vancouver","CA");
