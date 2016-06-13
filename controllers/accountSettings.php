@@ -58,11 +58,11 @@ class AccountSettings extends Restapi{
 	
 	function updateInfo(){
 		
-		$email = $_POST['emailRegister'];
-		$firstName = $_POST['firstName'];
-		$lastName = $_POST['lastName'];
-		$city = $_POST['city'];
-		$country = $_POST['country'];
+		$email = $_POST["email"];
+		// $firstName = $_POST['firstName'];
+		// $lastName = $_POST['lastName'];
+		// $city = $_POST['city'];
+		// $country = $_POST['country'];
 		
 		// $token = $_POST["token"];
 		// $token = (new Parser())->parse((string) $token); // Parses from a string
@@ -74,7 +74,7 @@ class AccountSettings extends Restapi{
 		
 		$sql = $this->prepareUpdateSql($table,$columns,$where);
 		
-		$this->response($sql,200);
+		 var_dump($_POST);
 		
 	}
 }
