@@ -60,7 +60,7 @@ class AccountSettings extends Restapi{
 		
 		$result = array();
 		
-		$email = $_POST["email"];
+		// $email = $_POST["email"];
 		$firstName = $_POST['firstName'];
 		$lastName = $_POST['lastName'];
 		$city = $_POST['city'];
@@ -70,9 +70,9 @@ class AccountSettings extends Restapi{
 		$token = (new Parser())->parse((string) $token); // Parses from a string
 		
 		$table = "user";
-		$columns = array("email","firstName","lastName","city","countryCode");
+		$columns = array("firstName","lastName","city","countryCode");
 		$where=array('userId');
-		$values = array($email,$firstName,$lastName,$city,$country,$token->getHeader('jti'));
+		$values = array($firstName,$lastName,$city,$country,$token->getHeader('jti'));
 		
 		$sql = $this->prepareUpdateSql($table,$columns,$where);
 		
