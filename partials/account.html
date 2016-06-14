@@ -12,7 +12,7 @@
      <form id="account_setting_form" method="POST" action ="/controllers/accountSettings">
 
      <label>Email</label>
-     <input type="text" id="email_account" name="email">
+     <input type="text" id="email_account" name="email" disabled>
      <div id="email_account_error" class="account_error"></div>
 
      <br>
@@ -52,6 +52,7 @@
                   
          <div class="save_changes">
              <input type="submit" id="save_change" value="Save Changes" class="btn btn_red">
+             <div id="save_message" class="account_error"></div>
          </div>
          
      </div>

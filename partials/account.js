@@ -41,7 +41,8 @@ $(document).ready(function(){
 	'firstName':$('#firstName_account').val(),
 	'lastName':$('#lastName_account').val(),
 	'city':$('#city_account').val(),
-	'country': getKeyByValue($('#country_account').val()) //store as country code in db
+	'country': getKeyByValue($('#country_account').val()), //store as country code in db
+    'token':localStorage.getItem("token")
 	};
 		
 		$.ajax({
@@ -51,7 +52,14 @@ $(document).ready(function(){
 		timeout: 3000,
 		success: function(data) {				
 	    console.log(data);
-	
+	   
+       if(data.success === true){
+       //document.getElementById('save_message').innerHTML = "Changes saved successfully!";    
+       }else{
+    //    document.getElementById('email_account_error').innerHTML = "Email already exists!";
+    //    document.getElementById('save_message').innerHTML = "Changes not saved!";    
+       }
+       
 		},
 		error: function(data) {
 			console.log("error");

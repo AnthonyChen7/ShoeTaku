@@ -58,23 +58,38 @@ class AccountSettings extends Restapi{
 	
 	function updateInfo(){
 		
-		$email = $_POST["email"];
-		// $firstName = $_POST['firstName'];
-		// $lastName = $_POST['lastName'];
-		// $city = $_POST['city'];
-		// $country = $_POST['country'];
+		$result = array();
 		
-		// $token = $_POST["token"];
-		// $token = (new Parser())->parse((string) $token); // Parses from a string
+		$email = $_POST["email"];
+		$firstName = $_POST['firstName'];
+		$lastName = $_POST['lastName'];
+		$city = $_POST['city'];
+		$country = $_POST['country'];
+		
+		$token = $_POST["token"];
+		$token = (new Parser())->parse((string) $token); // Parses from a string
 		
 		$table = "user";
 		$columns = array("email","firstName","lastName","city","countryCode");
 		$where=array('userId');
-		// $values = array($token->getHeader('jti'));
+		$values = array($email,$firstName,$lastName,$city,$country,$token->getHeader('jti'));
 		
 		$sql = $this->prepareUpdateSql($table,$columns,$where);
 		
-		 var_dump($_POST);
+		try{
+		$this->connect();
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute($values);
+		
+		$result["success"] = true;
+
+		}catch (Exception $e) {
+			$result["success"] = false;
+		}
+		
+		$this->disconnect();
+		
+		echo json_encode($result);
 		
 	}
 }
