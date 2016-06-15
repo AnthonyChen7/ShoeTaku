@@ -14,6 +14,7 @@ $(document).ready(function(){
            
            if(data != null){
                document.getElementById("email_account").value = data.email;
+               document.getElementById("password_account").value = data.password;
                document.getElementById("firstName_account").value = data.firstName;
                document.getElementById("lastName_account").value = data.lastName;
                document.getElementById("city_account").value = data.city;

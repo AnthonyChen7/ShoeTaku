@@ -32,7 +32,7 @@ class AccountSettings extends Restapi{
 		$token = (new Parser())->parse((string) $token); // Parses from a string
 		
 		$table = "user";
-		$columns = array("email","firstName","lastName","city","countryCode");
+		$columns = array("email","password","firstName","lastName","city","countryCode");
 		$where=array('userId');
 		$values = array($token->getHeader('jti'));
 		$limOff = array();
