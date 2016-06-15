@@ -24,25 +24,25 @@
      <br>
      
      <label>First Name</label>
-     <input type="text" id="firstName_account" name="firstName" required="">
+     <input type="text" id="firstName_account" name="firstName" >
      <div id="firstName_account_error" class="account_error"></div> 
 
      <br>
      
      <label>Last Name</label>
-     <input type="text" id="lastName_account" name="lastName" required="">
+     <input type="text" id="lastName_account" name="lastName">
      <div id="lastName_account_error" class="account_error"></div>
 
      <br>
      
      <label>City</label>
-     <input type="text" id="city_account" name="city" required="">
+     <input type="text" id="city_account" name="city">
      <div id="city_account_error" class="account_error"></div>
 
      <br>
      
      <label>Country</label>
-     <input type="text" id="country_account" name="country" list="countryList" required="">
+     <input type="text" id="country_account" name="country" list="countryList">
      <datalist id="countryList">
      </datalist>
            <div id="country_account_error" class="account_error"></div>
@@ -52,7 +52,7 @@
                   
          <div class="save_changes">
              <input type="submit" id="save_change" value="Save Changes" class="btn btn_red">
-             <div id="save_message" class="account_error"></div>
+             <div id="save_message" class="account_error" style="text-align:center;"></div>
          </div>
          
      </div>
@@ -65,6 +65,7 @@
     </div>
     
     <script src="/partials/countries.js" type="text/javascript" charset="utf-8"></script> 
+    <script src="/partials/nonFBlogin-controller.js" type="text/javascript" charset="utf-8"></script>
    <script src="/partials/account.js" type="text/javascript" charset="utf-8"></script>
    <link rel="stylesheet" href="/partials/login_style.css">
    

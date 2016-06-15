@@ -1,6 +1,6 @@
-// $(document).ready(function(){
+$(document).ready(function(){
     
-    document.getElementById('save_message').innerHTML = "";
+    clearErrorDivs();
     
    // make ajax call to populate fields in account.html
     $.ajax(
@@ -48,8 +48,12 @@
 	'country': getKeyByValue($('#country_account').val()), //store as country code in db
     'token':localStorage.getItem("token")
 	};
-		
-		$.ajax({
+    
+    clearErrorDivs();
+    
+    if(isFormValid() === true){
+        
+        $.ajax({
 		type: 'POST',
 		url: url, 
 		data: data,
@@ -69,10 +73,51 @@
 			console.log(data);
             document.getElementById('save_message').innerHTML = "Error! Changes not saved!"; 
 		}
-	});	
+	});
+        
+    }else{
+        document.getElementById('save_message').innerHTML = "Error! Changes not saved!";
+    }
+		
+			
 	
 		
 	
 });
     
-// });
+});
+
+function isFormValid(){
+    var isValid = true;
+    
+    if($("#firstName_account").val() === "" || hasWhiteSpace( $("#firstName_account").val())){
+			document.getElementById('firstName_account_error').innerHTML += "<p>Please provide a valid first name!</p>";
+			isValid= false;
+		}
+		
+		if($("#lastName_account").val() === "" || hasWhiteSpace( $("#lastName_account").val())){
+			document.getElementById('lastName_account_error').innerHTML += "<p>Please provide a valid last name!</p>";
+			isValid= false;
+		}
+		
+		if($("#city_account").val() === "" || hasWhiteSpace( $("#city_account").val())){
+			document.getElementById('city_account_error').innerHTML += "<p>Please provide a valid city!</p>";
+			isValid= false;
+		}
+		
+		if($("#country_account").val() === "" || hasWhiteSpace( $("#country_account").val())|| getKeyByValue($("#country_account").val() ) === undefined ){
+			document.getElementById('country_account_error').innerHTML += "<p>Please provide a valid country!</p>";
+			isValid= false;
+		}
+    
+    
+    return isValid;
+}
+
+function clearErrorDivs(){
+    document.getElementById('firstName_account_error').innerHTML = "";
+    document.getElementById('lastName_account_error').innerHTML="";
+    document.getElementById('city_account_error').innerHTML="";
+    document.getElementById('country_account_error').innerHTML="";
+    document.getElementById('save_message').innerHTML ="";
+}

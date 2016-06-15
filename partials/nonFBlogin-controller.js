@@ -163,11 +163,11 @@ function validateForm(isLoginForm){
 		// }
 			
 		if($("#passwordRegister").val() !== $("#confirmPassword").val() ){
-				document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
-		isValid= false;
+			document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
+			isValid= false;
 		}
 			
-			if($("#firstName").val() === "" || hasWhiteSpace( $("#firstName").val())){
+		if($("#firstName").val() === "" || hasWhiteSpace( $("#firstName").val())){
 			document.getElementById('error_firstName').innerHTML += "<p>Please provide a valid first name!</p>";
 			isValid= false;
 		}
