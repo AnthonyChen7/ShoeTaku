@@ -1,4 +1,6 @@
 
+    
+    
     <div class="user_setting">
         
      <form id="account_setting_form" method="POST" action ="/controllers/accountSettings">
@@ -11,7 +13,7 @@
      
      <label>Password</label>
      <input type="password" id="password_account" name="password" disabled>
-     <input type="button" id="change_password" value="Change Password" class="btn btn_red">
+     <a id="change_password" href="#modal" class="btn btn_red">Change Password</a>
      
      <br>
      <br>
@@ -54,6 +56,51 @@
 
     </div>
     
+    <div id="modal" class="popupContainer" style="display:none;">
+        
+        <header class="popupHeader">
+    
+    <span class="header_title">Change Password</span>
+    <span class="modal_close"><i class="fa fa-times"></i></span>
+ 
+</header>
+
+    <section class="popupBody">
+        
+        <div class="user_login" style="display:block;">
+          
+          <label>Old Password</label>
+     <input type="password" id="old_password" name="password">
+     <div id="error_email"></div>
+     <br>  
+     
+     <label>New Password</label>
+     <input type="password" id="new_password" name="password">
+     <div id="error_email"></div>
+     <br>  
+     
+     <label>Confirm New Password</label>
+     <input type="password" id="confirm_new_password" name="password">
+     <div id="error_email"></div>
+     <br> 
+     
+     <div class="action_btns">
+                  
+         <div class="save_changes">
+             <input type="button" id="save_password" value="Save Changes" class="btn btn_red">
+             <div id="save_message" class="account_error"></div>
+         </div>
+         
+     </div> 
+            
+            
+         </div>
+    
+    </section>
+        
+    </div>
+    
+        <link href="/components/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" >
     <script src="/components/jquery/jquery-2.2.3.js" type="text/javascript" charset="utf-8"></script>
     <script src="/components/jquery/jquery.leanModal.min.js" type="text/javascript"charset="utf-8" ></script>
     <script src="/partials/countries.js" type="text/javascript" charset="utf-8"></script> 

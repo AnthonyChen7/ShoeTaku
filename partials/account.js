@@ -122,3 +122,9 @@ function clearErrorDivs(){
     document.getElementById('country_account_error').innerHTML="";
     document.getElementById('save_message').innerHTML ="";
 }
+
+$("#change_password").leanModal({
+	top: 100,
+	overlay: 0.6,
+	closeButton: ".modal_close"
+});
