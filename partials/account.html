@@ -67,34 +67,37 @@
 
     <section class="popupBody">
         
-        <div class="user_login" style="display:block;">
+    <div class="user_login" style="display:block;">
+        
+        <form id="password_setting_form" method="POST" action ="/controllers/accountSettings">
           
-          <label>Old Password</label>
+     <label>Old Password</label>
      <input type="password" id="old_password" name="password">
-     <div id="error_email"></div>
+     <div id="error_old_password" class="account_error"></div>
      <br>  
      
      <label>New Password</label>
      <input type="password" id="new_password" name="password">
-     <div id="error_email"></div>
+     <div id="error_new_password" class="account_error"></div>
      <br>  
      
      <label>Confirm New Password</label>
      <input type="password" id="confirm_new_password" name="password">
-     <div id="error_email"></div>
+     <div id="error_confirm_password" class="account_error"></div>
      <br> 
      
      <div class="action_btns">
                   
          <div class="save_changes">
-             <input type="button" id="save_password" value="Save Changes" class="btn btn_red">
-             <div id="save_message" class="account_error"></div>
+             <input type="submit" id="save_password" value="Save Changes" class="btn btn_red">
+             <div id="error_save_password" class="account_error"></div>
          </div>
          
      </div> 
             
+      </form>
             
-         </div>
+     </div>
     
     </section>
         
