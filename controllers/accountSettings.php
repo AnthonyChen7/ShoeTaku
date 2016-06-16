@@ -21,9 +21,12 @@ class AccountSettings extends Restapi{
 		if($method == 'GET'){
 			$this->retrieveInfo();
 		}
-		else if($method == 'POST'){
-			$this->updateInfo();
+		else if($method == 'POST' && isset($_POST['old_password']) && !empty($_POST['old_password'])){
 			
+			echo "yolo";
+			
+		}else{
+			$this->updateInfo();
 		}
 	}
 	

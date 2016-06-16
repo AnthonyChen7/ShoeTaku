@@ -91,9 +91,30 @@ $(document).ready(function(){
     document.getElementById('error_save_password').innerHTML = "";
     
     if(isValidPasswordForm()===true){
-        document.getElementById('error_save_password').innerHTML = "valid form";
+        
+        var data = {
+            "old_password": $("#old_password").val(),
+            "new_password": $("#new_password").val()
+        }
+        
+        $.ajax({
+            type:'POST',
+            url: url,
+            data: data,
+            //dataType:"json",
+            success:function(data){
+              console.log(data);
+              document.getElementById('error_save_password').innerHTML = "Password successfully changed!";  
+            },
+            error:function(data){
+                console.log(data);
+                document.getElementById('error_save_password').innerHTML = "Password not successfully changed!";   
+            }
+        });
+        
+        
     }else{
-        document.getElementById('error_save_password').innerHTML = "invalid form";
+        document.getElementById('error_save_password').innerHTML = "Password not successfully changed!";
     } 
         
     });
