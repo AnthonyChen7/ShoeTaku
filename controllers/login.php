@@ -90,9 +90,6 @@ class Login extends Restapi{
                         //->set('userId', $object['userId']) // Configures a new claim, called "uid"
 						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
                         ->getToken(); // Retrieves the generated token
-			
-			
-			
 			}else{
 			
 			}
@@ -100,7 +97,8 @@ class Login extends Restapi{
 		}else{
 			
 			if($email === $object['email'] && password_verify($password,$object['password'])){
-
+				
+				
 			
 			$token = (new Builder())
 						->setIssuer(ISSUER) // Configures the issuer (iss claim)
@@ -111,8 +109,7 @@ class Login extends Restapi{
                         ->setExpiration(time() + EXPIRATION_TIME) // Configures the expiration time of the token (nbf claim)
                         //->set('userId', $object['userId']) // Configures a new claim, called "uid"
 						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
-                        ->getToken(); // Retrieves the generated token
-						
+                        ->getToken(); // Retrieves the generated token						
 			}else{
 			
 			}

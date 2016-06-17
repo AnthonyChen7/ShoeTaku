@@ -36,15 +36,16 @@ $("#form").submit(function(event){
 		data: data, 
 		timeout: 3000,
 		success: function(data) {
-			
-			
-			if(data != null){
+						
+			if(data != ""){
 				console.log(data);
 				document.getElementById('error_email').innerHTML = "";
 				document.getElementById('error_password').innerHTML = "";
-				window.location="/partials/main-page.html";
+				
 				
 				localStorage.setItem("token",data);
+				
+				window.location="/partials/main-page.html";
 				
 			}else{
 				document.getElementById('error_email').innerHTML = "Incorrect email/password!";

@@ -44,6 +44,7 @@ $(document).ready(function(){
 	 */
 	var data = {
 	'firstName':$('#firstName_account').val(),
+    'password': $('#password_account').val(),
 	'lastName':$('#lastName_account').val(),
 	'city':$('#city_account').val(),
 	'country': getKeyByValue($('#country_account').val()), //store as country code in db
@@ -94,17 +95,26 @@ $(document).ready(function(){
         
         var data = {
             "old_password": $("#old_password").val(),
-            "new_password": $("#new_password").val()
+            "new_password": $("#new_password").val(),
+            'token':localStorage.getItem("token")
         }
         
         $.ajax({
             type:'POST',
             url: url,
             data: data,
-            //dataType:"json",
+            dataType:"json",
             success:function(data){
               console.log(data);
-              document.getElementById('error_save_password').innerHTML = "Password successfully changed!";  
+              
+              if(data.password_match === true){
+              $('#password_account').val(data.new_password);    
+              document.getElementById('error_save_password').innerHTML = "Password successfully changed!";    
+              }else{
+              document.getElementById('error_old_password').innerHTML = "Password is incorrect!";    
+              document.getElementById('error_save_password').innerHTML = "Password not successfully changed!";    
+              }
+                
             },
             error:function(data){
                 console.log(data);
