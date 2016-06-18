@@ -1,6 +1,6 @@
 <?php 
 
-require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\autoload.php' );
+require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '/vendor/autoload.php' );
 
 /**
 This class handles the non-FB authentication
@@ -37,6 +37,7 @@ class Login extends Restapi{
 		
 		$email = $_POST["email"];
 		$password = $_POST["password"];
+		$this->response($password, 200);
 				
 		$table = "user";
 		$columns = array("userId","email","password");
@@ -95,9 +96,9 @@ class Login extends Restapi{
 			}
 			
 		}else{
-			
+			$this->response(200, $password);
 			if($email === $object['email'] && password_verify($password,$object['password'])){
-				
+			
 				
 			
 			$token = (new Builder())
