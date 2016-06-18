@@ -277,6 +277,14 @@ $(function(){
 		$(".header_title").text('Login');
 		return false;
 	});
+	
+	$('.forgot_password').click(function(){
+		$(".social_login").hide();
+		$(".user_register").hide();
+		$(".user_login").hide();
+		$(".header_title").text('Change Password');
+		return false;
+	});
 });
 
 /**
