@@ -258,6 +258,7 @@ $(function(){
 	$('#login_form').click(function(){
 		$(".social_login").hide();
 		$(".user_login").show();
+		$(".forgot_password_div").hide();
 		return false;
 	});
 	
@@ -266,6 +267,7 @@ $(function(){
 		$(".social_login").hide();
 		$(".user_register").show();
 		$(".header_title").text('Register');
+		$(".forgot_password_div").hide();
 		return false;
 	});
 	
@@ -274,11 +276,13 @@ $(function(){
 		$(".social_login").show();
 		$(".user_register").hide();
 		$(".user_login").hide();
+		$(".forgot_password_div").hide();
 		$(".header_title").text('Login');
 		return false;
 	});
 	
 	$('.forgot_password').click(function(){
+		$(".forgot_password_div").show();
 		$(".social_login").hide();
 		$(".user_register").hide();
 		$(".user_login").hide();

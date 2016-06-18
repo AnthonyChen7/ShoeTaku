@@ -174,7 +174,7 @@ a.btn_red  {
  By default, login form is hidden */
  
  /* User Login Form */
-.user_login  {
+.user_login, .forgot_password_div  {
     display:  none;
 }
 
@@ -287,4 +287,18 @@ user_setting label  {
 .save_changes{
     width: 50%;
     margin-left: 13%;
+}
+
+.forgot_password_div label  {
+    display:  block;
+     margin-bottom: 5px;
+}
+
+.forgot_password_div input[type="text"]{
+     margin-top: 0.5%;
+    margin-bottom: 2%;
+     width: 45%;
+     padding:  10px;
+     border: 1px solid #DDD;
+     color: #666;
 }
