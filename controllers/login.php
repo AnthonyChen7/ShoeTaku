@@ -78,9 +78,7 @@ class Login extends Restapi{
 			
 			//check if newly-hashed password matches inputted password
 			if($email === $object['email'] && password_verify($object['password'],$hash)){
-			
-			
-			
+
 			$token = (new Builder())
 						->setIssuer(ISSUER) // Configures the issuer (iss claim)
                         //->setAudience('http://example.org') // Configures the audience (aud claim)
@@ -96,11 +94,9 @@ class Login extends Restapi{
 			}
 			
 		}else{
-			$this->response(200, $password);
+			
 			if($email === $object['email'] && password_verify($password,$object['password'])){
-			
-				
-			
+
 			$token = (new Builder())
 						->setIssuer(ISSUER) // Configures the issuer (iss claim)
                         //->setAudience('http://example.org') // Configures the audience (aud claim)
