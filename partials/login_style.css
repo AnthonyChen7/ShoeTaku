@@ -1,23 +1,290 @@
-#loginForm
-{
-   width:500px;
-   height:330px;
-   margin-top:100px;
-   background-color:#FFF;
-   border-radius:3px;
-   box-shadow:0px 0px 10px 0px #424242;
-   padding:10px;
-   box-sizing:border-box;
-   font-family:helvetica;
-   visibility:hidden;
-   display:none;
+#login_page_message{
+    position: relative;
+    top: 300px;
+    font-size: 50px;
 }
 
-#loginForm #close_login
+
+/*Styles for overlay and popup box/modal */
+
+/* Overlay when Modal is open */
+#lean_overlay {
+    position: fixed;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    display: none;
+}
+
+/* Modal box or Popup box */
+.popupContainer{
+	position:absolute;
+	width:500px;
+	height: auto;
+	left:45%;
+	top:50px;
+	background: #FFF;
+}
+
+/* Style for buttons and 2 column grid that contains the login and sign up button */
+
+#modal_trigger  {
+    /*margin: 100px auto;*/
+     width: 250px;
+     display: block;
+     font-size: 25px;
+}
+
+.btn  {
+    padding: 10px 20px;
+     background:  #F4F4F2;
+}
+
+.btn_red  {
+    background:  #ED6347;
+     color:  #FFF;
+}
+
+.btn:hover  {
+    background:  #E4E4E2;
+}
+
+.btn_red:hover  {
+    background:  #C12B05;
+}
+
+a.btn  {
+    color: #666;
+     text-align:  center;
+     text-decoration:  none;
+}
+
+a.btn_red  {
+    color:  #FFF;
+}
+
+.one_half  {
+    width: 45%;
+     display:  block;
+     float: left;
+}
+
+.one_half.last  {
+    width: 45%;
+     margin-left: 5%;
+}
+
+/* Styles for modal box header and pop up body */
+/* Popup Styles*/
+.popupHeader  {
+    font-size: 16px;
+     text-transform:  uppercase;
+}
+
+.popupHeader  {
+    background: #F4F4F2;
+     position: relative;
+     padding: 10px 20px;
+     border-bottom: 1px solid #DDD;
+     font-weight: bold;
+}
+
+.popupHeader .modal_close  {
+    position:  absolute;
+     right:  0;
+     top: 0;
+     padding: 10px 15px;
+     background: #E4E4E2;
+     cursor:  pointer;
+     color: #aaa;
+     font-size: 16px;
+}
+
+.popupBody  {
+    padding: 20px;
+}
+
+/* Style for social login boxes */
+/* Social Login Form */
+
+.social_login .social_box  {
+    display: block;
+     clear: both;
+     padding: 10px;
+     margin-bottom:  10px;
+     background:  #F4F4F2;
+     overflow:  hidden;
+}
+
+.social_login .icon  {
+    display: block;
+     width: 10px;
+     padding: 5px 10px;
+     margin-right:  10px;
+     float: left;
+     color: #FFF;
+     font-size: 16px;
+     text-align:  center;
+}
+ 
+.social_login .fb .icon  {
+    background: #3B5998;
+}
+
+.social_login .google .icon  {
+    background: #DD4B39;
+}
+
+.social_login .icon_title  {
+    display: block;
+     padding: 5px 0;
+     float: left;
+     font-weight:  bold;
+     font-size:  16px;
+     color: #777;
+}
+
+.social_login .social_box:hover  {
+    background:  #E4E4E2;
+}
+
+
+.centeredText  {
+    text-align:  center;
+     margin:  20px 0;
+     clear:  both;
+     overflow:  hidden;
+     text-transform:  uppercase;
+}
+
+
+.action_btns  {
+    clear: both;
+     overflow:  hidden;
+}
+
+.action_btns a  {
+    display:  block;
+}
+
+/* Style for the login form
+ By default, login form is hidden */
+ 
+ /* User Login Form */
+.user_login  {
+    display:  none;
+}
+
+.user_login label  {
+    display:  block;
+     margin-bottom: 5px;
+}
+
+.user_login input[type="text"],  .user_login input[type="email"],  .user_login input[type="password"]  {
+     margin-top: 0.5%;
+    margin-bottom: 2%;
+     width: 45%;
+     padding:  10px;
+     border: 1px solid #DDD;
+     color: #666;
+}
+
+.user_login input[type="checkbox"]  {
+    float: left;
+     margin-right: 5px;
+}
+
+.user_login input[type="checkbox"]+label  {
+    float: left;
+}
+
+
+.user_login .checkbox  {
+    margin-bottom:  10px;
+     clear:  both;
+     overflow:  hidden;
+}
+
+.forgot_password{
+    display: block;
+     margin:  20px 0 10px;
+     clear:  both;
+     overflow:  hidden;
+     text-decoration:  none;
+     color: #ED6347;
+}
+
+/*Styles for the register form
+By default, register form is hidden */
+/* User Register Form */
+.user_register  {
+    display:  none;
+    overflow: auto;
+    height:700px;
+}
+
+.user_register label {
+     display:  block;
+     margin-bottom: 5px;
+}
+
+.user_register input[type="text"], .user_register input[type="number"],  .user_register input[type="email"],  .user_register input[type="password"]
 {
-   position:absolute;
-   top:140px;
-   left:735px;
-   width:15px;
-   height:15px;
+    margin-top: 0.5%;
+    margin-bottom: 2%;
+     width: 45%;
+     padding:  10px;
+     border: 1px solid #DDD;
+     color: #666;
+}
+
+ .fb_login{
+     float: right;
+     position: relative;
+       top: 2px;
+ }
+ 
+ #error_email, #error_password, #error_emailRegister,#error_passwordRegister, #error_confirmPassword,
+ #error_firstName, #error_lastName, #error_age, #error_city, #error_country  {
+     margin-top: 3%;
+     margin-left: 1px;
+     float: right;
+     position: relative;
+     color: red;
+     width: 50%;
+ }
+ 
+ /*
+ Styles for account setting form
+ */
+ .user_setting  {
+    overflow: auto;
+    height:auto;
+    margin-left: 37%;
+}
+
+user_setting label  {
+     display:  block;
+     margin-bottom: 5px;
+}
+
+.user_setting input[type="text"], .user_setting input[type="number"], .user_setting input[type="password"]{
+    display:  block;
+     width: 40%;
+     padding:  10px;
+     border: 1px solid #DDD;
+     color: #666;
+}
+
+.account_error{
+     color: red;
+     width: 50%;
+}
+
+.save_changes{
+    width: 50%;
+    margin-left: 5%;
 }

@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+      
+<head>
+
+   <link rel="stylesheet" href="/partials/login_style.css">
+   <script src="/partials/countries.js" type="text/javascript" charset="utf-8"></script> 
+   <script src="/partials/nonFBlogin-controller.js" type="text/javascript" charset="utf-8"></script>
+   <script src="/partials/account.js" type="text/javascript" charset="utf-8"></script> 
+</head>
+
+<body>
+
+    <div class="user_setting">
+        
+      <!--<form id="form2" method="post" action = "/controllers/register">-->
+      <form>
+
+     <label  for="emailLabel">Email</label>
+     <input type="text" id="emailRegister" name="emailRegister">
+     <div id="email_account_error" class="account_error"></div>
+
+     <br>
+     
+     <label  for="passwordLabel">Password</label>
+     <input type="button" value="Change Password" class="btn btn_red">
+     
+     <br>
+     <br>
+     
+     <label  for="firstNameLabel">First Name</label>
+     <input type="text" id="firstName" name="firstName">
+     <div id="firstName_account_error" class="account_error"></div> 
+
+     <br>
+     
+     <label  for="lastNameLabel">Last Name</label>
+     <input type="text" id="lastName" name="lastName">
+     <div id="lastName_account_error" class="account_error"></div>
+
+     <br>
+     
+     <label  for="cityLabel">City</label>
+     <input type="text" id="city" name="city">
+     <div id="city_account_error" class="account_error"></div>
+
+     <br>
+     
+     <label  for="countryLabel">Country</label>
+     <input type="text" id="country" name="country" list="countryList">
+     <datalist id="countryList">
+     </datalist>
+           <div id="country_account_error" class="account_error"></div>
+     <br>
+     
+     <div class="action_btns">
+                  
+         <div class="save_changes">
+             <input type="submit" id="register" value="Save Changes" class="btn btn_red">
+         </div>
+         
+     </div>
+           
+    </form>
+
+        
+    </div>
+
+</body>
+</html>

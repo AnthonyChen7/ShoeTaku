@@ -1,17 +1,18 @@
 //https://developers.facebook.com/docs/facebook-login/web
 
-//note need to make sure app id is private
-//set up fb sdk for javascript
 function fbLogout() {
     FB.getLoginStatus(function(response) {
         if (response && response.status === 'connected') {
             FB.logout(function(response) {
-                document.location.reload();
+                //document.location.reload();
+                // window.location="/";
             });
         }
     });
 }
-  
+
+//note need to make sure app id is private
+//set up fb sdk for javascript  
 window.fbAsyncInit = function () {
     "use strict";
 
@@ -23,7 +24,7 @@ window.fbAsyncInit = function () {
     });
     
 
-checkLoginState(); 
+//checkLoginState(); 
 
 /**
  * Set up success login/login event
@@ -52,7 +53,7 @@ var logout_event = function(response) {
     
     if (response.status === 'unknown') {
         console.log(response); 
-        window.location="/index.html";
+        window.location="/";
     }
   
 }
@@ -69,6 +70,7 @@ function loginStatusChangeCallback(response) {
      * 2. logged into fb but not app; 'not_authorized'
      * 3. not logged into fb and not sure if logged into app; unknown
      */
+     console.log("response.status is " + response.status);
      
     if (response.status === 'connected') {
     // Logged into your app and Facebook.
@@ -84,8 +86,8 @@ function loginStatusChangeCallback(response) {
     // they are logged into this app or not.
     
      //Ensures page will not attempt to keep re-loading   
-    if(window.location.href.indexOf("/index.html") <= -1) {
-       window.location="/index.html";
+    if(window.location.href.indexOf("/testhahhhahaha.html") <= -1) {
+       window.location="/";
     }   
   }
 }	

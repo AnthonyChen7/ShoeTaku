@@ -91,7 +91,16 @@ class SqlQueryBuilder extends Database
 	private function prepareWhereSql($whereArr)
 	{
 		$array = $whereArr;
-		foreach ($array as &$value) $value = $this->WHERE . $value . $this->VALUEBIND;
+
+		foreach ($array as &$value){
+			
+			//only attach "WHERE" to first item
+			if(array_search($value, $array) === 0 ){
+				$value = $this->WHERE . $value . $this->VALUEBIND;
+			}else{
+				$value =  $value . $this->VALUEBIND;
+			}	
+		} 
 
 		$sql = implode($this->WHEREDELIMIT, $array);
 		return $sql;
