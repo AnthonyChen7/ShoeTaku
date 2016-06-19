@@ -7,17 +7,17 @@
     <link href="/components/bootstrap-3.3.6-dist 2/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="/components/layout.css" rel="stylesheet">
     <script src="/components/bootstrap-3.3.6-dist 2/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-
-    <script src="/partials/fblogin-controller.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/partials/nonFBlogin-controller.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/partials/authentication.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/partials/fblogin-controller.js" type="text/javascript" charset="utf-8"></script> 
+    
 
     <title>ShoeTaku</title>
 
 </head>
 
 <body>
- 
+    
+     
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
 
@@ -37,7 +37,6 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a id="sellPage" class="firstPage" data-page="sell" href="#">Sell <span class="sr-only">(current)</span></a></li>
                 <li><a id="wantedPage" class="page" data-page="wanted" href="#">Wanted</a></li>
-                <li><a id="accountPage" class="page" data-page="account" href="#">Account Settings</a></li>
             </ul>
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
@@ -57,10 +56,9 @@
                         <li><a href="#">Separated link</a></li>
                     </ul>
                 </li>
-
-                <!--<li><a id="wantedPage" class="page" onclick="fbLogout()">Logout</a></li>-->
-                <!--<li><a id="wantedPage" class="page" onclick="authentication.logout()">Logout</a></li>-->
-                <li><a id="wantedPage" class="page" onclick="logout()">Logout</a></li>
+                <!-- TODO create container for this so we can differentiate between manual login and FB login -->
+                <!-- <li><fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();" ></fb:login-button></li> -->
+                <li><a id="wantedPage" class="page" onclick="fbLogout()">Logout</a></li>
             </ul>
         </div> <!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
