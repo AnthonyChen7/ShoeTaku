@@ -1,0 +1,62 @@
+<?php
+include('../controllers/database.php');
+?>
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script src="pagination.js"></script>
+	<script type="text/javascript" src="../components/jquery/jquery-2.2.3.js"></script>
+
+	<style>
+	#pagination div { display: inline-block; margin-right: 5px; margin-top: 5px }
+	#pagination .cell a { border-radius: 3px; font-size: 11px; color: #333; padding: 8px; text-decoration:none; border: 1px solid #d3d3d3; background-color: #f8f8f8; }
+	#pagination .cell a:hover { border: 1px solid #c6c6c6; background-color: #f0f0f0;  }
+	#pagination .cell_active span { border-radius: 3px; font-size: 11px; color: #333; padding: 8px; border: 1px solid #c6c6c6; background-color: #e9e9e9; }
+	#pagination .cell_disabled span { border-radius: 3px; font-size: 11px; color: #777777; padding: 8px; border: 1px solid #dddddd; background-color: #ffffff; }
+	</style>
+	
+</head>
+<body>
+	
+	<div id="postTitle">
+		<h1>Selling Shoes Post</h1>
+	</div>
+	
+	<div id="articleArea">
+		<h2> This is the Article Area</h2>
+	</div>
+
+	<div id="pagination" class="firstPage">
+		<h4> Display pagination </h4>
+		<div><a href="#" id="1"></a></div>
+	</div>
+
+</body>
+
+<script>
+	$(document).ready(function(){
+	
+	$("#test").click(function(){
+		var url = "/controllers/testing/tests";
+		
+		var param = JSON.stringify({test:test});
+		$.ajax({
+			url: url,
+			data: param,
+			dataType: "json",
+			success: function(data, textStatus, jqXHR){
+				console.log(data);
+			},
+			error: function(jqXHR, textStatus, error){
+				//debug.log(textStatus + ":" + error);
+			},
+			complete: function(jqXHR, textStatus){
+				//debug.log("ajax call complete");
+			}
+		})
+	});
+});
+
+
+</script>
+</html>
