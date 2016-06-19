@@ -36,6 +36,7 @@ $("#form").submit(function(event){
 		data: data, 
 		timeout: 3000,
 		success: function(data) {
+			console.log(data); 
 						
 			if(data != ""){
 				console.log(data);
@@ -183,10 +184,10 @@ function validateForm(isLoginForm){
 			isValid= false;
 		}
 		
-		if($("#country").val() === "" || hasWhiteSpace( $("#country").val())|| getKeyByValue($("#country").val() ) === undefined ){
-			document.getElementById('error_country').innerHTML += "<p>Please provide a valid country!</p>";
-			isValid= false;
-		}
+		// if($("#country").val() === "" || hasWhiteSpace( $("#country").val())|| getKeyByValue($("#country").val() ) === undefined ){
+		// 	document.getElementById('error_country').innerHTML += "<p>Please provide a valid country!</p>";
+		// 	isValid= false;
+		// }
 	}else{
 		
 		//clear any existing error messages first
