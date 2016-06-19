@@ -25,10 +25,31 @@ class Shoe extends Restapi
 		if ($method == 'POST'){
 			// Base case: /controllers/shoe   Create a new Shoe
 			if ($length == 1){
-				if(isset($data))
-					$result = $this->paginationShoe($data);
-				else
-			 		$result = $this->createShoe();
+				if(isset($data)){
+
+					$page = 1; // curent page number
+					$per_page = 4; 
+
+					if($page != 1){
+						$start = ($page - 1) * $per_page;
+					}else{
+						$start = 0;
+					}
+
+					$numArticles = $this->getTotalNumberOfPosts($data);
+					$result['first'] = $numArticles[0];
+
+					$numPage = ceil($numArticles[0] / $per_page); // Total number of page
+
+					$result['articleList'] = $this->getListofSellPosts($data,$start);
+					$result['pageAfter'] = $page;
+					$result['perPageAfter'] = $per_page;
+					$result['numArticles'] = $numArticles;
+					$result['numPage'] = $numPage;
+				}
+				else{
+					$result = $this->createShoe();
+				}
 				
 				$this->response($result, 200);
 			}
@@ -69,6 +90,50 @@ class Shoe extends Restapi
 		}
 
 
+	}
+
+	private function getListofSellPosts($data,$start){
+		$table = "Shoe";
+		$columns = array("shoeId,brand,model");
+		$where = array();
+		$limOff = array(4,$start);
+
+		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);
+		$this->connect();
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+
+		$stmt->setFetchMode(PDO::FETCH_OBJ);
+		$articleList = '';
+		// $executed = $stmt->fetch();
+		while( $result = $stmt->fetch() ) {
+			$articleList .= '<div class="well well-sm">' . $result->shoeId . '. <b>' . $result->brand . '</b><p>' . $result->model . '</p></div>';
+		}
+		$this->disconnect();
+
+		// return $result;
+		return $articleList;
+
+
+	}
+
+	private function getTotalNumberOfPosts($data){
+		$totalNumOfPosts = $data["totalNumberOfPost"];
+
+		$table = "Shoe";
+		$columns = array("count(*)");
+		$where = array();
+		$limOff = array();
+
+		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);
+
+		$this->connect();
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetch(PDO::FETCH_NUM);
+		$this->disconnect();
+
+		return $result;
 	}
 
 	private function paginationShoe($data)
