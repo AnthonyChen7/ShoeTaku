@@ -108,7 +108,7 @@ event.preventDefault();
 		document.getElementById('error_lastName').innerHTML = "";
 		document.getElementById('error_city').innerHTML = "";
 		document.getElementById('error_country').innerHTML = "";
-		//window.location="/partials/main-page.html";
+		window.location="/partials/main-page.html";
 			}else{
 				localStorage.setItem("token",null);
 				document.getElementById('error_emailRegister').innerHTML = $("#emailRegister").val() + " already exists!";
@@ -248,43 +248,43 @@ function isNumberKey(evt)
          return true;
       }
 	  
-$(function(){
-	//Call Login Form
-	$('#login_form').click(function(){
-		$(".social_login").hide();
-		$(".user_login").show();
-		$(".forgot_password_div").hide();
-		return false;
-	});
+// $(function(){
+// 	//Call Login Form
+// 	$('#login_form').click(function(){
+// 		$(".social_login").hide();
+// 		$(".user_login").show();
+// 		$(".forgot_password_div").hide();
+// 		return false;
+// 	});
 	
-	//Call Register Form
-	$('#register_form').click(function(){
-		$(".social_login").hide();
-		$(".user_register").show();
-		$(".header_title").text('Register');
-		$(".forgot_password_div").hide();
-		return false;
-	});
+// 	//Call Register Form
+// 	$('#register_form').click(function(){
+// 		$(".social_login").hide();
+// 		$(".user_register").show();
+// 		$(".header_title").text('Register');
+// 		$(".forgot_password_div").hide();
+// 		return false;
+// 	});
 	
-	//Go back to social forms
-	$('.back_btn').click(function(){
-		$(".social_login").show();
-		$(".user_register").hide();
-		$(".user_login").hide();
-		$(".forgot_password_div").hide();
-		$(".header_title").text('Login');
-		return false;
-	});
+// 	//Go back to social forms
+// 	$('.back_btn').click(function(){
+// 		$(".social_login").show();
+// 		$(".user_register").hide();
+// 		$(".user_login").hide();
+// 		$(".forgot_password_div").hide();
+// 		$(".header_title").text('Login');
+// 		return false;
+// 	});
 	
-	$('.forgot_password').click(function(){
-		$(".forgot_password_div").show();
-		$(".social_login").hide();
-		$(".user_register").hide();
-		$(".user_login").hide();
-		$(".header_title").text('Change Password');
-		return false;
-	});
-});
+// 	$('.forgot_password').click(function(){
+// 		$(".forgot_password_div").show();
+// 		$(".social_login").hide();
+// 		$(".user_register").hide();
+// 		$(".user_login").hide();
+// 		$(".header_title").text('Change Password');
+// 		return false;
+// 	});
+// });
 
 /**
  * Temporary function to get logout working

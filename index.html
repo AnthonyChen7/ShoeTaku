@@ -1,4 +1,4 @@
-
+<!--http://www.w3schools.com/bootstrap/bootstrap_modal.asp-->
 <!DOCTYPE html>
 <html>
 
@@ -31,13 +31,14 @@
 
         <!-- Modal Container (Popup Box) -->
         <div id="modal" class="modal fade" role="dialog">
+            
             <div class="modal-dialog">
+                
               <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <span class="header_title">Login</span>
-                        <!--<span class="modal_close"><i class="fa fa-times"></i></span>-->
                     </div>
 
                     <div class="modal-body">    
@@ -78,6 +79,12 @@
             <div class="modal-dialog">
               <!-- Modal content-->
                 <div class="modal-content">
+                    
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <span class="header_title">Login</span>
+                    </div>
+                    
                     <form id="form" method="post" action = "/controllers/login" onsubmit="return validateForm(true)">
                         <br>
 
@@ -91,7 +98,7 @@
                         <br>
                         <div class="action_btns">
                             <div class="one_half">
-                                <a class="btn back_btn" href="#">Back</a>
+                                <a class="btn back_btn" href="#" data-dismiss="modal">Back</a>
                             </div>
                             <div class="one_half last">
                                 <input class="btn btn_red" type="submit" id="login" value="Login">
@@ -107,6 +114,12 @@
             <div class="modal-dialog">
                   <!-- Modal content-->
                 <div class="modal-content">
+                    
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <span class="header_title">Register</span>
+                    </div>
+                    
                     <form id="form2" method="post" action = "/controllers/register">
                         <div style="color: red;"> <u>ALL</u> fields are required!</div>
                         <br>
@@ -151,7 +164,7 @@
 
                         <div class="action_btns">
                             <div class="one_half">
-                                <a class="btn back_btn" href="#">Back</a>
+                                <a class="btn back_btn" href="#" data-dismiss="modal">Back</a>
                             </div>
                              
                             <div class="one_half last">
@@ -168,6 +181,12 @@
             <div class="modal-dialog">
                   <!-- Modal content-->
                 <div class="modal-content">
+                    
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <span class="header_title">Forgot Password</span>
+                    </div>
+                    
                     <form>
                         <p>Please enter your email so your password can be reset!</p>
                         <br>
@@ -177,7 +196,7 @@
                      
                         <div class="action_btns"> 
                             <div class="one_half">
-                                <a class="btn back_btn" href="#">Back</a>
+                                <a class="btn back_btn" href="#" data-dismiss="modal">Back</a>
                             </div>
                              
                             <div class="one_half last">
