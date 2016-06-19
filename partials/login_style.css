@@ -15,7 +15,7 @@
     left: 0px;
     height:100%;
     width:100%;
-    background: #000;
+    background: #FFF;
     display: none;
 }
 
@@ -26,7 +26,7 @@
 	height: auto;
 	left:45%;
 	top:50px;
-	background: #000;
+	background: #FFF;
 }
 
 /* Style for buttons and 2 column grid that contains the login and sign up button */

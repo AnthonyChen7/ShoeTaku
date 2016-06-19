@@ -248,13 +248,6 @@ function isNumberKey(evt)
          return true;
       }
 	  
-$("#modal_trigger").leanModal({
-	top: 100,
-	overlay: 0.6,
-	closeButton: ".modal_close" ,
-});
-
-
 $(function(){
 	//Call Login Form
 	$('#login_form').click(function(){
