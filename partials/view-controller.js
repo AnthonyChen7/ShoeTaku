@@ -19,12 +19,24 @@ var constants = (function(){
 	}
 })();
 
+// var controller= (function(){
+// 	var controllerPhp = "/partials/view-controller.php";
+// 	var currentPage = "";
+// 	var pages= ["error","sell","wanted","account","main-page",""];
+// 	var $partialView = $("#partial_view");
+
+// 	function determineCurrentPage(){
+// 		if (currentPage == "" || currentPage == null)
+// 			return constants.DEFAULT;
+// 		else
+// 			return currentPage;
+// 	}
+
 var controller= (function(){
 	var controllerPhp = "/partials/view-controller.php";
 	var currentPage = "";
-	var pages= ["error","sell","wanted","account","main-page",""];
+	var pages= ["sell","wanted","account"];
 	var $partialView = $("#partial_view");
-
 	function determineCurrentPage(){
 		if (currentPage == "" || currentPage == null)
 			return constants.DEFAULT;
