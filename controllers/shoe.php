@@ -123,7 +123,6 @@ class Shoe extends Restapi
 
 		$stmt->setFetchMode(PDO::FETCH_OBJ);
 		$articleList = '';
-		// $executed = $stmt->fetch();
 		while( $result = $stmt->fetch() ) {
 			$articleList .= '<div class="well well-sm">' . $result->shoeId . '. <b>' . $result->brand . '</b><p>' . $result->model . '</p></div>';
 		}
@@ -266,4 +265,4 @@ class Shoe extends Restapi
 
 }
 
-?>
+?>g
