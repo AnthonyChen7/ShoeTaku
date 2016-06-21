@@ -19,16 +19,36 @@ class Shoe extends Restapi
 		$length = count($requestArray);
 		$json = file_get_contents("php://input");
 		$data;
-		if ($json)
-			$data = json_decode($json, TRUE);
+		if ($json){
+				$data = json_decode($json, TRUE);
+				// json error detector
+				// switch(json_last_error())
+			 //        {
+			 //            case JSON_ERROR_DEPTH:
+			 //                $error =  ' - Maximum stack depth exceeded';
+			 //                break;
+			 //            case JSON_ERROR_CTRL_CHAR:
+			 //                $error = ' - Unexpected control character found';
+			 //                break;
+			 //            case JSON_ERROR_SYNTAX:
+			 //                $error = ' - Syntax error, malformed JSON';
+			 //                break;
+			 //            case JSON_ERROR_NONE:
+			 //            default:
+			 //                $error = '';                    
+			 //        }
+			 //        if (!empty($error))
+			 //            throw new Exception('JSON Error: '.$error);
+			}
 		
 		if ($method == 'POST'){
 			// Base case: /controllers/shoe   Create a new Shoe
 			if ($length == 1){
 				if(isset($data)){
 
-					$page = 1; // curent page number
-					$per_page = 4; 
+					$page = $data['page'];
+
+					$per_page = $data['per_page']; 
 
 					if($page != 1){
 						$start = ($page - 1) * $per_page;
@@ -36,15 +56,13 @@ class Shoe extends Restapi
 						$start = 0;
 					}
 
+
 					$numArticles = $this->getTotalNumberOfPosts($data);
-					$result['first'] = $numArticles[0];
 
 					$numPage = ceil($numArticles[0] / $per_page); // Total number of page
 
 					$result['articleList'] = $this->getListofSellPosts($data,$start);
-					$result['pageAfter'] = $page;
-					$result['perPageAfter'] = $per_page;
-					$result['numArticles'] = $numArticles;
+					$result['page'] = $page;
 					$result['numPage'] = $numPage;
 				}
 				else{
