@@ -1,7 +1,3 @@
-
-
-
-
 <?php
 class ViewController
 {
@@ -17,7 +13,6 @@ class ViewController
 		{
 			$json = file_get_contents("php://input");
 			$data = json_decode($json, TRUE);
-			var_dump($data);
 			if (isset($data))
 			{
 				$page = $data['page'];
