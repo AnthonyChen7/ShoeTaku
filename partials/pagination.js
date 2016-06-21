@@ -10,7 +10,7 @@ $('#sellPage').on('click', function(e) { // When click on a 'a' element of the p
 
 	var url = "/controllers/shoe";
 	
-	var data = {page: page, per_page: 4, test: 'test'}; // Create JSON which will be sent via Ajax
+	var data = {page: page, per_page: 4}; // Create JSON which will be sent via Ajax
 	// We set up the per_page var at 4. You may change to any number you need.
 
 	$.ajax({ // jQuery Ajax
