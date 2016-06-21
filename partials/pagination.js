@@ -10,7 +10,7 @@ $('#sellPage').on('click', function(e) { // When click on a 'a' element of the p
 
 	var url = "/controllers/shoe";
 	
-	var data = {page: page, per_page: 4}; // Create JSON which will be sent via Ajax
+	var data = {page: page, per_page: 4, test: 'test'}; // Create JSON which will be sent via Ajax
 	// We set up the per_page var at 4. You may change to any number you need.
 
 	$.ajax({ // jQuery Ajax
@@ -36,21 +36,6 @@ $('#sellPage').on('click', function(e) { // When click on a 'a' element of the p
 			pagination += '<div class="cell"><a href="#" id="' + (parseInt(page) + 1) + '">Next</a></div><div class="cell"><a href="#" id="' + data.numPage + '">Last</span></a></div>';
 			
 			$('#pagination').html(pagination); // We update the pagination DIV
-
-			console.log("this is sellpost ajax");
-			console.log(data);
-			console.log("article list: " + data['articleList']);
-			console.log(data['numPage']);
-			console.log(data['numArticles']['0']);
-
-			console.log("the first data is: " + data['first']);
-			console.log(data['pageBefore']);
-			console.log(data['perPageBefore']);
-
-			console.log("start is: " + data['start']);
-			console.log("after");
-			console.log(data['pageAfter']);
-			console.log(data['perPageAfter']);
 
 		},
 		error: function(data) {
@@ -99,53 +84,6 @@ $('#pagination').on('click', 'a', function(e){
 			else pagination += '<div class="cell"><a href="#" id="' + (parseInt(page) + 1) + '">Next</a></div><div class="cell"><a href="#" id="' + data.numPage + '">Last</span></a></div>';
 			
 			$('#pagination').html(pagination); // We update the pagination DIV
-		
-			console.log("this is pagination ajax");
-			console.log("data is: "+data);
-			console.log("article list: " + data['articleList']);
-			console.log("num page is : " + data['numPage']);
-			console.log("first element of numArticle: "+data['numArticles']['0']);
-
-			console.log("the first data is: " + data['first']);
-			console.log("page before is: " + data['pageBefore']);
-			console.log("perpage after is: " + data['perPageBefore']);
-			console.log("start is: " + data['start']);
-
-			console.log("after");
-			console.log("pageAfter is: "+ data['pageAfter']);
-			console.log("perpage before is: "+ data['perPageAfter']);
-
-		},
-		error: function(data) {
-			// for debugging purpose
-			alert("error");
-		}
-	});
-
-	return false;
-
-});
-
-
-cell_disabled"><span>Next</span></div><div class="cell_disabled"><span>Last</span></div>';
-			else pagination += '<div class="cell"><a href="#" id="' + (parseInt(page) + 1) + '">Next</a></div><div class="cell"><a href="#" id="' + data.numPage + '">Last</span></a></div>';
-			
-			$('#pagination').html(pagination); // We update the pagination DIV
-		
-			console.log("this is pagination ajax");
-			console.log("data is: "+data);
-			console.log("article list: " + data['articleList']);
-			console.log("num page is : " + data['numPage']);
-			console.log("first element of numArticle: "+data['numArticles']['0']);
-
-			console.log("the first data is: " + data['first']);
-			console.log("page before is: " + data['pageBefore']);
-			console.log("perpage after is: " + data['perPageBefore']);
-			console.log("start is: " + data['start']);
-
-			console.log("after");
-			console.log("pageAfter is: "+ data['pageAfter']);
-			console.log("perpage before is: "+ data['perPageAfter']);
 
 		},
 		error: function(data) {
