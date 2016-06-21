@@ -36,15 +36,17 @@ $("#form").submit(function(event){
 		data: data, 
 		timeout: 3000,
 		success: function(data) {
-			
-			
-			if(data != null){
+			console.log(data); 
+						
+			if(data != ""){
 				console.log(data);
 				document.getElementById('error_email').innerHTML = "";
 				document.getElementById('error_password').innerHTML = "";
-				window.location="/partials/main-page.html";
+				
 				
 				localStorage.setItem("token",data);
+				
+				window.location="/partials/main-page.html";
 				
 			}else{
 				document.getElementById('error_email').innerHTML = "Incorrect email/password!";
@@ -106,7 +108,7 @@ event.preventDefault();
 		document.getElementById('error_lastName').innerHTML = "";
 		document.getElementById('error_city').innerHTML = "";
 		document.getElementById('error_country').innerHTML = "";
-		//window.location="/partials/main-page.html";
+		window.location="/partials/main-page.html";
 			}else{
 				localStorage.setItem("token",null);
 				document.getElementById('error_emailRegister').innerHTML = $("#emailRegister").val() + " already exists!";
@@ -163,11 +165,11 @@ function validateForm(isLoginForm){
 		// }
 			
 		if($("#passwordRegister").val() !== $("#confirmPassword").val() ){
-				document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
-		isValid= false;
+			document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
+			isValid= false;
 		}
 			
-			if($("#firstName").val() === "" || hasWhiteSpace( $("#firstName").val())){
+		if($("#firstName").val() === "" || hasWhiteSpace( $("#firstName").val())){
 			document.getElementById('error_firstName').innerHTML += "<p>Please provide a valid first name!</p>";
 			isValid= false;
 		}
@@ -182,10 +184,10 @@ function validateForm(isLoginForm){
 			isValid= false;
 		}
 		
-		if($("#country").val() === "" || hasWhiteSpace( $("#country").val())|| getKeyByValue($("#country").val() ) === undefined ){
-			document.getElementById('error_country').innerHTML += "<p>Please provide a valid country!</p>";
-			isValid= false;
-		}
+		// if($("#country").val() === "" || hasWhiteSpace( $("#country").val())|| getKeyByValue($("#country").val() ) === undefined ){
+		// 	document.getElementById('error_country').innerHTML += "<p>Please provide a valid country!</p>";
+		// 	isValid= false;
+		// }
 	}else{
 		
 		//clear any existing error messages first
@@ -246,37 +248,43 @@ function isNumberKey(evt)
          return true;
       }
 	  
-$("#modal_trigger").leanModal({
-	top: 100,
-	overlay: 0.6,
-	closeButton: ".modal_close"
-});
-
-$(function(){
-	//Call Login Form
-	$('#login_form').click(function(){
-		$(".social_login").hide();
-		$(".user_login").show();
-		return false;
-	});
+// $(function(){
+// 	//Call Login Form
+// 	$('#login_form').click(function(){
+// 		$(".social_login").hide();
+// 		$(".user_login").show();
+// 		$(".forgot_password_div").hide();
+// 		return false;
+// 	});
 	
-	//Call Register Form
-	$('#register_form').click(function(){
-		$(".social_login").hide();
-		$(".user_register").show();
-		$(".header_title").text('Register');
-		return false;
-	});
+// 	//Call Register Form
+// 	$('#register_form').click(function(){
+// 		$(".social_login").hide();
+// 		$(".user_register").show();
+// 		$(".header_title").text('Register');
+// 		$(".forgot_password_div").hide();
+// 		return false;
+// 	});
 	
-	//Go back to social forms
-	$('.back_btn').click(function(){
-		$(".social_login").show();
-		$(".user_register").hide();
-		$(".user_login").hide();
-		$(".header_title").text('Login');
-		return false;
-	});
-});
+// 	//Go back to social forms
+// 	$('.back_btn').click(function(){
+// 		$(".social_login").show();
+// 		$(".user_register").hide();
+// 		$(".user_login").hide();
+// 		$(".forgot_password_div").hide();
+// 		$(".header_title").text('Login');
+// 		return false;
+// 	});
+	
+// 	$('.forgot_password').click(function(){
+// 		$(".forgot_password_div").show();
+// 		$(".social_login").hide();
+// 		$(".user_register").hide();
+// 		$(".user_login").hide();
+// 		$(".header_title").text('Change Password');
+// 		return false;
+// 	});
+// });
 
 /**
  * Temporary function to get logout working

@@ -1,53 +1,41 @@
-<!DOCTYPE HTML>
-<html>
-      
-<head>
-
-   <link rel="stylesheet" href="/partials/login_style.css">
-   <script src="/partials/countries.js" type="text/javascript" charset="utf-8"></script> 
-   <script src="/partials/nonFBlogin-controller.js" type="text/javascript" charset="utf-8"></script>
-   <script src="/partials/account.js" type="text/javascript" charset="utf-8"></script> 
-</head>
-
-<body>
 
     <div class="user_setting">
         
-      <!--<form id="form2" method="post" action = "/controllers/register">-->
-      <form>
+     <form id="account_setting_form" method="POST" action ="/controllers/accountSettings">
 
-     <label  for="emailLabel">Email</label>
-     <input type="text" id="emailRegister" name="emailRegister">
+     <label>Email</label>
+     <input type="text" id="email_account" name="email" disabled>
      <div id="email_account_error" class="account_error"></div>
 
      <br>
      
-     <label  for="passwordLabel">Password</label>
-     <input type="button" value="Change Password" class="btn btn_red">
+     <label>Password</label>
+     <input type="password" id="password_account" name="password" disabled>
+     <a id="change_password" href="#modal" class="btn btn_red">Change Password</a>
      
      <br>
      <br>
      
-     <label  for="firstNameLabel">First Name</label>
-     <input type="text" id="firstName" name="firstName">
+     <label>First Name</label>
+     <input type="text" id="firstName_account" name="firstName" >
      <div id="firstName_account_error" class="account_error"></div> 
 
      <br>
      
-     <label  for="lastNameLabel">Last Name</label>
-     <input type="text" id="lastName" name="lastName">
+     <label>Last Name</label>
+     <input type="text" id="lastName_account" name="lastName">
      <div id="lastName_account_error" class="account_error"></div>
 
      <br>
      
-     <label  for="cityLabel">City</label>
-     <input type="text" id="city" name="city">
+     <label>City</label>
+     <input type="text" id="city_account" name="city">
      <div id="city_account_error" class="account_error"></div>
 
      <br>
      
-     <label  for="countryLabel">Country</label>
-     <input type="text" id="country" name="country" list="countryList">
+     <label>Country</label>
+     <input type="text" id="country_account" name="country" list="countryList">
      <datalist id="countryList">
      </datalist>
            <div id="country_account_error" class="account_error"></div>
@@ -56,15 +44,67 @@
      <div class="action_btns">
                   
          <div class="save_changes">
-             <input type="submit" id="register" value="Save Changes" class="btn btn_red">
+             <input type="submit" id="save_change" value="Save Changes" class="btn btn_red">
+             <div id="save_message" class="account_error" style="text-align:center;"></div>
          </div>
          
      </div>
-           
+
     </form>
 
+    </div>
+    
+    <div id="modal" class="popupContainer" style="display:none;">
+        
+        <header class="popupHeader">
+    
+    <span class="header_title">Change Password</span>
+    <span class="modal_close"><i class="fa fa-times"></i></span>
+ 
+</header>
+
+    <section class="popupBody">
+        
+    <div class="user_login" style="display:block;">
+        
+        <form id="password_setting_form" method="POST" action ="/controllers/accountSettings">
+          
+     <label>Old Password</label>
+     <input type="password" id="old_password" name="password">
+     <div id="error_old_password" class="account_error"></div>
+     <br>  
+     
+     <label>New Password</label>
+     <input type="password" id="new_password" name="password">
+     <div id="error_new_password" class="account_error"></div>
+     <br>  
+     
+     <label>Confirm New Password</label>
+     <input type="password" id="confirm_new_password" name="password">
+     <div id="error_confirm_password" class="account_error"></div>
+     <br> 
+     
+     <div class="action_btns">
+                  
+         <div class="save_changes">
+             <input type="submit" id="save_password" value="Save Changes" class="btn btn_red">
+             <div id="error_save_password" class="account_error"></div>
+         </div>
+         
+     </div> 
+            
+      </form>
+            
+     </div>
+    
+    </section>
         
     </div>
-
-</body>
-</html>
+    
+        <!-- <link href="/components/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" >
+    <script src="/components/jquery/jquery-2.2.3.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/components/jquery/jquery.leanModal.min.js" type="text/javascript"charset="utf-8" ></script>
+    <script src="/partials/countries.js" type="text/javascript" charset="utf-8"></script> 
+    <script src="/partials/nonFBlogin-controller.js" type="text/javascript" charset="utf-8"></script>
+   <script src="/partials/account.js" type="text/javascript" charset="utf-8"></script>
+   <link rel="stylesheet" href="/partials/login_style.css"> -->

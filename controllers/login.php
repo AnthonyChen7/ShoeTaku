@@ -1,6 +1,6 @@
 <?php 
 
-require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\autoload.php' );
+require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '/vendor/autoload.php' );
 
 /**
 This class handles the non-FB authentication
@@ -37,6 +37,7 @@ class Login extends Restapi{
 		
 		$email = $_POST["email"];
 		$password = $_POST["password"];
+		$this->response($password, 200);
 				
 		$table = "user";
 		$columns = array("userId","email","password");
@@ -77,9 +78,7 @@ class Login extends Restapi{
 			
 			//check if newly-hashed password matches inputted password
 			if($email === $object['email'] && password_verify($object['password'],$hash)){
-			
-			
-			
+
 			$token = (new Builder())
 						->setIssuer(ISSUER) // Configures the issuer (iss claim)
                         //->setAudience('http://example.org') // Configures the audience (aud claim)
@@ -90,9 +89,6 @@ class Login extends Restapi{
                         //->set('userId', $object['userId']) // Configures a new claim, called "uid"
 						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
                         ->getToken(); // Retrieves the generated token
-			
-			
-			
 			}else{
 			
 			}
@@ -101,7 +97,6 @@ class Login extends Restapi{
 			
 			if($email === $object['email'] && password_verify($password,$object['password'])){
 
-			
 			$token = (new Builder())
 						->setIssuer(ISSUER) // Configures the issuer (iss claim)
                         //->setAudience('http://example.org') // Configures the audience (aud claim)
@@ -111,8 +106,7 @@ class Login extends Restapi{
                         ->setExpiration(time() + EXPIRATION_TIME) // Configures the expiration time of the token (nbf claim)
                         //->set('userId', $object['userId']) // Configures a new claim, called "uid"
 						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
-                        ->getToken(); // Retrieves the generated token
-						
+                        ->getToken(); // Retrieves the generated token						
 			}else{
 			
 			}
