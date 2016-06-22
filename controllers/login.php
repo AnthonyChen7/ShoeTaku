@@ -61,42 +61,10 @@ class Login extends Restapi{
 		**/
 			
 		$object = $result[0];
-		
-		//check if password needs re-hashing first
-		if(password_needs_rehash($object['password'],PASSWORD_BCRYPT)){
 			
-			$hash= password_hash($password, PASSWORD_BCRYPT);
-			
-			$values = array($hash,$object['email']);
-			//update with new hashed password in db
-			$columns = array("password");
-			$sql = $this->prepareUpdateSql($table,$columns,$where);
-			
-			$stmt = $this->conn->prepare($sql);
-			$stmt->execute($values);
-			
-			//check if newly-hashed password matches inputted password
-			if($email === $object['email'] && password_verify($object['password'],$hash)){
+		if($email === $object['email'] && password_verify($password,$object['password'])){
 
-			$token = (new Builder())
-						->setIssuer(ISSUER) // Configures the issuer (iss claim)
-                        //->setAudience('http://example.org') // Configures the audience (aud claim)
-                        ->setId($object['userId'], true) // Configures the id (jti claim), replicating as a header item
-                        ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
-                        ->setNotBefore(time() + USE_TIME) // Configures the time that the token can be used (nbf claim)
-                        ->setExpiration(time() + EXPIRATION_TIME) // Configures the expiration time of the token (nbf claim)
-                        //->set('userId', $object['userId']) // Configures a new claim, called "uid"
-						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
-                        ->getToken(); // Retrieves the generated token
-			}else{
-			
-			}
-			
-		}else{
-			
-			if($email === $object['email'] && password_verify($password,$object['password'])){
-
-			$token = (new Builder())
+		$token = (new Builder())
 						->setIssuer(ISSUER) // Configures the issuer (iss claim)
                         //->setAudience('http://example.org') // Configures the audience (aud claim)
                         ->setId($object['userId'], true) // Configures the id (jti claim), replicating as a header item
@@ -107,16 +75,10 @@ class Login extends Restapi{
 						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
                         ->getToken(); // Retrieves the generated token	
 				
-			}else{
-			
 			}
-			
-	}
-	
-		}else{
-			
+
 		}
-		
+
 		$this->disconnect();
 
 		// return all our data to an AJAX call
