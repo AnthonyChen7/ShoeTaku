@@ -1,6 +1,6 @@
 <?php 
 
-require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '/vendor/autoload.php' );
+require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\autoload.php' );
 
 /**
 This class handles the non-FB authentication
@@ -37,8 +37,7 @@ class Login extends Restapi{
 		
 		$email = $_POST["email"];
 		$password = $_POST["password"];
-		$this->response($password, 200);
-				
+		
 		$table = "user";
 		$columns = array("userId","email","password");
 		$where = array("email");
@@ -106,7 +105,8 @@ class Login extends Restapi{
                         ->setExpiration(time() + EXPIRATION_TIME) // Configures the expiration time of the token (nbf claim)
                         //->set('userId', $object['userId']) // Configures a new claim, called "uid"
 						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
-                        ->getToken(); // Retrieves the generated token						
+                        ->getToken(); // Retrieves the generated token	
+				
 			}else{
 			
 			}

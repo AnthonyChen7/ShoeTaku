@@ -1,6 +1,11 @@
 // $('document').ready(function() {
 // 	$("#pagination a").trigger('click'); // When page is loaded we trigger a click
 // });
+
+
+
+// =============== WILL NEED TO CHANGE THIS INTO MODULAR PATTERN ======================================== //
+
 $('#sellPage').on('click', function(e) { // When click on a 'a' element of the pagination div
 	
 	var page = 1;
@@ -38,16 +43,21 @@ $('#sellPage').on('click', function(e) { // When click on a 'a' element of the p
 	});
 	return false;
 });
+
 var pagination = (function(){
+
 	function callAjax(sendUrl, pageNum){
 		
 		var url = sendUrl;
 		var page = pageNum;
+
 		if (!url || !page)
 			return false;
+
 		var pagination = ''; // Init pagination
 		var data = {page: page, per_page: 4}; // Create JSON which will be sent via Ajax
 		// We set up the per_page var at 4. You may change to any number you need.
+
 		$.ajax({ // jQuery Ajax
 			type: 'POST',
 			url: url, // URL to the PHP file which will insert new value in the database
@@ -56,8 +66,10 @@ var pagination = (function(){
 			timeout: 3000,
 			success: function(data) {
 				$('#articleArea').html(data.articleList);
+
 				if (page == 1) pagination += '<div class="cell_disabled"><span>First</span></div><div class="cell_disabled"><span>Previous</span></div>';
 				else pagination += '<div class="cell"><a href="#" id="1">First</a></div><div class="cell"><a href="#" id="' + (page - 1) + '">Previous</span></a></div>';
+
 				for (var i=parseInt(page)-3; i<=parseInt(page)+3; i++) {
 					if (i >= 1 && i <= data.numPage) {
 						pagination += '<div';
@@ -66,6 +78,7 @@ var pagination = (function(){
 						pagination += '</div>';
 					}
 				}
+
 				if (page == data.numPage) pagination += '<div class="cell_disabled"><span>Next</span></div><div class="cell_disabled"><span>Last</span></div>';
 				else pagination += '<div class="cell"><a href="#" id="' + (parseInt(page) + 1) + '">Next</a></div><div class="cell"><a href="#" id="' + data.numPage + '">Last</span></a></div>';
 				
@@ -77,14 +90,17 @@ var pagination = (function(){
 			}
 		});
 	}
+
 	return {
 		pagination: function(url, page){
 			return callAjax(url, page);
 		}
 	}
 })();
+
 // 	var page = this.id;
 // 	var pagination = ''; // Init pagination
+
 // 	var url = "/controllers/shoe";
 	
 // 	var data = {page: page, per_page: 4}; // Create JSON which will be sent via Ajax
@@ -97,8 +113,11 @@ var pagination = (function(){
 // 		timeout: 3000,
 // 		success: function(data) {
 // 			$('#articleArea').html(data.articleList);
+
+
 // 			if (page == 1) pagination += '<div class="cell_disabled"><span>First</span></div><div class="cell_disabled"><span>Previous</span></div>';
 // 			else pagination += '<div class="cell"><a href="#" id="1">First</a></div><div class="cell"><a href="#" id="' + (page - 1) + '">Previous</span></a></div>';
+
 // 			for (var i=parseInt(page)-3; i<=parseInt(page)+3; i++) {
 // 				if (i >= 1 && i <= data.numPage) {
 // 					pagination += '<div';
@@ -107,10 +126,12 @@ var pagination = (function(){
 // 					pagination += '</div>';
 // 				}
 // 			}
+
 // 			if (page == data.numPage) pagination += '<div class="cell_disabled"><span>Next</span></div><div class="cell_disabled"><span>Last</span></div>';
 // 			else pagination += '<div class="cell"><a href="#" id="' + (parseInt(page) + 1) + '">Next</a></div><div class="cell"><a href="#" id="' + data.numPage + '">Last</span></a></div>';
 			
 // 			$('#pagination').html(pagination); // We update the pagination DIV
+
 // 		},
 // 		error: function(data) {
 // 			// for debugging purpose
@@ -118,7 +139,9 @@ var pagination = (function(){
 // 		}
 // 	});
 // 	return false;
+
 // });
+
 $('document').ready(function() {
 	$('#pagination').on('click', 'a', function(e){
 		var id = e.target.id;
@@ -126,5 +149,7 @@ $('document').ready(function() {
 		if (id){
 			pagination.pagination(url, id);
 		}
+
 	});
 });
+

@@ -1,14 +1,14 @@
 $(document).ready(function(){
     
     clearErrorDivs();
-    
+    console.log(localStorage.getItem("token"));
    // make ajax call to populate fields in account.html
     $.ajax(
     {
         type: 'GET',
         url:"/controllers/accountSettings",
         data: {"token":localStorage.getItem("token")},
-        dataType: "json",
+         dataType: "json",
         success: function(data){
            console.log(data);
            
@@ -25,6 +25,7 @@ $(document).ready(function(){
             
         },
         error: function(data){
+            console.log(data);
             document.getElementById('save_message').innerHTML = "Error: Unable to retrieve account information!";
         }
         
@@ -193,9 +194,3 @@ function clearPasswordDivs(){
     document.getElementById('error_confirm_password').innerHTML="";
     document.getElementById('error_save_password').innerHTML=""; 
 }
-
-$("#change_password").leanModal({
-	top: 100,
-	overlay: 0.6,
-	closeButton: ".modal_close"
-});
