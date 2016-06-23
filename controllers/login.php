@@ -11,8 +11,10 @@ require_once(__DIR__.'/restapi.php');
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 
-define("USE_TIME", 60);
-define("EXPIRATION_TIME", 60);
+use Lcobucci\JWT\ValidationData;
+
+define("USE_TIME", 1);
+define("EXPIRATION_TIME", 10000);
 define("RANDOM_STRING", '70bpyytrEVHXNC99PvjKfNcgHLwByB2B9eGExqiBYSG6LdnjdT2q9nARwCKWVNy');
 define("ISSUER", 'ShoeTaku');
 
@@ -66,24 +68,24 @@ class Login extends Restapi{
 
 		$token = (new Builder())
 						->setIssuer(ISSUER) // Configures the issuer (iss claim)
-                        //->setAudience('http://example.org') // Configures the audience (aud claim)
-                        ->setId($object['userId'], true) // Configures the id (jti claim), replicating as a header item
+                        //->setAudience(NULL) // Configures the audience (aud claim)
+                        // ->setId($object['userId'], true) // Configures the id (jti claim), replicating as a header item
+						->setId($object['userId'], true)
                         ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
-                        ->setNotBefore(time() + USE_TIME) // Configures the time that the token can be used (nbf claim)
+                        //->setNotBefore(time() + USE_TIME) // Configures the time that the token can be used (nbf claim)
                         ->setExpiration(time() + EXPIRATION_TIME) // Configures the expiration time of the token (nbf claim)
                         //->set('userId', $object['userId']) // Configures a new claim, called "uid"
 						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key
-                        ->getToken(); // Retrieves the generated token	
-				
+                        ->getToken(); // Retrieves the generated token
+						
 			}
 
 		}
 
-		$this->disconnect();
-
+		$this->disconnect();		
 		// return all our data to an AJAX call
 		echo $token;
-		
+
 	}
 	
 }

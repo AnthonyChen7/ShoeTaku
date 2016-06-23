@@ -78,7 +78,7 @@ class Register extends Restapi{
                         //->setAudience('http://example.org') // Configures the audience (aud claim)
                         ->setId($result['userId'], true) // Configures the id (jti claim), replicating as a header item
                         ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
-                        ->setNotBefore(time() + USE_TIME) // Configures the time that the token can be used (nbf claim)
+                        //->setNotBefore(time() + USE_TIME) // Configures the time that the token can be used (nbf claim)
                         ->setExpiration(time() + EXPIRATION_TIME) // Configures the expiration time of the token (nbf claim)
                         //->set('userId', $result['userId']) // Configures a new claim, called "uid"
 						->sign($signer, RANDOM_STRING) // creates a signature using "testing" as key

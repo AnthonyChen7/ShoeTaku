@@ -44,7 +44,7 @@ $("#form").submit(function(event){
 	
 				localStorage.setItem("token",data);
 				
-				window.location="/partials/main-page.html";
+				 window.location="/partials/main-page.html";
 				
 			}else{
 				document.getElementById('error_email').innerHTML = "Incorrect email/password!";

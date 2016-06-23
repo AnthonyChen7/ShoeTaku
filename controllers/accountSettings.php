@@ -13,9 +13,14 @@ use Lcobucci\JWT\Parser;
 
 class AccountSettings extends Restapi{
 	
+	private $signer;
+
 	function __construct(){
 		parent::__construct();
 		
+		$this->signer = new Sha256();
+
+
 		$method = $_SERVER['REQUEST_METHOD'];
 		
 		if($method == 'GET'){
@@ -33,9 +38,9 @@ class AccountSettings extends Restapi{
 	function retrieveInfo(){
 		$token = $_GET["token"];
 		$token = (new Parser())->parse((string) $token); // Parses from a string
-		
+
 		$table = "user";
-		$columns = array("email","password","firstName","lastName","city","countryCode");
+		$columns = array("userId","email","password","firstName","lastName","city","countryCode");
 		$where=array('userId');
 		$values = array($token->getHeader('jti'));
 		$limOff = array();
@@ -52,6 +57,14 @@ class AccountSettings extends Restapi{
 		
 		if(count($result)==1){
 			$result = $result[0];
+
+		// $data = new ValidationData(); // It will use the current time to validate (iat, nbf and exp)
+		// $data->setIssuer(ISSUER);
+		// $data->setAudience('');
+		// $data->setId($result['userId']);
+
+		// var_dump($token->validate($data)); // true, because validation information is equals to data contained on the token
+			
 		}else{
 			$result = null;
 		}
