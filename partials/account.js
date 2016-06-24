@@ -114,7 +114,11 @@ $(document).ready(function(){
             success:function(data){
               console.log(data);
               
-              if(data.password_match === true){
+              if(data.error != null){
+              document.getElementById('error_save_password').innerHTML = data.error;        
+              }
+              
+              else if(data.password_match === true){
               $('#password_account').val(data.new_password);    
               document.getElementById('error_save_password').innerHTML = "Password successfully changed!";    
               }else{

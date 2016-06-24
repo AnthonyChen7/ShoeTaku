@@ -120,16 +120,19 @@ class AccountSettings extends Restapi{
 		$newPassword = $_POST['new_password'];
 		
 		$token = $_POST["token"];
-		$token = (new Parser())->parse((string) $token); // Parses from a string
+		$parsedToken = TokenCreator::initParseToken( $token );
+		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
 		
 		//queries user and checks if old password matches
 		$table = "user";
 		$columns = array("password");
 		$where=array('userId');
-		$values = array($token->getHeader('jti'));
+		$values = array($parsedToken->getToken()->getHeader('jti'));
 		$limOff = array();
 		
 		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
+		
+		if($tokenVerifier->isTokenValid()){
 		
 		$this->connect();
 		
@@ -154,6 +157,10 @@ class AccountSettings extends Restapi{
 			
 		}else{
 			$data['password_match'] = false;
+		}
+		
+		}else{
+			$data['error']=TIMED_OUT;
 		}
 		
 		echo json_encode($data);

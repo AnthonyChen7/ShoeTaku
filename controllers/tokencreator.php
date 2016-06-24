@@ -8,7 +8,7 @@ use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Parser;
 
-define("EXPIRATION_TIME", 999);
+define("EXPIRATION_TIME", 120);
 define("RANDOM_STRING", '70bpyytrEVHXNC99PvjKfNcgHLwByB2B9eGExqiBYSG6LdnjdT2q9nARwCKWVNy');
 define("ISSUER", 'ShoeTaku');
 define("TIMED_OUT", 'Session timed out!');
