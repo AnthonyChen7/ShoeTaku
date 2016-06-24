@@ -47,6 +47,10 @@ class AccountSettings extends Restapi{
 		
 		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
 		
+		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
+		
+		if($tokenVerifier->isTokenValid()){
+			
 		$this->connect();
 		
 		$stmt = $this->conn->prepare($sql);
@@ -60,6 +64,12 @@ class AccountSettings extends Restapi{
 		}else{
 			$result = null;
 		}
+			
+		}else{
+			$result['error']= TIMED_OUT;	
+		}
+		
+		
 		
 		echo json_encode($result);
 	}

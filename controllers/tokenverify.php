@@ -7,6 +7,7 @@ include_once __DIR__.'/tokencreator.php';
 
 use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\ValidationData;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
 
 class TokenVerify{
 
@@ -19,11 +20,12 @@ function __construct($token,$userId){
 $this->token = (new Parser())->parse((string) $token); // Parses from a string
 $this->data = new ValidationData(); // It will use the current time to validate (iat, nbf and exp)
 $this->data->setIssuer(ISSUER);
-$this->data->setId($userId);	
+$this->data->setId($userId);
+$this->signer = new Sha256();	
 }
 
 function isTokenValid(){
-	if($this->token->validate($this->data)){
+	if($this->token->validate($this->data) && $this->token->verify($this->signer,RANDOM_STRING) ){
 		return true;
 	}else{
 		return false;

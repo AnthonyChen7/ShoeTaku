@@ -12,7 +12,9 @@ $(document).ready(function(){
         success: function(data){
            console.log(data);
            
-           if(data != null){
+           if(data.error!=null){
+              document.getElementById('save_message').innerHTML = data.error; 
+           }else if(data != null){
                document.getElementById("email_account").value = data.email;
                document.getElementById("password_account").value = data.password;
                document.getElementById("firstName_account").value = data.firstName;
