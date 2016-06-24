@@ -62,7 +62,7 @@ class Register extends Restapi{
 		$result = $stmt->fetchAll();
 		$result = $result[0];
 		
-		$tokenCreator = new TokenCreator($result['userId']);
+		$tokenCreator = TokenCreator::createToken($result['userId']);
 		$token = $tokenCreator->getToken();
 		
 		}catch (Exception $e) {

@@ -53,7 +53,7 @@ class Login extends Restapi{
 			
 		if($email === $object['email'] && password_verify($password,$object['password'])){
 		
-		$tokenCreator = new TokenCreator($object['userId']); 
+		$tokenCreator = TokenCreator::createToken($object['userId']);
 		$token = $tokenCreator->getToken();
 						
 		}
