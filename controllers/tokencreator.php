@@ -1,6 +1,6 @@
 <?php 
 
-//this class will validat and verify the jwt
+//this class will create a JWT and convert a JWT into a string
 
 require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\autoload.php' );
 
@@ -8,7 +8,9 @@ use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Parser;
 
-define("EXPIRATION_TIME", 120);
+//time is in seconds
+define("EXPIRATION_TIME", 999);
+
 define("RANDOM_STRING", '70bpyytrEVHXNC99PvjKfNcgHLwByB2B9eGExqiBYSG6LdnjdT2q9nARwCKWVNy');
 define("ISSUER", 'ShoeTaku');
 define("TIMED_OUT", 'Session timed out!');
@@ -25,16 +27,17 @@ function __construct(){
 public static function createToken( $userId ) {
     	$instance = new self();
     	$instance->token = (new Builder())
-						->setIssuer(ISSUER) // Configures the issuer (iss claim)
+						->setIssuer(ISSUER) 
 						->setId($userId, true)
-                        ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
-                        ->setExpiration(time() + EXPIRATION_TIME) // Configures the expiration time of the token (nbf claim)
-						->sign($instance->signer, RANDOM_STRING) // creates a signature using "testing" as key
-                        ->getToken(); // Retrieves the generated token
+                        ->setIssuedAt(time()) 
+                        ->setExpiration(time() + EXPIRATION_TIME) 
+						->sign($instance->signer, RANDOM_STRING) 
+                        ->getToken();
 
     	return $instance;
-    }
+}
 
+//Given a JWT, parse it into a string
 public static function initParseToken( $token ) {
     	$instance = new self();
     	$instance->token = (new Parser())->parse((string) $token);

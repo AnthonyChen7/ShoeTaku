@@ -1,6 +1,6 @@
 <?php 
 
-//this class will validat and verify the jwt
+//this class will validate and verify the jwt
 
 require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\autoload.php' );
 include_once __DIR__.'/tokencreator.php';
@@ -24,6 +24,7 @@ $this->data->setId($userId);
 $this->signer = new Sha256();	
 }
 
+//If token hasn't been messed with and hasn't expire, true is returned
 function isTokenValid(){
 	if($this->token->validate($this->data) && $this->token->verify($this->signer,RANDOM_STRING) ){
 		return true;
