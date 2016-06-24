@@ -67,7 +67,11 @@ $(document).ready(function(){
 		success: function(data) {				
 	    console.log(data);
 	   
-       if(data.success === true){
+       if(data.error != null){
+         document.getElementById('save_message').innerHTML = data.error;   
+       }
+       
+       else if(data.success === true){
        document.getElementById('save_message').innerHTML = "Changes saved successfully!";    
        }else{
        document.getElementById('save_message').innerHTML = "Error! Changes not saved!";    

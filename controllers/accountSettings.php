@@ -68,9 +68,7 @@ class AccountSettings extends Restapi{
 		}else{
 			$result['error']= TIMED_OUT;	
 		}
-		
-		
-		
+
 		echo json_encode($result);
 	}
 	
@@ -84,14 +82,17 @@ class AccountSettings extends Restapi{
 		$password = $_POST['password'];
 		
 		$token = $_POST["token"];
-		$token = (new Parser())->parse((string) $token); // Parses from a string
+		$parsedToken = TokenCreator::initParseToken( $token );
+		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
 		
 		$table = "user";
 		$columns = array("password","firstName","lastName","city","countryCode");
 		$where=array('userId');
-		$values = array($password,$firstName,$lastName,$city,$country,$token->getHeader('jti'));
+		$values = array($password,$firstName,$lastName,$city,$country,$parsedToken->getToken()->getHeader('jti'));
 		
 		$sql = $this->prepareUpdateSql($table,$columns,$where);
+		
+		if($tokenVerifier->isTokenValid()){
 		
 		try{
 		$this->connect();
@@ -105,6 +106,10 @@ class AccountSettings extends Restapi{
 		}
 		
 		$this->disconnect();
+		
+		}else{
+			$result['error']= TIMED_OUT;
+		}
 		
 		echo json_encode($result);
 		
