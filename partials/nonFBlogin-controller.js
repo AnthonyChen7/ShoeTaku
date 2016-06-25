@@ -286,9 +286,3 @@ function isNumberKey(evt)
 /**
  * Temporary function to get logout working
  */
-function logout(){
-	
-	window.location="/";
-	localStorage.setItem("token",null);
-	
-}
