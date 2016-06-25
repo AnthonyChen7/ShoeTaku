@@ -15,7 +15,6 @@ class Authentication extends Restapi
 	{
 		parent::__construct();
 		$this->checkCredentials();
-		
 	}
 	
 	private function checkCredentials()
@@ -85,6 +84,64 @@ class Authentication extends Restapi
 			
 			$this->disconnect();
 		}
+	}
+
+	private function register(){
+
+		$token = NULL;
+
+		$result = NULL;
+				
+		$email = $_POST["email"];
+		
+		$password = $_POST["password"];
+		
+		//hash the password using bcrypt method
+		$password = password_hash($password,PASSWORD_BCRYPT);
+		
+		$firstName = $_POST["firstName"];
+		$lastName = $_POST["lastName"];
+		$city = $_POST["city"];
+		$country = $_POST["country"];
+		
+		$table = "user";
+		$columns = array("email","password","firstName","lastName","city", "countryCode");
+		$where = array();
+		$values = array($email, $password, $firstName, $lastName, $city, $country);
+		$limOff = array();
+		
+		$sql = $this->prepareInsertSql($table, $columns, $where, $limOff);
+		
+		try{
+				
+		$this->connect();
+		$stmt = $this->conn->prepare($sql);
+		
+		$result = $stmt->execute($values);
+		
+		//retrieve user ID....
+		$columns=array("userId");
+		$values = array($email);
+		$where=array("email");
+		
+		$sql = $this->prepareSelectSql($table, $columns, $where ,$limOff);
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute($values);
+		
+		$result = $stmt->fetchAll();
+		$result = $result[0];
+		
+		$tokenCreator = TokenCreator::createToken($result['userId']);
+		$token = $tokenCreator->getToken();
+		
+		}catch (Exception $e) {
+			$token = "error";
+		}
+
+		$this->disconnect();
+		
+		// return all our data to an AJAX call
+		echo $token;
 	}
 	
 
