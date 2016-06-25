@@ -26,6 +26,7 @@ class Logout extends Restapi{
 			$this->connect();
 			
 			//TODO
+			//Also, if token is already expired. Don't bother to store in db
 			
 			$this->disconnect();
 		}
