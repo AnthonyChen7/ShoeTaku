@@ -19,7 +19,6 @@ class AccountSettings extends Restapi{
 		
 		$this->signer = new Sha256();
 
-
 		$method = $_SERVER['REQUEST_METHOD'];
 		
 		if($method == 'GET'){
@@ -30,6 +29,10 @@ class AccountSettings extends Restapi{
 		}
 	}
 	
+	/**
+	Retrieves account info to be displayed in account settings.html
+	Don't retrieve password for security concern purposes
+	*/
 	function retrieveInfo(){
 		$token = $_GET["token"];
 
@@ -45,25 +48,30 @@ class AccountSettings extends Restapi{
 		
 		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
 		
-		if($tokenVerifier->isTokenValid()){
+			if($tokenVerifier->isTokenValid()){
+				
+				try{
 			
-		$this->connect();
+					$this->connect();
 		
-		$stmt = $this->conn->prepare($sql);
-		$stmt->execute($values);
-		$result = $stmt->fetchAll();
+					$stmt = $this->conn->prepare($sql);
+					$stmt->execute($values);
+					$result = $stmt->fetchAll();
+				}catch(Exception $e){
+					$result = null;
+				}
 		
-		$this->disconnect();
+			$this->disconnect();
 		
-		if(count($result)==1){
-			$result = $result[0];
-		}else{
-			$result = null;
-		}
+				if(count($result)==1){
+					$result = $result[0];
+				}else{
+					$result = null;
+				}
 			
-		}else{
-			$result['error']= TIMED_OUT;	
-		}
+			}else{
+				$result['error']= TIMED_OUT;	
+			}
 
 		echo json_encode($result);
 	}
@@ -82,9 +90,7 @@ class AccountSettings extends Restapi{
 		$token = $_POST["token"];
 		$parsedToken = TokenCreator::initParseToken( $token );
 		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
-		
 
-		
 		if($tokenVerifier->isTokenValid()){
 		
 		try{
@@ -100,31 +106,31 @@ class AccountSettings extends Restapi{
 		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
 		$stmt = $this->conn->prepare($sql);
 		$stmt->execute($values);
-		$result = $stmt->fetchAll();
+		$object = $stmt->fetchAll();
 		
-			if(count($result)==1){
-			$result = $result[0];
+			if(count($object)==1){
+				$object = $object[0];
 		
 		
-				if(password_verify($oldPassword,$result['password'])){
+				if(password_verify($oldPassword,$object['password'])){
 			
-				$table = "user";
-				$columns = array("password","firstName","lastName","city","countryCode");
-				$where=array('userId');
+					$table = "user";
+					$columns = array("password","firstName","lastName","city","countryCode");
+					$where=array('userId');
 		
-				$sql = $this->prepareUpdateSql($table,$columns,$where);
-				$stmt = $this->conn->prepare($sql);
+					$sql = $this->prepareUpdateSql($table,$columns,$where);
+					$stmt = $this->conn->prepare($sql);
 		
-				$newPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+					$newPassword = password_hash($newPassword, PASSWORD_BCRYPT);
 		
-				$values = array($newPassword,$firstName,$lastName,$city,$country,$parsedToken->getToken()->getHeader('jti'));
+					$values = array($newPassword,$firstName,$lastName,$city,$country,$parsedToken->getToken()->getHeader('jti'));
 		
-				$stmt->execute($values);
+					$stmt->execute($values);
 		
-				$result["success"] = true;
+					$result["success"] = true;
 		
 				}else{
-				$result['error']= "Old password doesn't match. Changes not saved!";
+					$result['error']= "Old password doesn't match. Changes not saved!";
 				}
 			}else{
 				$result['error']='Unable to unable to update user account!';

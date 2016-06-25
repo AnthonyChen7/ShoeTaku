@@ -33,7 +33,10 @@ class Login extends Restapi{
 		$values = array($email);
 		$limOff = array();
 		
-		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);		
+		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);
+		
+		try{
+				
 		$this->connect();
 		
 		$stmt = $this->conn->prepare($sql);
@@ -49,15 +52,19 @@ class Login extends Restapi{
 		we would expect there to be only 1 result
 		**/
 			
-		$object = $result[0];
+			$object = $result[0];
 			
-		if($email === $object['email'] && password_verify($password,$object['password'])){
+			if($email === $object['email'] && password_verify($password,$object['password'])){
 		
-		$tokenCreator = TokenCreator::createToken($object['userId']);
-		$token = $tokenCreator->getToken();
+				$tokenCreator = TokenCreator::createToken($object['userId']);
+				$token = $tokenCreator->getToken();
 						
-		}
+			}
 
+		}
+		
+		}catch(Exception $e){
+			$token = null;
 		}
 
 		$this->disconnect();		
