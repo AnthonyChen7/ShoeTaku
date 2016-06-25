@@ -25,11 +25,6 @@ class AccountSettings extends Restapi{
 		if($method == 'GET'){
 			$this->retrieveInfo();
 		}
-		// else if($method == 'POST' && isset($_POST['old_password']) && !empty($_POST['old_password'])){
-			
-		// 	$this->changePassword();
-			
-		// }
 		else{
 			$this->updateInfo();
 		}
@@ -148,57 +143,6 @@ class AccountSettings extends Restapi{
 		echo json_encode($result);
 		
 	}
-	
-	// function changePassword(){
-	// 	$oldPassword = $_POST['old_password'];
-	// 	$newPassword = $_POST['new_password'];
-		
-	// 	$token = $_POST["token"];
-	// 	$parsedToken = TokenCreator::initParseToken( $token );
-	// 	$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
-		
-	// 	//queries user and checks if old password matches
-	// 	$table = "user";
-	// 	$columns = array("password");
-	// 	$where=array('userId');
-	// 	$values = array($parsedToken->getToken()->getHeader('jti'));
-	// 	$limOff = array();
-		
-	// 	$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
-		
-	// 	if($tokenVerifier->isTokenValid()){
-		
-	// 	$this->connect();
-		
-	// 	$stmt = $this->conn->prepare($sql);
-	// 	$stmt->execute($values);
-	// 	$result = $stmt->fetchAll();
-		
-	// 	$this->disconnect();
-		
-	// 	$data = array();
-		
-	// 	if(count($result)==1){
-	// 		$result = $result[0];
-			
-	// 		if(password_verify($oldPassword,$result['password'])){
-	// 			$newPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-	// 			$data['password_match'] = true;
-	// 			$data['new_password']=$newPassword;
-	// 		}else{
-	// 			$data['password_match'] = false;
-	// 		}
-			
-	// 	}else{
-	// 		$data['password_match'] = false;
-	// 	}
-		
-	// 	}else{
-	// 		$data['error']=TIMED_OUT;
-	// 	}
-		
-	// 	echo json_encode($data);
-	// }
 }
 
 ?>
