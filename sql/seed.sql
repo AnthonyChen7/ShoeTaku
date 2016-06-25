@@ -15,8 +15,12 @@ password VARCHAR(64) NOT NULL,
 firstName VARCHAR(50) NOT NULL,
 lastName VARCHAR(50) NOT NULL,
 city VARCHAR(10) NOT NULL,
-countryCode VARCHAR(10) NOT NULL
+countryCode VARCHAR(10) NOT NULL,
+isFacebook TINYINT NOT NULL DEFAULT 0,
+isMerged TINYINT NOT NULL DEFAULT 0 
 );
+
+
 
 INSERT INTO User (email, password, firstName, lastName, city, countryCode) VALUES ("edwardchoi90@gmail.com","test","FN","LN","Vancouver","CA");
 INSERT INTO User (email, password, firstName, lastName, city, countryCode) VALUES ("test@test.com","test","FN","LN","Vancouver","CA");

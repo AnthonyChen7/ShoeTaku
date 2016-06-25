@@ -11,7 +11,7 @@ var authentication = (function(){
 		if(isFBloggedIn)
 			fbLogout();
 		else
-			console.log("here log out non fb");
+			logout();
 		
 	}
 	return{
