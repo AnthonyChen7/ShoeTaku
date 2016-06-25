@@ -47,8 +47,8 @@ class Shoe extends Restapi
 				if(isset($data)){
 
 					$page = $data['page'];
-
 					$per_page = $data['per_page']; 
+
 
 					if($page != 1){
 						$start = ($page - 1) * $per_page;
@@ -64,7 +64,9 @@ class Shoe extends Restapi
 					$result['articleList'] = $this->getListofSellPosts($data,$start);
 					$result['page'] = $page;
 					$result['numPage'] = $numPage;
-				}
+
+					$result['convertJSON'] = $this->getListofSellPosts($data,$start);
+ 				}
 				else{
 					$result = $this->createShoe();
 				}
@@ -124,13 +126,13 @@ class Shoe extends Restapi
 		$stmt->setFetchMode(PDO::FETCH_OBJ);
 		$articleList = '';
 		while( $result = $stmt->fetch() ) {
-			$articleList .= '<div class="well well-sm">' . $result->shoeId . '. <b>' . $result->brand . '</b><p>' . $result->model . '</p></div>';
+			$articleList .= '<div id = "sellPost" class="well well-sm">' . $result->shoeId . '. <b>' . $result->brand . '</b><p>' . $result->model . '</p></div>';
 		}
+		$articleList = json_encode($articleList);
 		$this->disconnect();
 
 		// return $result;
 		return $articleList;
-
 
 	}
 
@@ -150,27 +152,6 @@ class Shoe extends Restapi
 		$result = $stmt->fetch(PDO::FETCH_NUM);
 		$this->disconnect();
 
-		return $result;
-	}
-
-	private function paginationShoe($data)
-	{	
-		$page = $data["page"]; // Current page number
-		$per_page = $data["per_page"]; // Articles per page
-		
-		$table = "Shoe";
-		$columns = array("*");
-		$where = array();
-		$limOff = array($per_page, $page-1);
-
-		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff); // Select article list from $start
-		
-		$this->connect();
-		$stmt = $this->conn->prepare($sql);
-		$stmt->execute();
-		$result = $stmt->fetchAll();
-		$this->disconnect();
-		
 		return $result;
 	}
 
@@ -265,4 +246,4 @@ class Shoe extends Restapi
 
 }
 
-?>g
+?>

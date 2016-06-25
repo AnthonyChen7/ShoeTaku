@@ -21,7 +21,9 @@ $('#sellPage').on('click', function(e) { // When click on a 'a' element of the p
 		dataType: 'json', // Json format
 		timeout: 3000,
 		success: function(data) {
-			$('#articleArea').html(data.articleList);
+
+			$('#articleArea').html(jQuery.parseJSON(data['convertJSON']));
+
 			pagination += '<div class="cell_disabled"><span>First</span></div><div class="cell_disabled"><span>Previous</span></div>';
 			
 			for (var i=parseInt(page)-3; i<=parseInt(page)+3; i++) {
@@ -65,7 +67,7 @@ var pagination = (function(){
 			dataType: 'json', // Json format
 			timeout: 3000,
 			success: function(data) {
-				$('#articleArea').html(data.articleList);
+				$('#articleArea').html(jQuery.parseJSON(data['convertJSON']));
 
 				if (page == 1) pagination += '<div class="cell_disabled"><span>First</span></div><div class="cell_disabled"><span>Previous</span></div>';
 				else pagination += '<div class="cell"><a href="#" id="1">First</a></div><div class="cell"><a href="#" id="' + (page - 1) + '">Previous</span></a></div>';
