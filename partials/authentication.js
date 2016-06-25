@@ -1,4 +1,5 @@
 var authentication = (function(){
+	
 	function isFBloggedIn(){
 		FB.getLoginStatus(function(response){
 			if (response.status == "connected")
@@ -7,16 +8,25 @@ var authentication = (function(){
 				return false;		
 		});
 	}
-	function logout(){
-		if(isFBloggedIn)
+
+	function accountLogout(){
+		if(isFBloggedIn()){
 			fbLogout();
-		else
-			logout();
-		
+		}else{
+			localStorage.setItem("token",null);
+			window.location="/";
+		}
 	}
+
 	return{
 		logout: function(){
-			logout();
+			return accountLogout();
 		}
 	}
 })();
+
+$(document).ready(function(){
+	$("#logout").on("click",function(event){
+		authentication.logout();
+	});
+});
