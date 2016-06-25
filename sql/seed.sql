@@ -90,6 +90,13 @@ FOREIGN KEY (sender) REFERENCES User (userId),
 FOREIGN KEY (receiver) REFERENCES User (userId)
 );
 
+CREATE TABLE Invalid_Token
+(  
+tokenId VARCHAR(30) NOT NULL,
+expiryTime INT(30) NOT NULL,
+PRIMARY KEY (tokenId)   
+);
+
 CREATE TRIGGER After_Add_Like AFTER INSERT ON Like_Shoe 
 FOR EACH ROW
 	UPDATE Shoe
