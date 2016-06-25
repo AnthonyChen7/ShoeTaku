@@ -1,17 +1,22 @@
 <div class="user_setting">
         
      <form id="account_setting_form" method="POST" action ="/controllers/accountSettings">
-     <label>Email</label>
-     <input type="text" id="email_account" name="email" readonly>
-     <div id="email_account_error" class="account_error"></div>
      <br>
      
-     <label>Password</label>
-     <input type="password" id="password_account" name="password" readonly>
-     <a class="btn btn_red" data-toggle="modal" data-target="#modal">Change Password</a>
+                                <label>Old Password</label>
+                                <input type="password" id="old_password" name="password">
+                                <div id="error_old_password" class="account_error"></div>
+                                <br>  
      
-     <br>
-     <br>
+                                <label>New Password</label>
+                                <input type="password" id="new_password" name="password">
+                                <div id="error_new_password" class="account_error"></div>
+                                <br>  
+     
+                                <label>Confirm New Password</label>
+                                <input type="password" id="confirm_new_password" name="password">
+                                <div id="error_confirm_password" class="account_error"></div>
+                                <br> 
      
      <label>First Name</label>
      <input type="text" id="firstName_account" name="firstName" >

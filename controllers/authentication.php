@@ -21,7 +21,6 @@ class Authentication extends Restapi
 	{
 		
 		//store data inside the array to pass back
-
 		$token = NULL;
 		
 		$email = $_POST["email"];
@@ -54,16 +53,14 @@ class Authentication extends Restapi
 		if($email === $object['email'] && password_verify($password,$object['password'])){
 		
 		$tokenCreator = TokenCreator::createToken($object['userId']);
-		$token = $tokenCreator->getToken();
-						
+		$token = $tokenCreator->getToken();				
 		}
 
-		}
+	}
 
 		$this->disconnect();		
 		// return all our data to an AJAX call
 		echo $token;
-
 	}
 
 	private function storeTokenInDB()

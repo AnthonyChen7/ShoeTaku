@@ -25,11 +25,12 @@ class AccountSettings extends Restapi{
 		if($method == 'GET'){
 			$this->retrieveInfo();
 		}
-		else if($method == 'POST' && isset($_POST['old_password']) && !empty($_POST['old_password'])){
+		// else if($method == 'POST' && isset($_POST['old_password']) && !empty($_POST['old_password'])){
 			
-			$this->changePassword();
+		// 	$this->changePassword();
 			
-		}else{
+		// }
+		else{
 			$this->updateInfo();
 		}
 	}
@@ -40,7 +41,7 @@ class AccountSettings extends Restapi{
 		$parsedToken = TokenCreator::initParseToken( $token );
 
 		$table = "user";
-		$columns = array("userId","email","password","firstName","lastName","city","countryCode");
+		$columns = array("firstName","lastName","city","countryCode");
 		$where=array('userId');
 		$values = array($parsedToken->getToken()->getHeader('jti'));
 		$limOff = array();
@@ -79,27 +80,60 @@ class AccountSettings extends Restapi{
 		$lastName = $_POST['lastName'];
 		$city = $_POST['city'];
 		$country = $_POST['country'];
-		$password = $_POST['password'];
+		
+		$oldPassword = $_POST['old_password'];
+		$newPassword = $_POST['new_password'];
 		
 		$token = $_POST["token"];
 		$parsedToken = TokenCreator::initParseToken( $token );
 		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
 		
-		$table = "user";
-		$columns = array("password","firstName","lastName","city","countryCode");
-		$where=array('userId');
-		$values = array($password,$firstName,$lastName,$city,$country,$parsedToken->getToken()->getHeader('jti'));
-		
-		$sql = $this->prepareUpdateSql($table,$columns,$where);
+
 		
 		if($tokenVerifier->isTokenValid()){
 		
 		try{
 		$this->connect();
+		
+		//retrieve old password first
+		$table = "user";
+		$columns = array("password");
+		$where=array('userId');
+		$values = array($parsedToken->getToken()->getHeader('jti'));
+		$limOff = array();
+		
+		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
 		$stmt = $this->conn->prepare($sql);
 		$stmt->execute($values);
+		$result = $stmt->fetchAll();
 		
-		$result["success"] = true;
+			if(count($result)==1){
+			$result = $result[0];
+		
+		
+				if(password_verify($oldPassword,$result['password'])){
+			
+				$table = "user";
+				$columns = array("password","firstName","lastName","city","countryCode");
+				$where=array('userId');
+		
+				$sql = $this->prepareUpdateSql($table,$columns,$where);
+				$stmt = $this->conn->prepare($sql);
+		
+				$newPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+		
+				$values = array($newPassword,$firstName,$lastName,$city,$country,$parsedToken->getToken()->getHeader('jti'));
+		
+				$stmt->execute($values);
+		
+				$result["success"] = true;
+		
+				}else{
+				$result['error']= "Old password doesn't match. Changes not saved!";
+				}
+			}else{
+				$result['error']='Unable to unable to update user account!';
+			}
 
 		}catch (Exception $e) {
 			$result["success"] = false;
@@ -115,56 +149,56 @@ class AccountSettings extends Restapi{
 		
 	}
 	
-	function changePassword(){
-		$oldPassword = $_POST['old_password'];
-		$newPassword = $_POST['new_password'];
+	// function changePassword(){
+	// 	$oldPassword = $_POST['old_password'];
+	// 	$newPassword = $_POST['new_password'];
 		
-		$token = $_POST["token"];
-		$parsedToken = TokenCreator::initParseToken( $token );
-		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
+	// 	$token = $_POST["token"];
+	// 	$parsedToken = TokenCreator::initParseToken( $token );
+	// 	$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
 		
-		//queries user and checks if old password matches
-		$table = "user";
-		$columns = array("password");
-		$where=array('userId');
-		$values = array($parsedToken->getToken()->getHeader('jti'));
-		$limOff = array();
+	// 	//queries user and checks if old password matches
+	// 	$table = "user";
+	// 	$columns = array("password");
+	// 	$where=array('userId');
+	// 	$values = array($parsedToken->getToken()->getHeader('jti'));
+	// 	$limOff = array();
 		
-		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
+	// 	$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
 		
-		if($tokenVerifier->isTokenValid()){
+	// 	if($tokenVerifier->isTokenValid()){
 		
-		$this->connect();
+	// 	$this->connect();
 		
-		$stmt = $this->conn->prepare($sql);
-		$stmt->execute($values);
-		$result = $stmt->fetchAll();
+	// 	$stmt = $this->conn->prepare($sql);
+	// 	$stmt->execute($values);
+	// 	$result = $stmt->fetchAll();
 		
-		$this->disconnect();
+	// 	$this->disconnect();
 		
-		$data = array();
+	// 	$data = array();
 		
-		if(count($result)==1){
-			$result = $result[0];
+	// 	if(count($result)==1){
+	// 		$result = $result[0];
 			
-			if(password_verify($oldPassword,$result['password'])){
-				$newPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-				$data['password_match'] = true;
-				$data['new_password']=$newPassword;
-			}else{
-				$data['password_match'] = false;
-			}
+	// 		if(password_verify($oldPassword,$result['password'])){
+	// 			$newPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+	// 			$data['password_match'] = true;
+	// 			$data['new_password']=$newPassword;
+	// 		}else{
+	// 			$data['password_match'] = false;
+	// 		}
 			
-		}else{
-			$data['password_match'] = false;
-		}
+	// 	}else{
+	// 		$data['password_match'] = false;
+	// 	}
 		
-		}else{
-			$data['error']=TIMED_OUT;
-		}
+	// 	}else{
+	// 		$data['error']=TIMED_OUT;
+	// 	}
 		
-		echo json_encode($data);
-	}
+	// 	echo json_encode($data);
+	// }
 }
 
 ?>
