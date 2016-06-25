@@ -2,12 +2,12 @@
         
      <form id="account_setting_form" method="POST" action ="/controllers/accountSettings">
      <label>Email</label>
-     <input type="text" id="email_account" name="email" disabled>
+     <input type="text" id="email_account" name="email" readonly>
      <div id="email_account_error" class="account_error"></div>
      <br>
      
      <label>Password</label>
-     <input type="password" id="password_account" name="password" disabled>
+     <input type="password" id="password_account" name="password" readonly>
      <a class="btn btn_red" data-toggle="modal" data-target="#modal">Change Password</a>
      
      <br>
@@ -99,5 +99,6 @@
         
     </div>
     <script src="/components/jquery/jquery-2.2.3.js" type="text/javascript" charset="utf-8"></script>
+    <link href="/partials/login_style.css" rel="stylesheet">
     <script src="/partials/countries.js" type="text/javascript" charset="utf-8"></script>
     <script src="/partials/account.js" type="text/javascript" charset="utf-8"></script>
