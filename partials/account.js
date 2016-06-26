@@ -8,7 +8,6 @@ $(document).ready(function(){
     {
         type: 'GET',
         url:"/controllers/accountSettings",
-        // data: {"token":localStorage.getItem("token")},
         contentType:"application/json",
         data: {token:localStorage.getItem("token")},
         
@@ -72,6 +71,8 @@ $(document).ready(function(){
 		timeout: 3000,
 		success: function(data) {				
 	    console.log(data);
+        
+        var data = data;
 	   
        if(data.error != null){
          document.getElementById('save_message').innerHTML = data.error;   
