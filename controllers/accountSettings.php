@@ -19,17 +19,14 @@ class AccountSettings extends Restapi{
 		
 		$this->signer = new Sha256();
 
-		// $method = $_SERVER['REQUEST_METHOD'];
-		
-		//var_dump($_POST);
-		
-		// if($method == 'GET'){
-		// if(isset($_POST['action'])&&!empty($_POST['action'])&& $_POST['action']==='retrieve'){
+		if(isset($_POST['action'])&&!empty($_POST['action'])&& $_POST['action']==='retrieve'){
 			$this->retrieveInfo();
-		// }
-		// else{
-		// 	$this->updateInfo();
-		// }
+		}
+		else if(isset($_POST['action'])&&!empty($_POST['action'])&& $_POST['action']==='update'){
+		$this->updateInfo();
+		}else{
+			//change password
+		}
 	}
 	
 	/**
@@ -37,10 +34,7 @@ class AccountSettings extends Restapi{
 	Don't retrieve password for security concern purposes
 	*/
 	function retrieveInfo(){
-		
-		
-		
-		// $token = $_GET["token"];
+
 		$token = $_POST["token"];
 
 		$parsedToken = TokenCreator::initParseToken( $token );
@@ -79,13 +73,13 @@ class AccountSettings extends Restapi{
 			}else{
 				$result['error']= TIMED_OUT;	
 			}
-		//var_dump($result);
-		 //echo json_encode($result);
-		//echo $result;
+
 		$this->response($result,200);
 	}
 	
 	function updateInfo(){
+		
+		//var_dump($_POST);
 		
 		$result = array();
 		$firstName = $_POST['firstName'];
@@ -154,8 +148,8 @@ class AccountSettings extends Restapi{
 		}else{
 			$result['error']= TIMED_OUT;
 		}
-		
-		echo json_encode($result);
+
+		$this->response($result,200);
 		
 	}
 	

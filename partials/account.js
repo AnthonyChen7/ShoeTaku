@@ -6,19 +6,13 @@ $(document).ready(function(){
    // make ajax call to populate fields in account.html
     $.ajax(
     {
-        // type: 'GET',
         type: 'POST',
         url:"/controllers/accountSettings",
-        //contentType:"application/json",
-        data: {"token":localStorage.getItem("token"),"action":"retrieve"},
-        
+        data: {"token":localStorage.getItem("token"),"action":"retrieve"},  
         dataType: "json",
         success: function(data){
-           
-           
           var data = data;
-          console.log(data);
-           
+          console.log(data); 
            if(data.error!=null){
               document.getElementById('save_message').innerHTML = data.error; 
            }else if(data != null){
@@ -52,6 +46,7 @@ $(document).ready(function(){
 	 * Send data using AJAX call
 	 */
 	var data = {
+    "action":"update",
 	'firstName':$('#firstName_account').val(),
 	'lastName':$('#lastName_account').val(),
 	'city':$('#city_account').val(),
@@ -73,9 +68,10 @@ $(document).ready(function(){
         dataType: "json", 
 		timeout: 3000,
 		success: function(data) {				
-	    console.log(data);
+	    
         
         var data = data;
+        console.log(data);
 	   
        if(data.error != null){
          document.getElementById('save_message').innerHTML = data.error;   
@@ -88,6 +84,7 @@ $(document).ready(function(){
        
 		},
 		error: function(data) {
+            var data = data;
 			console.log(data);
             document.getElementById('save_message').innerHTML = "Error! Changes not saved!"; 
 		}
