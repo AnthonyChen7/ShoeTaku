@@ -138,7 +138,9 @@ class AccountSettings extends Restapi{
 		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
 		
 		if($tokenVerifier->isTokenValid()){
-		
+
+		try{
+			
 		$this->connect();
 		
 		$stmt = $this->conn->prepare($sql);
@@ -169,9 +171,15 @@ class AccountSettings extends Restapi{
 			$data['password_match'] = false;
 		}
 		
+		}catch(Exception $e){
+			$data['error']="Error occured on server";
+		}
+		
 		}else{
 			$data['error']=TIMED_OUT;
 		}
+		
+		
 		
 		
 		$this->disconnect();
