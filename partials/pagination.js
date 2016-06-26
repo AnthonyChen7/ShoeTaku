@@ -22,7 +22,18 @@ $('#sellPage').on('click', function(e) { // When click on a 'a' element of the p
 		timeout: 3000,
 		success: function(data) {
 
-			$('#articleArea').html(jQuery.parseJSON(data['convertJSON']));
+			var shoeInfo = jQuery.parseJSON(data['convertJSON']);
+
+			var shoePostList;
+
+			for(var i = 0; i < 4; i++){
+				var shoeId = shoeInfo["shoePostArray"][i]["shoeId"];
+				var shoeBrand = shoeInfo["shoePostArray"][i]["brand"];
+				var shoeModel = shoeInfo["shoePostArray"][i]["model"];
+				shoePostList += '<div class="well well-sm">' + shoeId + '. <b>' + shoeBrand + '</b><p>' + shoeModel + '</p></div>';
+			}
+
+			$('#articleArea').html(shoePostList);
 
 			pagination += '<div class="cell_disabled"><span>First</span></div><div class="cell_disabled"><span>Previous</span></div>';
 			
@@ -67,7 +78,26 @@ var pagination = (function(){
 			dataType: 'json', // Json format
 			timeout: 3000,
 			success: function(data) {
-				$('#articleArea').html(jQuery.parseJSON(data['convertJSON']));
+
+				console.log(jQuery.parseJSON(data['convertJSON']));
+				var shoeInfo = jQuery.parseJSON(data['convertJSON']);
+
+				var shoeId1 = shoeInfo["shoePostArray"][0]["shoeId"];
+				var shoeBrand1 = shoeInfo["shoePostArray"][0]["brand"];
+				var shoeModel1 = shoeInfo["shoePostArray"][0]["model"];
+
+				var shoeId2 = shoeInfo["shoePostArray"][1]["shoeId"];
+				var shoeBrand2 = shoeInfo["shoePostArray"][1]["brand"];
+				var shoeModel2 = shoeInfo["shoePostArray"][1]["model"];
+
+				var shoeId3 = shoeInfo["shoePostArray"][2]["shoeId"];
+				var shoeBrand3 = shoeInfo["shoePostArray"][2]["brand"];
+				var shoeModel3 = shoeInfo["shoePostArray"][2]["model"];
+
+				var shoeId4 = shoeInfo["shoePostArray"][3]["shoeId"];
+				var shoeBrand4 = shoeInfo["shoePostArray"][3]["brand"];
+				var shoeModel4 = shoeInfo["shoePostArray"][3]["model"];
+				$('#articleArea').html('<div class="well well-sm">' + shoeId1 + '. <b>' + shoeBrand1 + '</b><p>' + shoeModel1 + '</p></div>' + '<div class="well well-sm">' + shoeId2 + '. <b>' + shoeBrand2 + '</b><p>' + shoeModel2 + '</p></div>' + '<div class="well well-sm">' + shoeId3 + '. <b>' + shoeBrand3 + '</b><p>' + shoeModel3 + '</p></div>' + '<div class="well well-sm">' + shoeId4 + '. <b>' + shoeBrand4 + '</b><p>' + shoeModel4 + '</p></div>');
 
 				if (page == 1) pagination += '<div class="cell_disabled"><span>First</span></div><div class="cell_disabled"><span>Previous</span></div>';
 				else pagination += '<div class="cell"><a href="#" id="1">First</a></div><div class="cell"><a href="#" id="' + (page - 1) + '">Previous</span></a></div>';
@@ -145,6 +175,15 @@ var pagination = (function(){
 // });
 
 $('document').ready(function() {
+
+	// $('#sellPage').on('click', function(e){
+	// 	var id = 1;
+	// 	var url = "/controllers/shoe";
+	// 	if (id){
+	// 		pagination.pagination(url, id);
+	// 	}
+	// });
+
 	$('#pagination').on('click', 'a', function(e){
 		var id = e.target.id;
 		var url = "/controllers/shoe";
