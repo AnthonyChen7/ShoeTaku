@@ -16,7 +16,7 @@ $(document).ready(function(){
         success: function(data){
            console.log(data);
            
-          
+          var data = data;
            
            if(data.error!=null){
               document.getElementById('save_message').innerHTML = data.error; 
