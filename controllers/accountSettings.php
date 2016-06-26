@@ -34,6 +34,9 @@ class AccountSettings extends Restapi{
 	Don't retrieve password for security concern purposes
 	*/
 	function retrieveInfo(){
+		
+		//var_dump($_GET);
+		
 		$token = $_GET["token"];
 
 		$parsedToken = TokenCreator::initParseToken( $token );
@@ -72,8 +75,10 @@ class AccountSettings extends Restapi{
 			}else{
 				$result['error']= TIMED_OUT;	
 			}
-
-		echo json_encode($result);
+		//var_dump($result);
+		 //echo json_encode($result);
+		//echo $result;
+		$this->response($result,200);
 	}
 	
 	function updateInfo(){

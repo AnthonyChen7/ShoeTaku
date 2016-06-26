@@ -13,25 +13,7 @@ var authentication = (function(){
 		if(isFBloggedIn()){
 			fbLogout();
 		}else{
-			
-			//make ajax call to handle token invalidation
-			// $.ajax({
-			// 	type:'POST',
-			// 	url:"/controllers/logout",
-			// 	data: {"token":localStorage.getItem("token")},
-			// 	 //dataType: "json",
-			// 	 success:function(data){
-					 
-			// 		 console.log(data);
-					 
-			// 	 },
-			// 	 error:function(data){
-			// 		 console.log(data);
-			// 	 }
-			// });
-			
-			localStorage.setItem("token",null);
-			window.location="/";
+			logout();
 		}
 	}
 

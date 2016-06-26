@@ -8,15 +8,20 @@ $(document).ready(function(){
     {
         type: 'GET',
         url:"/controllers/accountSettings",
-        data: {"token":localStorage.getItem("token")},
+        // data: {"token":localStorage.getItem("token")},
+        contentType:"application/json",
+        data: {token:localStorage.getItem("token")},
+        
         dataType: "json",
         success: function(data){
            console.log(data);
            
+          
+           
            if(data.error!=null){
               document.getElementById('save_message').innerHTML = data.error; 
            }else if(data != null){
-               document.getElementById("firstName_account").value = data.firstName;
+                document.getElementById("firstName_account").value = data.firstName;
                document.getElementById("lastName_account").value = data.lastName;
                document.getElementById("city_account").value = data.city;
                document.getElementById("country_account").value = getCountryName(data.countryCode);
