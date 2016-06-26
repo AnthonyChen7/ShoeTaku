@@ -144,9 +144,7 @@ class AccountSettings extends Restapi{
 		$stmt = $this->conn->prepare($sql);
 		$stmt->execute($values);
 		$result = $stmt->fetchAll();
-		
-		$this->disconnect();
-		
+
 		$data = array();
 		
 		if(count($result)==1){
@@ -154,8 +152,15 @@ class AccountSettings extends Restapi{
 			
 			if(password_verify($oldPassword,$result['password'])){
 				$newPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+				
+				
+				//update user db
+				$values =array($newPassword,$parsedToken->getToken()->getHeader('jti'));
+				$sql = $this->prepareUpdateSql($table,$columns,$where);
+				$stmt = $this->conn->prepare($sql);
+				$stmt->execute($values);
+				
 				$data['password_match'] = true;
-				//$data['new_password']=$newPassword;
 			}else{
 				$data['password_match'] = false;
 			}
@@ -167,6 +172,9 @@ class AccountSettings extends Restapi{
 		}else{
 			$data['error']=TIMED_OUT;
 		}
+		
+		
+		$this->disconnect();
 		
 		$this->response($data,200);
 	}
