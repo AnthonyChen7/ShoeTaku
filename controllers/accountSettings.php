@@ -25,7 +25,7 @@ class AccountSettings extends Restapi{
 		else if(isset($_POST['action'])&&!empty($_POST['action'])&& $_POST['action']==='update'){
 		$this->updateInfo();
 		}else{
-			//change password
+			$this->changePassword();
 		}
 	}
 	
@@ -120,56 +120,56 @@ class AccountSettings extends Restapi{
 		
 	}
 	
-	// function changePassword(){
-	// 	$oldPassword = $_POST['old_password'];
-	// 	$newPassword = $_POST['new_password'];
+	function changePassword(){
+		$oldPassword = $_POST['old_password'];
+		$newPassword = $_POST['new_password'];
 		
-	// 	$token = $_POST["token"];
-	// 	$parsedToken = TokenCreator::initParseToken( $token );
-	// 	$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
+		$token = $_POST["token"];
+		$parsedToken = TokenCreator::initParseToken( $token );
+		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
 		
-	// 	//queries user and checks if old password matches
-	// 	$table = "user";
-	// 	$columns = array("password");
-	// 	$where=array('userId');
-	// 	$values = array($parsedToken->getToken()->getHeader('jti'));
-	// 	$limOff = array();
+		//queries user and checks if old password matches
+		$table = "user";
+		$columns = array("password");
+		$where=array('userId');
+		$values = array($parsedToken->getToken()->getHeader('jti'));
+		$limOff = array();
 		
-	// 	$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
+		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
 		
-	// 	if($tokenVerifier->isTokenValid()){
+		if($tokenVerifier->isTokenValid()){
 		
-	// 	$this->connect();
+		$this->connect();
 		
-	// 	$stmt = $this->conn->prepare($sql);
-	// 	$stmt->execute($values);
-	// 	$result = $stmt->fetchAll();
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute($values);
+		$result = $stmt->fetchAll();
 		
-	// 	$this->disconnect();
+		$this->disconnect();
 		
-	// 	$data = array();
+		$data = array();
 		
-	// 	if(count($result)==1){
-	// 		$result = $result[0];
+		if(count($result)==1){
+			$result = $result[0];
 			
-	// 		if(password_verify($oldPassword,$result['password'])){
-	// 			$newPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-	// 			$data['password_match'] = true;
-	// 			$data['new_password']=$newPassword;
-	// 		}else{
-	// 			$data['password_match'] = false;
-	// 		}
+			if(password_verify($oldPassword,$result['password'])){
+				$newPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+				$data['password_match'] = true;
+				//$data['new_password']=$newPassword;
+			}else{
+				$data['password_match'] = false;
+			}
 			
-	// 	}else{
-	// 		$data['password_match'] = false;
-	// 	}
+		}else{
+			$data['password_match'] = false;
+		}
 		
-	// 	}else{
-	// 		$data['error']=TIMED_OUT;
-	// 	}
+		}else{
+			$data['error']=TIMED_OUT;
+		}
 		
-	// 	echo json_encode($data);
-	// }
+		$this->response($data,200);
+	}
 }
 
 ?>
