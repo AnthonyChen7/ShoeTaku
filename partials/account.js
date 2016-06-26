@@ -1,7 +1,6 @@
 $(document).ready(function(){
     
     clearErrorDivs();
-    clearPasswordDivs();
     console.log(localStorage.getItem("token"));
    // make ajax call to populate fields in account.html
     $.ajax(
@@ -51,15 +50,11 @@ $(document).ready(function(){
 	'lastName':$('#lastName_account').val(),
 	'city':$('#city_account').val(),
 	'country': getKeyByValue($('#country_account').val()), //store as country code in db
-    "old_password": $("#old_password").val(),
-     "new_password": $("#new_password").val(),
     'token':localStorage.getItem("token")
 	};
     
     clearErrorDivs();
-    clearPasswordDivs();
-    
-    if(isFormValid() === true && isValidPasswordForm()==true){
+        if(isFormValid() === true){
         
         $.ajax({
 		type: 'POST',

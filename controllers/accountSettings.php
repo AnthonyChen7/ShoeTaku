@@ -79,16 +79,11 @@ class AccountSettings extends Restapi{
 	
 	function updateInfo(){
 		
-		//var_dump($_POST);
-		
 		$result = array();
 		$firstName = $_POST['firstName'];
 		$lastName = $_POST['lastName'];
 		$city = $_POST['city'];
 		$country = $_POST['country'];
-		
-		$oldPassword = $_POST['old_password'];
-		$newPassword = $_POST['new_password'];
 		
 		$token = $_POST["token"];
 		$parsedToken = TokenCreator::initParseToken( $token );
@@ -98,46 +93,18 @@ class AccountSettings extends Restapi{
 		
 		try{
 		$this->connect();
-		
-		//retrieve old password first
+
 		$table = "user";
-		$columns = array("password");
+		$columns = array("firstName","lastName","city","countryCode");
 		$where=array('userId');
-		$values = array($parsedToken->getToken()->getHeader('jti'));
-		$limOff = array();
+		$values = array($firstName,$lastName,$city,$country,$parsedToken->getToken()->getHeader('jti'));
 		
-		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
+		$sql = $this->prepareUpdateSql($table,$columns,$where);
 		$stmt = $this->conn->prepare($sql);
 		$stmt->execute($values);
-		$object = $stmt->fetchAll();
 		
-			if(count($object)==1){
-				$object = $object[0];
-		
-		
-				if(password_verify($oldPassword,$object['password'])){
-			
-					$table = "user";
-					$columns = array("password","firstName","lastName","city","countryCode");
-					$where=array('userId');
-		
-					$sql = $this->prepareUpdateSql($table,$columns,$where);
-					$stmt = $this->conn->prepare($sql);
-		
-					$newPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-		
-					$values = array($newPassword,$firstName,$lastName,$city,$country,$parsedToken->getToken()->getHeader('jti'));
-		
-					$stmt->execute($values);
-		
-					$result["success"] = true;
-		
-				}else{
-					$result['error']= "Old password doesn't match. Changes not saved!";
-				}
-			}else{
-				$result['error']='Unable to unable to update user account!';
-			}
+		$result["success"]=true;
+
 
 		}catch (Exception $e) {
 			$result["success"] = false;
