@@ -2,6 +2,14 @@
 
 require_once(__DIR__.'/restapi.php');
 
+class shoeInfo {
+
+	public $shoeID;
+	public $shoeBrand;
+	public $shoeModel;
+
+}
+
 class Shoe extends Restapi
 {
 
@@ -55,7 +63,6 @@ class Shoe extends Restapi
 					}else{
 						$start = 0;
 					}
-
 
 					$numArticles = $this->getTotalNumberOfPosts($data);
 
@@ -124,15 +131,32 @@ class Shoe extends Restapi
 		$stmt->execute();
 
 		$stmt->setFetchMode(PDO::FETCH_OBJ);
-		$articleList = '';
+
+		$shoeInfo_array = array();
+		$shoePostList_array["shoePostArray"] = array();
+
+		// {"shoePostArray" : [
+		// 	{"shoeId" : "shoeId", "brand" : "shoeBrand", "model" : "shoeModel"},
+		// 	{"shoeId" : "shoeId", "brand" : "shoeBrand", "model" : "shoeModel"},
+		// 	{"shoeId" : "shoeId", "brand" : "shoeBrand", "model" : "shoeModel"},
+		// 	{"shoeId" : "shoeId", "brand" : "shoeBrand", "model" : "shoeModel"}
+		// ]}
+		
 		while( $result = $stmt->fetch() ) {
-			$articleList .= '<div id = "sellPost" class="well well-sm">' . $result->shoeId . '. <b>' . $result->brand . '</b><p>' . $result->model . '</p></div>';
+
+			$shoeInfo_array["shoeId"] = $result->shoeId;
+			$shoeInfo_array["brand"] = $result->brand;
+			$shoeInfo_array["model"] = $result->model;
+
+			array_push($shoePostList_array["shoePostArray"], $shoeInfo_array);
+			// $articleList .= '<div id = "sellPost" class="well well-sm">' . $result->shoeId . '. <b>' . $result->brand . '</b><p>' . $result->model . '</p></div>';
 		}
-		$articleList = json_encode($articleList);
+
+
+		$json_string = json_encode($shoePostList_array);
 		$this->disconnect();
 
-		// return $result;
-		return $articleList;
+		return $json_string;
 
 	}
 
