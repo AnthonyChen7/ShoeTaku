@@ -6,16 +6,18 @@ $(document).ready(function(){
    // make ajax call to populate fields in account.html
     $.ajax(
     {
-        type: 'GET',
+        // type: 'GET',
+        type: 'POST',
         url:"/controllers/accountSettings",
-        contentType:"application/json",
-        data: {token:localStorage.getItem("token")},
+        //contentType:"application/json",
+        data: {"token":localStorage.getItem("token"),"action":"retrieve"},
         
         dataType: "json",
         success: function(data){
-           console.log(data);
+           
            
           var data = data;
+          console.log(data);
            
            if(data.error!=null){
               document.getElementById('save_message').innerHTML = data.error; 
@@ -30,6 +32,7 @@ $(document).ready(function(){
             
         },
         error: function(data){
+            var data=data;
             console.log(data);
             document.getElementById('save_message').innerHTML = "Error: Unable to retrieve account information!";
         }
@@ -94,6 +97,57 @@ $(document).ready(function(){
         document.getElementById('save_message').innerHTML = "Error! Changes not saved!";
     }
 });
+
+// $('#password_setting_form').submit(function(event){
+        
+    //  event.preventDefault();
+	// var $form = $(this),
+	// url = $form.attr('action');
+    
+    // clearPasswordDivs();
+    // document.getElementById('error_save_password').innerHTML = "";
+    
+    // if(isValidPasswordForm()===true){
+        
+    //     var data = {
+    //         "old_password": $("#old_password").val(),
+    //         "new_password": $("#new_password").val(),
+    //         'token':localStorage.getItem("token")
+    //     }
+        
+    //     $.ajax({
+    //         type:'POST',
+    //         url: url,
+    //         data: data,
+    //         dataType:"json",
+    //         success:function(data){
+    //           console.log(data);
+              
+    //           if(data.error != null){
+    //           document.getElementById('error_save_password').innerHTML = data.error;        
+    //           }
+              
+    //           else if(data.password_match === true){
+    //           $('#password_account').val(data.new_password);    
+    //           document.getElementById('error_save_password').innerHTML = "Password successfully changed!";    
+    //           }else{
+    //           document.getElementById('error_old_password').innerHTML = "Password is incorrect!";    
+    //           document.getElementById('error_save_password').innerHTML = "Password not successfully changed!";    
+    //           }
+                
+    //         },
+    //         error:function(data){
+    //             console.log(data);
+    //             document.getElementById('error_save_password').innerHTML = "Password not successfully changed!";   
+    //         }
+    //     });
+        
+        
+    // }else{
+    //     document.getElementById('error_save_password').innerHTML = "Password not successfully changed!";
+    // } 
+        
+    // });
 
 });
 
