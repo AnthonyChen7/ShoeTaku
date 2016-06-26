@@ -11,11 +11,14 @@ class ViewController
 		$method = $_SERVER['REQUEST_METHOD'];
 		if ($method == 'POST')
 		{
-			$json = file_get_contents("php://input");
-			$data = json_decode($json, TRUE);
-			if (isset($data))
+			// $json = file_get_contents("php://input");
+			// $data = json_decode($json, TRUE);
+			
+			// if (isset($data))
+			if (isset($_POST['page']))
 			{
-				$page = $data['page'];
+				// $page = $data['page'];
+				$page = $_POST['page'];
 				if ($page == "")
 					$this->html = $this->ROOT."/partials/main-page.html";
 				else

@@ -50,7 +50,8 @@ var controller= (function(){
 	}
 
 	function requestPage(page){
-		var param = JSON.stringify({page:page});
+		// var param = JSON.stringify({page:page});
+		var param = {page:page};
 		$.ajax({
 			url: controllerPhp,
 			data: param,
@@ -77,11 +78,11 @@ var controller= (function(){
 		},
 		setupAjax: function(){
 			$.ajaxSetup({
-				contentType:"application/json",
+				//contentType:"application/json",
 				async: true,
 				cache: false,
 				crossDomain: false,
-				dataType: "html",
+				//dataType: "html",
 				method: "POST",
 				timeout: 10000
 			});
