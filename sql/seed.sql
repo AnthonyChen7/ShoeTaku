@@ -95,10 +95,11 @@ FOREIGN KEY (receiver) REFERENCES User (userId)
 );
 
 CREATE TABLE Invalid_Token
-(  
+(
+dbId INT(11)  NOT NULL PRIMARY KEY AUTO_INCREMENT,
 tokenId VARCHAR(30) NOT NULL,
-expiryTime INT(30) NOT NULL,
-PRIMARY KEY (tokenId)   
+token VARCHAR(60) NOT NULL,
+expiryTime INT(30) NOT NULL
 );
 
 CREATE TRIGGER After_Add_Like AFTER INSERT ON Like_Shoe 

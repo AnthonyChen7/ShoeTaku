@@ -15,14 +15,11 @@ class Logout extends Restapi{
 	Store it in db
 	*/
 	private function storeTokenInDB(){
-		
-		$json = file_get_contents("php://input"); 
-		$jsonData = json_decode($json,true);
 
-		$tokenCreator = TokenCreator::initParseToken($jsonData["token"]);
+		$tokenCreator = TokenCreator::initParseToken($_POST["token"]);
 		$parsedToken = $tokenCreator->getToken();		
 		$table="invalid_token";
-		$columns = array('tokenId',"expiryTime");
+		$columns = array('tokenId',"token","expiryTime");
 		$where = array('tokenId');
 		$limOff = array();
 			
@@ -36,30 +33,21 @@ class Logout extends Restapi{
 			
 			if($currTime <= $expiryTime){
 				//echo "not expired";
-				
-				//check if it exists in db
-				$values = array($parsedToken->getHeader('jti'));
-				$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);
-				$stmt = $this->conn->prepare($sql);
-				$stmt->execute($values);
-				$result = $stmt->fetchAll();
-				if(count($result)===1){
-					//echo "exists";
-				}else{
-					//echo "not exists";
-					
+
 					//register it to db
-					$values = array($parsedToken->getHeader('jti'), $parsedToken);
-				}
-				
-			}else{
-				//echo "expired";
+					$values = array($parsedToken->getHeader('jti'), $parsedToken,$expiryTime);
+					$sql = $this->prepareInsertSql($table, $columns, $where, $limOff);
+					$stmt = $this->conn->prepare($sql);
+					$stmt->execute($values);
+					
+				$this->disconnect();
+				$this->response("success",200);
 			}
 		}catch(Exception $e){
-			
+			$this->response("error occurred",200);
 		}
 	
-	$this->disconnect();
+	
 	
 	}
 }

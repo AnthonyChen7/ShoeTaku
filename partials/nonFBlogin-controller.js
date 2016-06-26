@@ -246,30 +246,27 @@ function isNumberKey(evt)
       }
 
 function logout(){
-	
-				localStorage.setItem("token",null);
-			window.location="/";
-	
-	// 			console.log(localStorage.getItem("token"));
-	// 			 var data = {token: localStorage.getItem("token")};
-	// 		//make ajax call to handle token invalidation
-	// 	$.ajax({
-	// 	type: 'POST',
-	// 	data: JSON.stringify(data),
-	// 	//data: data,
-	// 	url: "/controllers/logout",
-	// 	contentType: 'application/json',
-	// 	//  dataType: 'json',
-	// 	success: function(data) {
-	// 		console.log(data); 		
 
-	// 	},
-	// 	error: function(data) {
+		var data = {token: localStorage.getItem("token")};
+			//make ajax call to handle token invalidation
+		$.ajax({
+		type: 'POST',
+		data: data,
+		url: "/controllers/logout",
+		dataType: 'json',
+		success: function(data) {
+			var data = data;
+			console.log(data);
+			localStorage.setItem("token",null);
+			window.location="/"; 		
 
-	// 		console.log(data);
+		},
+		error: function(data) {
+			var data = data;
+			console.log(data);
 			
-	// 	}
-	// });
+		}
+	});
 
 			
 

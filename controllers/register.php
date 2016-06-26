@@ -50,7 +50,7 @@ class Register extends Restapi{
 		
 		$result = $stmt->execute($values);
 		
-		//retrieve user ID....
+		//retrieve user ID so we can create token....
 		$columns=array("userId");
 		$values = array($email);
 		$where=array("email");

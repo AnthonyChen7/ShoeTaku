@@ -33,6 +33,11 @@ function isTokenValid(){
 	}
 }
 
+//make public for now...
+function isTokenValid(){
+	$result = true;
+}
+
 }
 
 ?>
