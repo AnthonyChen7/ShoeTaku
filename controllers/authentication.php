@@ -48,81 +48,87 @@ class Authentication extends Restapi{
 	private function fBLogin(){
 		
 		if (isset($_POST)){
+			$id = $_POST["id"];
 			$email = $_POST["email"];
 			$fName = $_POST["first_name"];
 			$lName = $_POST["last_name"];
-			$isFacebook = True;
+			$isMerged = false;
 			if (isset($_POST["location"])){
 				$city = $_POST["location"]["city"];
 				$countryCode = $_POST["location"]["country_code"];
-				$insertColumns = array("email", "firstName", "lastName", "city", "countryCode", "isFacebook");
-				$insertValues = array($email, $fName, $lName, $city, $countryCode, $isFacebook);
+				$insertColumns = array("id", "email", "firstName", "lastName", "city", "countryCode", "isMerged");
+				$insertValues = array($email, $fName, $lName, $city, $countryCode, $isMerged);
 			}else{
-				$insertColumns = array("email", "firstName", "lastName", "isFacebook");
-				$insertValues = array($email, $fName, $lName, $isFacebook);
+				$insertColumns = array("id", "email", "firstName", "lastName", "isMerged");
+				$insertValues = array($id, $email, $fName, $lName, $isMerged);
 			}
 			
-			
-			$table = "User";
-			$columns = array("userId","email","isFacebook", "isMerged");
+			$userTable = "User";
+			$fbTable = "FBUser";
+			$userColumns = array("userId");
+			$fbColumns = array("id","isMerged");
 			$where = array("email");
 			$values = array($email);
 			$limOff = array();
-			$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);
 
-			$insertSql = $this->prepareInsertSql($table, $insertColumns);
 			$result;
 			$data;
 			
 			try{
-				$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);		
+				$sql = $this->prepareSelectSql($fbTable, $fbColumns, $where, $limOff);		
 				$this->connect();
 				$stmt = $this->conn->prepare($sql);
 				$stmt->execute($values);
 				$result = $stmt->fetch(PDO::FETCH_ASSOC);
+				$this->disconnect();
+
 			}catch (Exception $e){
 				$this->response($e->getMessage(), 500);
 			}
 
-			// account already in db
+			// account already in db FBUser table
 			if (isset($result) && $result != false){
-				if (!$result["isMerged"] && $result["isFacebook"]){
-					// User has logged in through FB before
-					// TODO: Code to give token back to the user
-				
-					$result = array(
-						"isMerged" => $result["isMerged"],
-						"isFacebook" => $result["isFacebook"]
-						);
-				}else if (!$result["isMerged"] && !$result["isFacebook"]){
-					// Have to merge fb with nonfb
-					$data = array(
-						"isMerged" => $result["isMerged"],
-						"isFacebook" => $result["isFacebook"]
-						);
-				
-				}else{
-					// User's account already merged w nonFB account
-					// TODO: Code to give token back to the user
-					$result = array(
-						"isMerged" => $result["isMerged"],
-						"isFacebook" => $result["isFacebook"]
-						);
+				if (!$result["isMerged"]){
+					// check if in User table
+					try{
+						$checkSql = $this->prepareSelectSql($userTable, $userColumns, $where, $limOff);
+						$this->connect();
+						$stmt = $this->conn->prepare($checkSql);
+						$stmt->execute($values);
+						$check = $stmt->fetch(PDO::FETCH_ASSOC);
+						$this->disconnect();
 
+						if (isset($check) && $check != false && isset($check["userId"])){
+							$this->mergeAccount($id, $check["userId"]);	
+							// TODO: Code to give token back to the user
+
+						}else{
+							// No nonFB account
+							// TODO: Code to give token back to the user
+							$result = true;
+
+						}
+
+					}catch (Exception $e){
+						$this->response($e->getMessage(), 500);
+					}
+				}else{
+					//already merged
+					// TODO: Code to give token back to the user
+					$result = true;
 				}
 			}else{
 				// account not in db. Insert to db
 				try{
+					$insertSql = $this->prepareInsertSql($fbTable, $insertColumns);
 					$this->connect();
 					$stmt = $this->conn->prepare($insertSql);
-					$result = $stmt->execute($insertValues);
-					
-					if ($result == true){
+					$insertResult = $stmt->execute($insertValues);
+					$this->disconnect();
+
+					if ($insertResult == true){
 						// TODO: Code to give token back to the user
-						$result = array(
-							"isMerged" => false,
-							"isFacebook" => true
-							);
+						$result = true;
 					
 					}else{
 						$message = "Please refresh and try again";
@@ -139,8 +145,25 @@ class Authentication extends Restapi{
 		
 	}
 
-	private function mergeAccount(){
+	private function mergeAccount($id, $userId){
+		try{
+			$fbTable = "FBUser";
+			$columns = array("userId","isMerged");
+			$where = array("id");
+			$values = array($userId, true, $id);
+			$sql = $this->prepareUpdateSql($fbTable, $columns, $where);
 
+			$this->connect();
+			$stmt = $this->conn->prepare($sql);
+			$result = $stmt->execute($values);
+			$this->disconnect();
+
+			$this->response($result, 200);
+
+		}catch (Exception $e){
+			$this->response($e->getMessage(), 500);
+		}
+		
 	}
 
 	private function storeTokenInDB(){

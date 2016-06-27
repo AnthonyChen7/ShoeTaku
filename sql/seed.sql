@@ -15,15 +15,19 @@ password VARCHAR(64),
 firstName VARCHAR(50) NOT NULL,
 lastName VARCHAR(50) NOT NULL,
 city VARCHAR(10),
-countryCode VARCHAR(10),
-isFacebook TINYINT NOT NULL DEFAULT 0,
-isMerged TINYINT NOT NULL DEFAULT 0 
+countryCode VARCHAR(10)
 );
 
-
-
-INSERT INTO User (email, password, firstName, lastName, city, countryCode) VALUES ("edwardchoi90@gmail.com","test","FN","LN","Vancouver","CA");
-INSERT INTO User (email, password, firstName, lastName, city, countryCode) VALUES ("test@test.com","test","FN","LN","Vancouver","CA");
+CREATE TABLE FBUser (
+id INT(11) NOT NULL PRIMARY KEY,
+email VARCHAR(50) NOT NULL UNIQUE,
+firstName VARCHAR(50) NOT NULL,
+lastName VARCHAR(50) NOT NULL,
+city VARCHAR(10),
+countryCode VARCHAR(10),
+userId INT(11),
+isMerged TINYINT NOT NULL DEFAULT 0 
+);
 
 CREATE TABLE Shoe (
 shoeId INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,

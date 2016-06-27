@@ -50,8 +50,7 @@ var login_event = function(response) {
         timeout: 3000,
         success: function(response) {
           if (response){
-            console.log(response);
-            if (response["isFacebook"]){
+            if (response == true){
               window.location="/partials/main-page.html"
             }else{
 
