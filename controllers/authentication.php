@@ -81,7 +81,7 @@ class Authentication extends Restapi{
 				$stmt->execute($values);
 				$result = $stmt->fetch(PDO::FETCH_ASSOC);
 			}catch (Exception $e){
-				$this->response(500, $e->getMessage());
+				$this->response($e->getMessage(), 500);
 			}
 
 			// account already in db
@@ -126,15 +126,15 @@ class Authentication extends Restapi{
 					
 					}else{
 						$message = "Please refresh and try again";
-						$this->response(500, $message);
+						$this->response($message, 500);
 					}
 
 				}catch (Exception $e){
-					$this->response(500, $e->getMessage());
+					$this->response($e->getMessage(), 500);
 				}
 			}
 
-			$this->response(200, $data);
+			$this->response($result,200);
 		}
 		
 	}
