@@ -38,12 +38,72 @@ FB.Event.subscribe('auth.logout', logout_event);
  * On successful login, redirect user to main page
  */
 var login_event = function(response) {
-  
-  if (response.status === 'connected') {
-  console.log(response);
-  window.location="/partials/main-page.html";
+  if (response.status === 'connected'){
+      var url = "/" + response.authResponse.userID;
+      var params = {fields: "email,first_name,last_name,location"}
+      FB.api(url, params, function(response) {
+        url = "/controllers/authentication";
+        $.ajax({ 
+        type: 'POST',
+        url: url, // URL to the PHP file which will insert new value in the database
+        data: response, // We send the data string
+        timeout: 3000,
+        success: function(response) {
+          if (response){
+            var data = json_decode(response);
+            if (data["isFacebook"]){
+              window.location="/partials/main-page.html"
+            }else{
+
+            }
+
+          }
+        },
+        error: function(data) {
+          // for debugging purpose
+          alert("error");
+        }
+      });
+    });
   }
+
+  //window.location="/partials/main-page.html"
+  // if (response.status === 'connected') {
+  //   var url = "/controllers/authentcation";
+  //   var data = {
+  //     email:
+  //     fName:
+  //     lName:
+  //     city:
+  //     countryCode:
+  //     }
+  //   $.ajax({ // jQuery Ajax
+  //     type: 'POST',
+  //     url: url, // URL to the PHP file which will insert new value in the database
+  //     data: data, // We send the data string
+  //     dataType: 'json', // Json format
+  //     timeout: 3000,
+  //     success: function(data) {
+
+        
+  //       window.location="/partials/main-page.html";
+  //     },
+  //     error: function(data) {
+  //       // for debugging purpose
+  //       alert("error");
+  //     }
+  //   });
+  // }
   
+}
+
+
+  function showDetails() {
+    FB.api('/me', {fields: fields}, function(details) {
+      // output the response
+      $('#userdata').html(JSON.stringify(details, null, '\t'));
+      $('#fb-login').attr('style', 'display:none;');
+    });
 }
 
 /**
@@ -77,7 +137,7 @@ function loginStatusChangeCallback(response) {
     
     //Ensures page will not attempt to keep re-loading     
       if(window.location.href.indexOf("/partials/main-page.html") <= -1) {
-       window.location="/partials/main-page.html";
+       //window.location="/partials/main-page.html";
     }     
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
