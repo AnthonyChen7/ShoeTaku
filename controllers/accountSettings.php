@@ -73,7 +73,7 @@ class AccountSettings extends Restapi{
 			}else{
 				$result['error']= TIMED_OUT;	
 			}
-
+			
 		$this->response($result,200);
 	}
 	
