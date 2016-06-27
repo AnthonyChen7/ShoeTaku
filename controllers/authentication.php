@@ -91,23 +91,23 @@ class Authentication extends Restapi{
 					// TODO: Code to give token back to the user
 				
 					$result = array(
-						"isMerged" => $result["isMerged"];
-						"isFacebook" => $result["isFacebook"];
+						"isMerged" => $result["isMerged"],
+						"isFacebook" => $result["isFacebook"]
 						);
 				}else if (!$result["isMerged"] && !$result["isFacebook"]){
 					// Have to merge fb with nonfb
 					$data = array(
-						"isMerged" => $result["isMerged"];
-						"isFacebook" => $result["isFacebook"];
+						"isMerged" => $result["isMerged"],
+						"isFacebook" => $result["isFacebook"]
 						);
 				
 				}else{
 					// User's account already merged w nonFB account
 					// TODO: Code to give token back to the user
 					$result = array(
-						"isMerged" => $result["isMerged"];
-						"isFacebook" => $result["isFacebook"];
-						)
+						"isMerged" => $result["isMerged"],
+						"isFacebook" => $result["isFacebook"]
+						);
 
 				}
 			}else{
@@ -120,8 +120,8 @@ class Authentication extends Restapi{
 					if ($result == true){
 						// TODO: Code to give token back to the user
 						$result = array(
-							"isMerged" => false;
-							"isFacebook" => true;
+							"isMerged" => false,
+							"isFacebook" => true
 							);
 					
 					}else{
