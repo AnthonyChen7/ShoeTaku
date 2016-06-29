@@ -10,8 +10,10 @@ use Lcobucci\JWT\ValidationData;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Parser;
 
+define("NON_FB_TABLE", "user");
+
 class AccountSettings extends Restapi{
-	
+		
 	private $signer;
 
 	function __construct(){
@@ -38,8 +40,13 @@ class AccountSettings extends Restapi{
 		$token = $_POST["token"];
 
 		$parsedToken = TokenCreator::initParseToken( $token );
+		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
 		
-		$result = $this->retrieveNonFbInfo($token, $parsedToken);
+		if($tokenVerifier->isTokenValid() && $parsedToken->getToken()->getClaim('isFb')===false ){
+			$result = $this->retrieveNonFbInfo($parsedToken);
+		}else{
+			$result['error']= TIMED_OUT;	
+		}
 	
 		$this->response($result,200);
 	}
@@ -47,38 +54,13 @@ class AccountSettings extends Restapi{
 	function updateInfo(){
 		
 		$result = array();
-		$firstName = $_POST['firstName'];
-		$lastName = $_POST['lastName'];
-		$city = $_POST['city'];
-		$country = $_POST['country'];
 		
 		$token = $_POST["token"];
 		$parsedToken = TokenCreator::initParseToken( $token );
 		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
 
 		if($tokenVerifier->isTokenValid() && $parsedToken->getToken()->getClaim('isFb')===false){
-		
-		try{
-		$this->connect();
-
-		$table = "user";
-		$columns = array("firstName","lastName","city","countryCode");
-		$where=array('userId');
-		$values = array($firstName,$lastName,$city,$country,$parsedToken->getToken()->getHeader('jti'));
-		
-		$sql = $this->prepareUpdateSql($table,$columns,$where);
-		$stmt = $this->conn->prepare($sql);
-		$stmt->execute($values);
-		
-		$result["success"]=true;
-
-
-		}catch (Exception $e) {
-			$result["success"] = false;
-		}
-		
-		$this->disconnect();
-		
+		$result = $this->updateNonFbInfo($parsedToken);		
 		}else{
 			$result['error']= TIMED_OUT;
 			$this->response($e->getMessage(), 500);
@@ -97,14 +79,14 @@ class AccountSettings extends Restapi{
 		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
 		
 		//queries user and checks if old password matches
-		$table = "user";
 		$columns = array("password");
 		$where=array('userId');
 		$values = array($parsedToken->getToken()->getHeader('jti'));
 		$limOff = array();
 		
-		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
+		$sql = $this->prepareSelectSql(NON_FB_TABLE,$columns,$where,$limOff);
 		
+		//only non-fb users can change password
 		if($tokenVerifier->isTokenValid() && $parsedToken->getToken()->getClaim('isFb')===false){
 
 		try{
@@ -125,7 +107,7 @@ class AccountSettings extends Restapi{
 
 				//update user db
 				$values =array($newPassword,$parsedToken->getToken()->getHeader('jti'));
-				$sql = $this->prepareUpdateSql($table,$columns,$where);
+				$sql = $this->prepareUpdateSql(NON_FB_TABLE,$columns,$where);
 				$stmt = $this->conn->prepare($sql);
 				$stmt->execute($values);
 				
@@ -147,27 +129,18 @@ class AccountSettings extends Restapi{
 			$data['error']=TIMED_OUT;
 		}
 		
-		
-		
-		
 		$this->disconnect();
 		
 		$this->response($data,200);
 	}
 	
-	private function retrieveNonFbInfo($token, $parsedToken){
-		$table = "user";
+	private function retrieveNonFbInfo($parsedToken){
 		$columns = array("firstName","lastName","city","countryCode");
 		$where=array('userId');
 		$values = array($parsedToken->getToken()->getHeader('jti'));
 		$limOff = array();
 		
-		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
-		
-		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
-		
-			if($tokenVerifier->isTokenValid() && $parsedToken->getToken()->getClaim('isFb')===false ){
-				
+		$sql = $this->prepareSelectSql(NON_FB_TABLE,$columns,$where,$limOff);
 				try{
 			
 					$this->connect();
@@ -187,12 +160,38 @@ class AccountSettings extends Restapi{
 				}else{
 					$result = null;
 				}
-			
-			}else{
-				$result['error']= TIMED_OUT;	
-			}
-			
+
 			return $result;
+	}
+	
+	private function updateNonFbInfo($parsedToken){
+		$result = array();
+		$firstName = $_POST['firstName'];
+		$lastName = $_POST['lastName'];
+		$city = $_POST['city'];
+		$country = $_POST['country'];
+		
+		try{
+		$this->connect();
+
+		$columns = array("firstName","lastName","city","countryCode");
+		$where=array('userId');
+		$values = array($firstName,$lastName,$city,$country,$parsedToken->getToken()->getHeader('jti'));
+		
+		$sql = $this->prepareUpdateSql(NON_FB_TABLE,$columns,$where);
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute($values);
+		
+		$result["success"]=true;
+
+
+		}catch (Exception $e) {
+			$result["success"] = false;
+		}
+		
+		$this->disconnect();
+		
+		return $result;
 	}
 }
 

@@ -32,7 +32,6 @@ class Logout extends Restapi{
 		$this->connect();
 			
 			if($currTime <= $expiryTime){
-				//echo "not expired";
 
 					//register it to db
 					$values = array($parsedToken->getHeader('jti'), $parsedToken,$expiryTime);

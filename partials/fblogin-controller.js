@@ -5,7 +5,7 @@ function fbLogout() {
         if (response && response.status === 'connected') {
             FB.logout(function(response) {
                 //document.location.reload();
-                // window.location="/";
+                 window.location="/";
             });
         }
     });
@@ -135,9 +135,36 @@ function loginStatusChangeCallback(response) {
     // Logged into your app and Facebook.
     
     //Ensures page will not attempt to keep re-loading     
-      if(window.location.href.indexOf("/partials/main-page.html") <= -1) {
+      // if(window.location.href.indexOf("/partials/main-page.html") <= -1) {
        //window.location="/partials/main-page.html";
-    }     
+    // }
+    
+          var url = "/" + response.authResponse.userID;
+      var params = {fields: "email,first_name,last_name,location"}
+      FB.api(url, params, function(response) {
+        url = "/controllers/authentication";
+        $.ajax({ 
+        type: 'POST',
+        url: url, // URL to the PHP file which will insert new value in the database
+        data: response, // We send the data string
+        timeout: 3000,
+        success: function(response) {
+          if (response){
+            if (response == true){
+              window.location="/partials/main-page.html"
+            }else{
+
+            }
+
+          }
+        },
+        error: function(data) {
+          // for debugging purpose
+          alert("error");
+        }
+      });
+    });
+         
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
   } else {

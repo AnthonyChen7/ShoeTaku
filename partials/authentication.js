@@ -1,20 +1,18 @@
 var authentication = (function(){
 	
-	function isFBloggedIn(){
-		FB.getLoginStatus(function(response){
-			if (response.status == "connected")
-				return true;
-			else
-				return false;		
-		});
-	}
-
 	function accountLogout(){
-		if(isFBloggedIn()){
-			fbLogout();
-		}else{
-			logout();
-		}
+		
+		FB.getLoginStatus(function(response){
+			console.log(response);
+			console.log(response.status === "connected");
+			if (response.status === "connected"){
+				fbLogout();
+			}	
+			else{
+				logout();
+			}
+						
+		});
 	}
 
 	return{
