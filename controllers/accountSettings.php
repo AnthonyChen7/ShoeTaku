@@ -38,42 +38,9 @@ class AccountSettings extends Restapi{
 		$token = $_POST["token"];
 
 		$parsedToken = TokenCreator::initParseToken( $token );
-
-		$table = "user";
-		$columns = array("firstName","lastName","city","countryCode");
-		$where=array('userId');
-		$values = array($parsedToken->getToken()->getHeader('jti'));
-		$limOff = array();
 		
-		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
-		
-		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
-		
-			if($tokenVerifier->isTokenValid()){
-				
-				try{
-			
-					$this->connect();
-		
-					$stmt = $this->conn->prepare($sql);
-					$stmt->execute($values);
-					$result = $stmt->fetchAll();
-				}catch(Exception $e){
-					$result = null;
-				}
-		
-			$this->disconnect();
-		
-				if(count($result)==1){
-					$result = $result[0];
-				}else{
-					$result = null;
-				}
-			
-			}else{
-				$result['error']= TIMED_OUT;	
-			}
-			
+		$result = $this->retrieveNonFbInfo($token, $parsedToken);
+	
 		$this->response($result,200);
 	}
 	
@@ -89,7 +56,7 @@ class AccountSettings extends Restapi{
 		$parsedToken = TokenCreator::initParseToken( $token );
 		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
 
-		if($tokenVerifier->isTokenValid()){
+		if($tokenVerifier->isTokenValid() && $parsedToken->getToken()->getClaim('isFb')===false){
 		
 		try{
 		$this->connect();
@@ -114,6 +81,7 @@ class AccountSettings extends Restapi{
 		
 		}else{
 			$result['error']= TIMED_OUT;
+			$this->response($e->getMessage(), 500);
 		}
 
 		$this->response($result,200);
@@ -137,7 +105,7 @@ class AccountSettings extends Restapi{
 		
 		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
 		
-		if($tokenVerifier->isTokenValid()){
+		if($tokenVerifier->isTokenValid() && $parsedToken->getToken()->getClaim('isFb')===false){
 
 		try{
 			
@@ -154,8 +122,7 @@ class AccountSettings extends Restapi{
 			
 			if(password_verify($oldPassword,$result['password'])){
 				$newPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-				
-				
+
 				//update user db
 				$values =array($newPassword,$parsedToken->getToken()->getHeader('jti'));
 				$sql = $this->prepareUpdateSql($table,$columns,$where);
@@ -173,6 +140,7 @@ class AccountSettings extends Restapi{
 		
 		}catch(Exception $e){
 			$data['error']="Error occured on server";
+			$this->response($e->getMessage(), 500);
 		}
 		
 		}else{
@@ -185,6 +153,46 @@ class AccountSettings extends Restapi{
 		$this->disconnect();
 		
 		$this->response($data,200);
+	}
+	
+	private function retrieveNonFbInfo($token, $parsedToken){
+		$table = "user";
+		$columns = array("firstName","lastName","city","countryCode");
+		$where=array('userId');
+		$values = array($parsedToken->getToken()->getHeader('jti'));
+		$limOff = array();
+		
+		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
+		
+		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
+		
+			if($tokenVerifier->isTokenValid() && $parsedToken->getToken()->getClaim('isFb')===false ){
+				
+				try{
+			
+					$this->connect();
+		
+					$stmt = $this->conn->prepare($sql);
+					$stmt->execute($values);
+					$result = $stmt->fetchAll();
+				}catch(Exception $e){
+					$result = null;
+					$this->response($e->getMessage(), 500);
+				}
+		
+			$this->disconnect();
+		
+				if(count($result)==1){
+					$result = $result[0];
+				}else{
+					$result = null;
+				}
+			
+			}else{
+				$result['error']= TIMED_OUT;	
+			}
+			
+			return $result;
 	}
 }
 

@@ -24,13 +24,14 @@ function __construct(){
 		$this->signer = new Sha256();
 }
 
-public static function createToken( $userId ) {
+public static function createToken( $userId, $isFb ) {
     	$instance = new self();
     	$instance->token = (new Builder())
 						->setIssuer(ISSUER) 
 						->setId($userId, true)
                         ->setIssuedAt(time()) 
-                        ->setExpiration(time() + EXPIRATION_TIME) 
+                        ->setExpiration(time() + EXPIRATION_TIME)
+						->set('isFb', $isFb) 
 						->sign($instance->signer, RANDOM_STRING) 
                         ->getToken();
 

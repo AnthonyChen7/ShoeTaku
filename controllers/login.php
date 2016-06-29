@@ -56,7 +56,7 @@ class Login extends Restapi{
 			
 			if($email === $object['email'] && password_verify($password,$object['password'])){
 		
-				$tokenCreator = TokenCreator::createToken($object['userId']);
+				$tokenCreator = TokenCreator::createToken($object['userId'],false);
 				$token = $tokenCreator->getToken();
 						
 			}
@@ -65,6 +65,7 @@ class Login extends Restapi{
 		
 		}catch(Exception $e){
 			$token = null;
+			$this->response($e->getMessage(), 500);
 		}
 
 		$this->disconnect();		
