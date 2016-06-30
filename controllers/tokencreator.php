@@ -2,7 +2,7 @@
 
 //this class will create a JWT and convert a JWT into a string
 
-require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\autoload.php' );
+require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '/vendor/autoload.php' );
 
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;

@@ -46,7 +46,6 @@ class Authentication extends Restapi{
 	}
 
 	private function fBLogin(){
-		
 		if (isset($_POST)){
 			$id = $_POST["id"];
 			$email = $_POST["email"];
@@ -66,7 +65,7 @@ class Authentication extends Restapi{
 			$userTable = "User";
 			$fbTable = "FBUser";
 			$userColumns = array("userId");
-			$fbColumns = array("id","isMerged");
+			$fbColumns = array("id","userId","isMerged");
 			$where = array("email");
 			$values = array($email);
 			$limOff = array();
@@ -85,7 +84,6 @@ class Authentication extends Restapi{
 			}catch (Exception $e){
 				$this->response($e->getMessage(), 500);
 			}
-
 			// account already in db FBUser table
 			if (isset($result) && $result != false){
 				if (!$result["isMerged"]){
@@ -99,14 +97,23 @@ class Authentication extends Restapi{
 						$this->disconnect();
 
 						if (isset($check) && $check != false && isset($check["userId"])){
-							$this->mergeAccount($id, $check["userId"]);	
-							// TODO: Code to give token back to the user
+							// merge accounts
+							$this->mergeAccount($id, $check["userId"]);
+							$tokenCreator = TokenCreator::createToken($check['userId']);
+							$token = $tokenCreator->getToken();
+							$result = array(
+								"token"=> $token,
+								"isFacebook" => false
+								);
 
 						}else{
 							// No nonFB account
-							// TODO: Code to give token back to the user
-							$result = true;
-
+							$tokenCreator = TokenCreator::createToken($id);
+							$token = $tokenCreator->getToken();
+							$result = array(
+								"token" => $token,
+								"isFacebook" => true
+								);
 						}
 
 					}catch (Exception $e){
@@ -114,8 +121,12 @@ class Authentication extends Restapi{
 					}
 				}else{
 					//already merged
-					// TODO: Code to give token back to the user
-					$result = true;
+					$tokenCreator = TokenCreator::createToken($check["userId"]);
+					$token = $tokenCreator->getToken();
+					$result = array(
+						"token" => $token,
+						"isFacebook" => false
+						);
 				}
 			}else{
 				// account not in db. Insert to db
@@ -127,8 +138,12 @@ class Authentication extends Restapi{
 					$this->disconnect();
 
 					if ($insertResult == true){
-						// TODO: Code to give token back to the user
-						$result = true;
+						$tokenCreator = TokenCreator::createToken($id);
+						$token = $tokenCreator->getToken();
+						$result = array(
+							"token" => $token,
+							"isFacebook" => true
+							);
 					
 					}else{
 						$message = "Please refresh and try again";
@@ -139,7 +154,6 @@ class Authentication extends Restapi{
 					$this->response($e->getMessage(), 500);
 				}
 			}
-
 			$this->response($result,200);
 		}
 		
@@ -157,8 +171,6 @@ class Authentication extends Restapi{
 			$stmt = $this->conn->prepare($sql);
 			$result = $stmt->execute($values);
 			$this->disconnect();
-
-			$this->response($result, 200);
 
 		}catch (Exception $e){
 			$this->response($e->getMessage(), 500);
