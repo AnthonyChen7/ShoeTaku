@@ -99,21 +99,15 @@ class Authentication extends Restapi{
 						if (isset($check) && $check != false && isset($check["userId"])){
 							// merge accounts
 							$this->mergeAccount($id, $check["userId"]);
-							$tokenCreator = TokenCreator::createToken($check['userId']);
-							$token = $tokenCreator->getToken();
-							$result = array(
-								"token"=> $token,
-								"isFacebook" => false
-								);
+							$isFacebook = false;
+							$tokenCreator = TokenCreator::createToken($check['userId'], $isFacebook);
+							$result = $tokenCreator->getToken();
 
 						}else{
 							// No nonFB account
-							$tokenCreator = TokenCreator::createToken($id);
-							$token = $tokenCreator->getToken();
-							$result = array(
-								"token" => $token,
-								"isFacebook" => true
-								);
+							$isFacebook = true;
+							$tokenCreator = TokenCreator::createToken($id, $isFacebook);
+							$result = $tokenCreator->getToken();
 						}
 
 					}catch (Exception $e){
@@ -121,12 +115,9 @@ class Authentication extends Restapi{
 					}
 				}else{
 					//already merged
-					$tokenCreator = TokenCreator::createToken($check["userId"]);
-					$token = $tokenCreator->getToken();
-					$result = array(
-						"token" => $token,
-						"isFacebook" => false
-						);
+					$isFacebook = false;
+					$tokenCreator = TokenCreator::createToken($check["userId"], $isFacebook);
+					$result = $tokenCreator->getToken();
 				}
 			}else{
 				// account not in db. Insert to db
@@ -136,14 +127,11 @@ class Authentication extends Restapi{
 					$stmt = $this->conn->prepare($insertSql);
 					$insertResult = $stmt->execute($insertValues);
 					$this->disconnect();
+					$isFacebook = true;
 
 					if ($insertResult == true){
-						$tokenCreator = TokenCreator::createToken($id);
-						$token = $tokenCreator->getToken();
-						$result = array(
-							"token" => $token,
-							"isFacebook" => true
-							);
+						$tokenCreator = TokenCreator::createToken($id, $isFacebook);
+						$result = $tokenCreator->getToken();
 					
 					}else{
 						$message = "Please refresh and try again";
