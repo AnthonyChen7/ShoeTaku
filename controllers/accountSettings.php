@@ -1,7 +1,7 @@
 <?php 
 
 
-require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\autoload.php' );
+require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '/vendor/autoload.php' );
 require_once(__DIR__.'/restapi.php');
 include_once __DIR__.'/tokencreator.php';
 include_once __DIR__.'/tokenverify.php';

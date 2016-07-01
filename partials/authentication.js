@@ -1,18 +1,17 @@
 var authentication = (function(){
 	
 	function accountLogout(){
-		
-		FB.getLoginStatus(function(response){
-			console.log(response);
-			console.log(response.status === "connected");
-			if (response.status === "connected"){
-				fbLogout();
-			}	
-			else{
-				logout();
-			}
-						
-		});
+		FB.getLoginStatus(function(response) {
+	        if (response && response.status === 'connected') {
+	            FB.logout(function(response) {
+	            	localStorage.setItem("token", null);
+	                window.location="/";
+	            });
+	        }else {
+	        	localStorage.setItem("token", null);
+	            window.location="/";
+	        }
+    	});
 	}
 
 	return{

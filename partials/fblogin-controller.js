@@ -52,14 +52,16 @@ var login_event = function(response) {
           if (response){
             if (response == true){
               //window.location="/partials/main-page.html"
+              localStorage.setItem("token",response["token"]);
+            window.location="/partials/main-page.html"
             }else{
 
             }
-
           }
         },
-        error: function(data) {
+        error: function(response) {
           // for debugging purpose
+          console.log(response);
           alert("error");
           console.log(data);
         }
@@ -140,7 +142,7 @@ function loginStatusChangeCallback(response) {
        //window.location="/partials/main-page.html";
     // }
     
-          var url = "/" + response.authResponse.userID;
+      var url = "/" + response.authResponse.userID;
       var params = {fields: "email,first_name,last_name,location"}
       FB.api(url, params, function(response) {
         url = "/controllers/authentication";
