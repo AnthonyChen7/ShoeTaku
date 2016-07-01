@@ -36,9 +36,9 @@ class AccountSettings extends Restapi{
 	Don't retrieve password for security concern purposes
 	*/
 	function retrieveInfo(){
-
-		$token = $_POST["token"];
-
+		
+		$token = $_POST['token'];
+		
 		$parsedToken = TokenCreator::initParseToken( $token );
 		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
 		

@@ -108,6 +108,7 @@ class Authentication extends Restapi{
 							$isFacebook = true;
 							$tokenCreator = TokenCreator::createToken($id, $isFacebook);
 							$result = $tokenCreator->getToken();
+							
 						}
 
 					}catch (Exception $e){
