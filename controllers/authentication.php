@@ -165,9 +165,11 @@ class Authentication extends Restapi{
 			$result = $stmt->execute($values);
 
 			$this->disconnect();
+			return true;
 
 		}catch (Exception $e){
 			$this->response($e->getMessage(), 500);
+			return false;
 		}
 		
 	}
