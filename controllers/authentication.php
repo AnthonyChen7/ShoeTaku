@@ -101,13 +101,16 @@ class Authentication extends Restapi{
 							$this->mergeAccount($id, $check["userId"]);
 							$isFacebook = false;
 							$tokenCreator = TokenCreator::createToken($check['userId'], $isFacebook);
-							$result = $tokenCreator->getToken();
+							$token = $tokenCreator->getToken();
+							$result = array("token" => (string)$token);
 
 						}else{
 							// No nonFB account
+
 							$isFacebook = true;
 							$tokenCreator = TokenCreator::createToken($id, $isFacebook);
-							$result = $tokenCreator->getToken();
+							$token = $tokenCreator->getToken();
+							$result = array("token" => (string)$token);
 						}
 
 					}catch (Exception $e){
@@ -117,7 +120,8 @@ class Authentication extends Restapi{
 					//already merged
 					$isFacebook = false;
 					$tokenCreator = TokenCreator::createToken($check["userId"], $isFacebook);
-					$result = $tokenCreator->getToken();
+					$token = $tokenCreator->getToken();
+					$result = array("token" => (string)$token);
 				}
 			}else{
 				// account not in db. Insert to db
@@ -131,8 +135,8 @@ class Authentication extends Restapi{
 
 					if ($insertResult == true){
 						$tokenCreator = TokenCreator::createToken($id, $isFacebook);
-						$result = $tokenCreator->getToken();
-					
+						$token = $tokenCreator->getToken();
+						$result = array("token" => (string)$token);
 					}else{
 						$message = "Please refresh and try again";
 						$this->response($message, 500);
@@ -142,6 +146,7 @@ class Authentication extends Restapi{
 					$this->response($e->getMessage(), 500);
 				}
 			}
+
 			$this->response($result,200);
 		}
 		
@@ -151,13 +156,14 @@ class Authentication extends Restapi{
 		try{
 			$fbTable = "FBUser";
 			$columns = array("userId","isMerged");
-			$where = array("id");
-			$values = array($userId, true, $id);
+			$where = array("email");
+			$values = array($userId, 1, $id);
 			$sql = $this->prepareUpdateSql($fbTable, $columns, $where);
 
 			$this->connect();
 			$stmt = $this->conn->prepare($sql);
 			$result = $stmt->execute($values);
+
 			$this->disconnect();
 
 		}catch (Exception $e){
