@@ -49,11 +49,11 @@ var login_event = function(response) {
         data: response, // We send the data string
         timeout: 3000,
         success: function(response) {
-          if (response){
-            
-            console.log(response);
-            localStorage.setItem("token",response);
-            //window.location="/partials/main-page.html";
+
+          if (response && response["token"] != ""){
+            localStorage.setItem("token",response["token"]);
+            window.location="/partials/main-page.html"
+
           }
         },
         error: function(response) {
@@ -137,7 +137,7 @@ function loginStatusChangeCallback(response) {
       // if(window.location.href.indexOf("/partials/main-page.html") <= -1) {
        //window.location="/partials/main-page.html";
     // }
-             
+
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
   } else {
