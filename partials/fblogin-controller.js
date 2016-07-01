@@ -51,7 +51,7 @@ var login_event = function(response) {
         success: function(response) {
           if (response){
             if (response == true){
-              window.location="/partials/main-page.html"
+              //window.location="/partials/main-page.html"
             }else{
 
             }
@@ -61,6 +61,7 @@ var login_event = function(response) {
         error: function(data) {
           // for debugging purpose
           alert("error");
+          console.log(data);
         }
       });
     });
@@ -161,6 +162,7 @@ function loginStatusChangeCallback(response) {
         error: function(data) {
           // for debugging purpose
           alert("error");
+          console.log(data);
         }
       });
     });
