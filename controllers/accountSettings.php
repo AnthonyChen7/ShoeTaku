@@ -11,10 +11,10 @@ use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Parser;
 
 define("NON_FB_TABLE", "user");
+define("FB_TABLE", "fbuser");
 
 class AccountSettings extends Restapi{
 		
-	private $signer;
 
 	function __construct(){
 		parent::__construct();
@@ -43,7 +43,10 @@ class AccountSettings extends Restapi{
 		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
 		
 		if($tokenVerifier->isTokenValid() && $parsedToken->getToken()->getClaim('isFb')===false ){
-			$result = $this->retrieveNonFbInfo($parsedToken);
+			$result = $this->retrieveInfoFromDB($parsedToken, NON_FB_TABLE);
+		}
+		else if($tokenVerifier->isTokenValid() && $parsedToken->getToken()->getClaim('isFb')===true){
+			$result = $this->retrieveInfoFromDB($parsedToken, FB_TABLE);
 		}else{
 			$result['error']= TIMED_OUT;	
 		}
@@ -60,7 +63,10 @@ class AccountSettings extends Restapi{
 		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
 
 		if($tokenVerifier->isTokenValid() && $parsedToken->getToken()->getClaim('isFb')===false){
-		$result = $this->updateNonFbInfo($parsedToken);		
+		$result = $this->updateInfoToDB($parsedToken,NON_FB_TABLE);		
+		}
+		else if($tokenVerifier->isTokenValid() && $parsedToken->getToken()->getClaim('isFb')===true){
+		$result = $this->updateInfoToDB($parsedToken,FB_TABLE);	
 		}else{
 			$result['error']= TIMED_OUT;
 			$this->response($e->getMessage(), 500);
@@ -134,13 +140,20 @@ class AccountSettings extends Restapi{
 		$this->response($data,200);
 	}
 	
-	private function retrieveNonFbInfo($parsedToken){
+	private function retrieveInfoFromDB($parsedToken, $tableName){
 		$columns = array("firstName","lastName","city","countryCode");
-		$where=array('userId');
+		
+		if($tableName === NON_FB_TABLE){
+			$where=array('userId');	
+		}else{
+			$where=array('id');
+		}
+		
 		$values = array($parsedToken->getToken()->getHeader('jti'));
 		$limOff = array();
 		
-		$sql = $this->prepareSelectSql(NON_FB_TABLE,$columns,$where,$limOff);
+		$sql = $this->prepareSelectSql($tableName,$columns,$where,$limOff);
+		
 				try{
 			
 					$this->connect();
@@ -163,8 +176,8 @@ class AccountSettings extends Restapi{
 
 			return $result;
 	}
-	
-	private function updateNonFbInfo($parsedToken){
+		
+	private function updateInfoToDB($parsedToken, $tableName){
 		$result = array();
 		$firstName = $_POST['firstName'];
 		$lastName = $_POST['lastName'];
@@ -175,10 +188,14 @@ class AccountSettings extends Restapi{
 		$this->connect();
 
 		$columns = array("firstName","lastName","city","countryCode");
+		if($tableName === NON_FB_TABLE){
 		$where=array('userId');
+		}else{
+		$where=array('id');	
+		}
 		$values = array($firstName,$lastName,$city,$country,$parsedToken->getToken()->getHeader('jti'));
 		
-		$sql = $this->prepareUpdateSql(NON_FB_TABLE,$columns,$where);
+		$sql = $this->prepareUpdateSql($tableName,$columns,$where);
 		$stmt = $this->conn->prepare($sql);
 		$stmt->execute($values);
 		
