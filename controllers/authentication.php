@@ -99,21 +99,20 @@ class Authentication extends Restapi{
 						if (isset($check) && $check != false && isset($check["userId"])){
 							// merge accounts
 							$this->mergeAccount($id, $check["userId"]);
-							$tokenCreator = TokenCreator::createToken($check['userId']);
+							$isFacebook = false;
+							$tokenCreator = TokenCreator::createToken($check['userId'], $isFacebook);
 							$token = $tokenCreator->getToken();
-							$result = array(
-								"token"=> $token,
-								"isFacebook" => false
-								);
+							$result = array("token" => (string)$token);
 
 						}else{
 							// No nonFB account
-							$tokenCreator = TokenCreator::createToken($id);
+
+							$isFacebook = true;
+							$tokenCreator = TokenCreator::createToken($id, $isFacebook);
+
 							$token = $tokenCreator->getToken();
-							$result = array(
-								"token" => $token,
-								"isFacebook" => true
-								);
+							$result = array("token" => (string)$token);
+
 						}
 
 					}catch (Exception $e){
@@ -121,12 +120,10 @@ class Authentication extends Restapi{
 					}
 				}else{
 					//already merged
-					$tokenCreator = TokenCreator::createToken($check["userId"]);
+					$isFacebook = false;
+					$tokenCreator = TokenCreator::createToken($check["userId"], $isFacebook);
 					$token = $tokenCreator->getToken();
-					$result = array(
-						"token" => $token,
-						"isFacebook" => false
-						);
+					$result = array("token" => (string)$token);
 				}
 			}else{
 				// account not in db. Insert to db
@@ -136,15 +133,12 @@ class Authentication extends Restapi{
 					$stmt = $this->conn->prepare($insertSql);
 					$insertResult = $stmt->execute($insertValues);
 					$this->disconnect();
+					$isFacebook = true;
 
 					if ($insertResult == true){
-						$tokenCreator = TokenCreator::createToken($id);
+						$tokenCreator = TokenCreator::createToken($id, $isFacebook);
 						$token = $tokenCreator->getToken();
-						$result = array(
-							"token" => $token,
-							"isFacebook" => true
-							);
-					
+						$result = array("token" => (string)$token);
 					}else{
 						$message = "Please refresh and try again";
 						$this->response($message, 500);
@@ -154,6 +148,7 @@ class Authentication extends Restapi{
 					$this->response($e->getMessage(), 500);
 				}
 			}
+
 			$this->response($result,200);
 		}
 		
@@ -163,17 +158,20 @@ class Authentication extends Restapi{
 		try{
 			$fbTable = "FBUser";
 			$columns = array("userId","isMerged");
-			$where = array("id");
-			$values = array($userId, true, $id);
+			$where = array("email");
+			$values = array($userId, 1, $id);
 			$sql = $this->prepareUpdateSql($fbTable, $columns, $where);
 
 			$this->connect();
 			$stmt = $this->conn->prepare($sql);
 			$result = $stmt->execute($values);
+
 			$this->disconnect();
+			return true;
 
 		}catch (Exception $e){
 			$this->response($e->getMessage(), 500);
+			return false;
 		}
 		
 	}
