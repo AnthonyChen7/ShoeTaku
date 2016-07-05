@@ -158,7 +158,7 @@ class Authentication extends Restapi{
 		try{
 			$fbTable = "FBUser";
 			$columns = array("userId","isMerged");
-			$where = array("email");
+			$where = array("id");
 			$values = array($userId, 1, $id);
 			$sql = $this->prepareUpdateSql($fbTable, $columns, $where);
 

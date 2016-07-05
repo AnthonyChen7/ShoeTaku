@@ -62,6 +62,32 @@ class Register extends Restapi{
 		$result = $stmt->fetchAll();
 		$result = $result[0];
 		
+		//merge fb account if fb account exists
+		$table = "fbuser";
+		$columns=array("*");
+		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute($values);
+		
+		$check = $stmt->fetchAll();
+		
+		if(count($check)===1){
+			$check = $check[0];
+			
+			if($check["isMerged"]==="0"){
+			//merge accounts	
+			$fbTable = "fbuser";
+			$columns = array("userId","isMerged");
+			$where = array("id");
+			$values = array($result['userId'], 1, $check['id']);
+			$sql = $this->prepareUpdateSql($fbTable, $columns, $where);
+			
+			$stmt = $this->conn->prepare($sql);
+			$stmt->execute($values);
+			}
+
+		}
+		
 		$tokenCreator = TokenCreator::createToken($result['userId'],false);
 		$token = $tokenCreator->getToken();
 		
@@ -75,7 +101,7 @@ class Register extends Restapi{
 		// return all our data to an AJAX call
 		echo $token;
 	}
-	
+
 }
 
 

@@ -91,7 +91,8 @@ event.preventDefault();
 		url: url, 
 		data: data, 
 		timeout: 3000,
-		success: function(data) {			
+		success: function(data) {
+			//console.log(data);			
 			if(data != "error"){
 			console.log(data);
 			
@@ -113,7 +114,7 @@ event.preventDefault();
 		},
 		error: function(data) {
 			alert("error");
-			
+			document.getElementById('error_emailRegister').innerHTML = $("#emailRegister").val() + " already exists!";
 			localStorage.setItem("token",null);
 			
 		}
