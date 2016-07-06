@@ -25,9 +25,20 @@ class AccountSettings extends Restapi{
 			$this->retrieveInfo();
 		}
 		else if(isset($_POST['action'])&&!empty($_POST['action'])&& $_POST['action']==='update'){
-		$this->updateInfo();
+			
+			if($this->areFieldsValid()){
+				$this->updateInfo();
+			}else{
+				$this->response("Invalid fields!",400);
+			}
+			
+		
 		}else{
+			if($this->areFieldsValid()){
 			$this->changePassword();
+			}else{
+			$this->response("Invalid fields!",400);	
+			}
 		}
 	}
 	
@@ -209,6 +220,16 @@ class AccountSettings extends Restapi{
 		$this->disconnect();
 		
 		return $result;
+	}
+	
+		private function areFieldsValid(){
+		foreach($_POST as $key=>$value){
+			if(empty($_POST[$key])){
+				return false;
+			}
+		}
+		
+		return true;
 	}
 }
 
