@@ -13,17 +13,17 @@ class Login extends Restapi{
 	function __construct()
 	{
 		parent::__construct();
-
-		$this->checkCredentials();
 		
+		if($this->areFieldsValid()){
+			$this->checkCredentials();
+		}
+
 	}
 	
 	private function checkCredentials(){
-		
-		//store data inside the array to pass back
 
 		$token = NULL;
-		
+				
 		$email = $_POST["email"];
 		$password = $_POST["password"];
 		
@@ -72,6 +72,16 @@ class Login extends Restapi{
 		// return all our data to an AJAX call
 		echo $token;
 
+	}
+	
+	private function areFieldsValid(){
+		foreach($_POST as $key=>$value){
+			if(empty($_POST[$key])){
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 }

@@ -44,7 +44,7 @@ $("#form").submit(function(event){
 	
 				localStorage.setItem("token",data);
 				
-				 window.location="/partials/main-page.html";
+				window.location="/partials/main-page.html";
 				
 			}else{
 				document.getElementById('error_email').innerHTML = "Incorrect email/password!";
@@ -91,8 +91,7 @@ event.preventDefault();
 		url: url, 
 		data: data, 
 		timeout: 3000,
-		success: function(data) {
-			//console.log(data);			
+		success: function(data) {		
 			if(data != "error"){
 			console.log(data);
 			
@@ -147,61 +146,62 @@ function validateForm(isLoginForm){
 		document.getElementById('error_country').innerHTML = "";
 		
 		
-		if($("#emailRegister").val() === "" || !validateEmail($("#emailRegister").val()) || hasWhiteSpace($("#emailRegister").val()) ){
-			document.getElementById('error_emailRegister').innerHTML = "<p>Please provide a valid email!</p>";
-			isValid = false;
-		}
+		// if($("#emailRegister").val() === "" || !validateEmail($("#emailRegister").val()) || hasWhiteSpace($("#emailRegister").val()) ){
+		// 	document.getElementById('error_emailRegister').innerHTML = "<p>Please provide a valid email!</p>";
+		// 	isValid = false;
+		// }
 		
-		if($("#passwordRegister").val() === "" || hasWhiteSpace( $("#passwordRegister").val())){
-			document.getElementById('error_passwordRegister').innerHTML += "<p>Please provide a valid password!</p>";
-			isValid= false;
-		}
+		// if($("#passwordRegister").val() === "" || hasWhiteSpace( $("#passwordRegister").val())){
+		// 	document.getElementById('error_passwordRegister').innerHTML += "<p>Please provide a valid password!</p>";
+		// 	isValid= false;
+		// }
 		
 		// if($("#passwordRegister").val().length <= 6){
 		// 	document.getElementById('error_passwordRegister').innerHTML += "<p>Length of password must be > 6!</p>";
 		// 	isValid= false;
 		// }
 			
-		if($("#passwordRegister").val() !== $("#confirmPassword").val() ){
-			document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
-			isValid= false;
-		}
+		// if($("#passwordRegister").val() !== $("#confirmPassword").val() ){
+		// 	document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
+		// 	isValid= false;
+		// }
 			
-		if($("#firstName").val() === "" || hasWhiteSpace( $("#firstName").val())){
-			document.getElementById('error_firstName').innerHTML += "<p>Please provide a valid first name!</p>";
-			isValid= false;
-		}
+		// if($("#firstName").val() === "" || hasWhiteSpace( $("#firstName").val())){
+		// 	document.getElementById('error_firstName').innerHTML += "<p>Please provide a valid first name!</p>";
+		// 	isValid= false;
+		// }
 		
-		if($("#lastName").val() === "" || hasWhiteSpace( $("#lastName").val())){
-			document.getElementById('error_lastName').innerHTML += "<p>Please provide a valid last name!</p>";
-			isValid= false;
-		}
+		// if($("#lastName").val() === "" || hasWhiteSpace( $("#lastName").val())){
+		// 	document.getElementById('error_lastName').innerHTML += "<p>Please provide a valid last name!</p>";
+		// 	isValid= false;
+		// }
 		
-		if($("#city").val() === "" || hasWhiteSpace( $("#city").val())){
-			document.getElementById('error_city').innerHTML += "<p>Please provide a valid city!</p>";
-			isValid= false;
-		}
+		// if($("#city").val() === "" || hasWhiteSpace( $("#city").val())){
+		// 	document.getElementById('error_city').innerHTML += "<p>Please provide a valid city!</p>";
+		// 	isValid= false;
+		// }
 		
-		if($("#country").val() === "" || hasWhiteSpace( $("#country").val())|| getKeyByValue($("#country").val() ) === undefined ){
-			document.getElementById('error_country').innerHTML += "<p>Please provide a valid country!</p>";
-			isValid= false;
-		}
+		// if($("#country").val() === "" || hasWhiteSpace( $("#country").val())|| getKeyByValue($("#country").val() ) === undefined ){
+		// 	document.getElementById('error_country').innerHTML += "<p>Please provide a valid country!</p>";
+		// 	isValid= false;
+		// }
+		
 	}else{
 		
 		//clear any existing error messages first
 		document.getElementById('error_email').innerHTML = "";
 		document.getElementById('error_password').innerHTML = "";
 		
-		if($("#email").val() === "" || !validateEmail($("#email").val()) || hasWhiteSpace($("#email").val()) ){
-			document.getElementById('error_email').innerHTML = "<p>Please provide a valid email!</p>";
-			isValid = false;
-		}
+		// if($("#email").val() === "" || !validateEmail($("#email").val()) || hasWhiteSpace($("#email").val()) ){
+		// 	document.getElementById('error_email').innerHTML = "<p>Please provide a valid email!</p>";
+		// 	isValid = false;
+		// }
 		
 
-		if($("#password").val() === "" || hasWhiteSpace( $("#password").val())){
-			document.getElementById('error_password').innerHTML += "<p>Please provide a valid password!</p>";
-			isValid= false;
-		}
+		// if($("#password").val() === "" || hasWhiteSpace( $("#password").val())){
+		// 	document.getElementById('error_password').innerHTML += "<p>Please provide a valid password!</p>";
+		// 	isValid= false;
+		// }
 		
 	}
 

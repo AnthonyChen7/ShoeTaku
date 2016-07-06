@@ -14,11 +14,12 @@ class Register extends Restapi{
 	function __construct()
 	{
 		parent::__construct();
+
 		$this->register();
 	}
 	
 	private function register(){
-
+		
 		$token = NULL;
 
 		$result = NULL;
