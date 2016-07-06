@@ -113,7 +113,8 @@ event.preventDefault();
 		},
 		error: function(data) {
 			alert("error");
-			document.getElementById('error_emailRegister').innerHTML = $("#emailRegister").val() + " already exists!";
+			console.log(data);
+			document.getElementById('error_emailRegister').innerHTML = data.responseText;
 			localStorage.setItem("token",null);
 			
 		}

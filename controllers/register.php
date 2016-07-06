@@ -14,8 +14,13 @@ class Register extends Restapi{
 	function __construct()
 	{
 		parent::__construct();
-
-		$this->register();
+		
+		if($this->areFieldsValid()){
+			$this->register();
+		}else{
+			$this->response("Invalid Fields!",400);
+		}
+		
 	}
 	
 	private function register(){
@@ -101,6 +106,16 @@ class Register extends Restapi{
 		
 		// return all our data to an AJAX call
 		echo $token;
+	}
+	
+	private function areFieldsValid(){
+		foreach($_POST as $key=>$value){
+			if(empty($_POST[$key])){
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 }
