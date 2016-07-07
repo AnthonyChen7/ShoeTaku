@@ -261,10 +261,14 @@ function getCountryName (countryCode) {
  function getKeyByValue ( value ) {
     for( var prop in isoCountries ) {
         if( isoCountries.hasOwnProperty( prop ) ) {
-             if( isoCountries[ prop ] === value )
+             if( isoCountries[ prop ] === value ){
                  return prop;
+             }
+                 
         }
     }
+    
+    return null;
 }
 
 var options = '';

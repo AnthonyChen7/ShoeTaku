@@ -5,6 +5,7 @@ require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '/vendor/autoload.php' );
 require_once(__DIR__.'/restapi.php');
 include_once __DIR__.'/tokencreator.php';
 include_once __DIR__.'/tokenverify.php';
+include_once __DIR__.'/countries.php';
 
 use Lcobucci\JWT\ValidationData;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
@@ -35,7 +36,9 @@ class AccountSettings extends Restapi{
 		
 		}else{
 			if($this->areFieldsValid()){
+
 			$this->changePassword();
+
 			}else{
 			$this->response("Invalid fields!",400);	
 			}
@@ -222,11 +225,19 @@ class AccountSettings extends Restapi{
 		return $result;
 	}
 	
-		private function areFieldsValid(){
+	private function areFieldsValid(){
+		
+		$isCountryValid = new Countries();
+
 		foreach($_POST as $key=>$value){
-			if(empty($_POST[$key])){
+			if(empty($_POST[$key]) || ctype_space($_POST[$key])){
 				return false;
 			}
+
+		}
+			
+		if( isset($_POST['country']) && $isCountryValid->isCountryValid($_POST['country'])===false){
+			$this->response("Invalid country!",400);
 		}
 		
 		return true;

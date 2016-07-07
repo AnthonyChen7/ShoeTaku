@@ -8,6 +8,7 @@ This class handles the non-FB authentication
 
 require_once(__DIR__.'/restapi.php');
 include_once __DIR__.'/tokencreator.php';
+include_once __DIR__.'/countries.php';
 
 class Register extends Restapi{
 	
@@ -109,10 +110,26 @@ class Register extends Restapi{
 	}
 	
 	private function areFieldsValid(){
+		
+		$isCountryValid = new Countries();
+
 		foreach($_POST as $key=>$value){
-			if(empty($_POST[$key])){
+			if(empty($_POST[$key]) || ctype_space($_POST[$key])){
 				return false;
 			}
+
+		}
+		
+		if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
+			$this->response("Invalid email!",400);
+		}
+	
+		if($isCountryValid->isCountryValid($_POST['country'])===false){
+			$this->response("Invalid country!",400);
+		}
+
+		if($_POST['password']!=$_POST['confirmPassword']){
+			$this->response("Passwords don't match!",400);
 		}
 		
 		return true;

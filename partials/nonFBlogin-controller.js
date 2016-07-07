@@ -80,9 +80,10 @@ event.preventDefault();
 	var data = {
 	'email': $("#emailRegister").val(), 
 	'password': $("#passwordRegister").val(),
+	'confirmPassword': $("#confirmPassword").val(),
 	'firstName':$('#firstName').val(),
 	'lastName':$('#lastName').val(),
-	'city':$('#city').val(),
+	 'city':$('#city').val(),
 	'country': getKeyByValue($('#country').val()) //store as country code in db
 	};
 		
@@ -112,7 +113,6 @@ event.preventDefault();
 			}
 		},
 		error: function(data) {
-			alert("error");
 			console.log(data);
 			document.getElementById('error_emailRegister').innerHTML = data.responseJSON;
 			localStorage.setItem("token",null);
@@ -193,16 +193,16 @@ function validateForm(isLoginForm){
 		document.getElementById('error_email').innerHTML = "";
 		document.getElementById('error_password').innerHTML = "";
 		
-		// if($("#email").val() === "" || !validateEmail($("#email").val()) || hasWhiteSpace($("#email").val()) ){
-		// 	document.getElementById('error_email').innerHTML = "<p>Please provide a valid email!</p>";
-		// 	isValid = false;
-		// }
+		if($("#email").val() === "" || !validateEmail($("#email").val()) || hasWhiteSpace($("#email").val()) ){
+			document.getElementById('error_email').innerHTML = "<p>Please provide a valid email!</p>";
+			isValid = false;
+		}
 		
 
-		// if($("#password").val() === "" || hasWhiteSpace( $("#password").val())){
-		// 	document.getElementById('error_password').innerHTML += "<p>Please provide a valid password!</p>";
-		// 	isValid= false;
-		// }
+		if($("#password").val() === "" || hasWhiteSpace( $("#password").val())){
+			document.getElementById('error_password').innerHTML += "<p>Please provide a valid password!</p>";
+			isValid= false;
+		}
 		
 	}
 
