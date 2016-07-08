@@ -60,7 +60,6 @@ var login_event = function(response) {
           // for debugging purpose
           console.log(response);
           alert("error");
-          console.log(data);
         }
       });
     });
