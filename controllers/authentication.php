@@ -70,6 +70,7 @@ class Authentication extends Restapi{
 			$values = array($email);
 			$limOff = array();
 
+			$check;
 			$result;
 			$data;
 			
@@ -86,38 +87,38 @@ class Authentication extends Restapi{
 			}
 			// account already in db FBUser table
 			if (isset($result) && $result != false){
-				if (!$result["isMerged"]){
-					// check if in User table
-					try{
-						$checkSql = $this->prepareSelectSql($userTable, $userColumns, $where, $limOff);
-						$this->connect();
-						$stmt = $this->conn->prepare($checkSql);
-						$stmt->execute($values);
-						$check = $stmt->fetch(PDO::FETCH_ASSOC);
-						$this->disconnect();
-
-						if (isset($check) && $check != false && isset($check["userId"])){
-							// merge accounts
-							$this->mergeAccount($id, $check["userId"]);
-							$isFacebook = false;
-							$tokenCreator = TokenCreator::createToken($check['userId'], $isFacebook);
-							$token = $tokenCreator->getToken();
-							$result = array("token" => (string)$token);
-
-						}else{
-							// No nonFB account
-
-							$isFacebook = true;
-							$tokenCreator = TokenCreator::createToken($id, $isFacebook);
-
-							$token = $tokenCreator->getToken();
-							$result = array("token" => (string)$token);
-
-						}
+				try{
+					$checkSql = $this->prepareSelectSql($userTable, $userColumns, $where, $limOff);
+					$this->connect();
+					$stmt = $this->conn->prepare($checkSql);
+					$stmt->execute($values);
+					$check = $stmt->fetch(PDO::FETCH_ASSOC);
+					$this->disconnect();
 
 					}catch (Exception $e){
 						$this->response($e->getMessage(), 500);
+				}
+				
+				if (!$result["isMerged"]){
+					// check if in User table
+					if (isset($check) && $check != false && isset($check["userId"])){
+						// merge accounts
+						$this->mergeAccount($id, $check["userId"]);
+						$isFacebook = false;
+						$tokenCreator = TokenCreator::createToken($check['userId'], $isFacebook);
+						$token = $tokenCreator->getToken();
+						$result = array("token" => (string)$token);
+
+					}else{
+						// No nonFB account
+
+						$isFacebook = true;
+						$tokenCreator = TokenCreator::createToken($id, $isFacebook);
+
+						$token = $tokenCreator->getToken();
+						$result = array("token" => (string)$token);
 					}
+
 				}else{
 					//already merged
 					$isFacebook = false;
