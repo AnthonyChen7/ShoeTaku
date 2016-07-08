@@ -26,7 +26,7 @@ $("#form").submit(function(event){
 	/**
 	 * Send data using AJAX call
 	 */
-	var data = {'email': $("#email").val(), 'password': $("#password").val()};
+	var data = {'email': $("#email").val(), 'password': $("#password").val(), 'action':'login'};
 	
 	 if(validateForm(true) === true){
 	
@@ -84,7 +84,8 @@ event.preventDefault();
 	'firstName':$('#firstName').val(),
 	'lastName':$('#lastName').val(),
 	 'city':$('#city').val(),
-	'country': getKeyByValue($('#country').val()) //store as country code in db
+	'country': getKeyByValue($('#country').val()), //store as country code in db
+	'action':'register'
 	};
 		
 		$.ajax({
@@ -193,16 +194,16 @@ function validateForm(isLoginForm){
 		document.getElementById('error_email').innerHTML = "";
 		document.getElementById('error_password').innerHTML = "";
 		
-		if($("#email").val() === "" || !validateEmail($("#email").val()) || hasWhiteSpace($("#email").val()) ){
-			document.getElementById('error_email').innerHTML = "<p>Please provide a valid email!</p>";
-			isValid = false;
-		}
+		// if($("#email").val() === "" || !validateEmail($("#email").val()) || hasWhiteSpace($("#email").val()) ){
+		// 	document.getElementById('error_email').innerHTML = "<p>Please provide a valid email!</p>";
+		// 	isValid = false;
+		// }
 		
 
-		if($("#password").val() === "" || hasWhiteSpace( $("#password").val())){
-			document.getElementById('error_password').innerHTML += "<p>Please provide a valid password!</p>";
-			isValid= false;
-		}
+		// if($("#password").val() === "" || hasWhiteSpace( $("#password").val())){
+		// 	document.getElementById('error_password').innerHTML += "<p>Please provide a valid password!</p>";
+		// 	isValid= false;
+		// }
 		
 	}
 
@@ -238,23 +239,14 @@ return false;
 
 }
 
-function isNumberKey(evt)
-      {
-         var charCode = (evt.which) ? evt.which : event.keyCode
-         if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-
-         return true;
-      }
-
 function logout(){
 
-		var data = {token: localStorage.getItem("token")};
+		var data = {token: localStorage.getItem("token"),'action':'logout'};
 			//make ajax call to handle token invalidation
 		$.ajax({
 		type: 'POST',
 		data: data,
-		url: "/controllers/logout",
+		url: "/controllers/authentication",
 		dataType: 'json',
 		success: function(data) {
 			var data = data;

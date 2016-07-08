@@ -6,43 +6,105 @@ This class handles the non-FB authentication
 
 require_once(__DIR__.'/restapi.php');
 include_once(__DIR__.'/tokencreator.php');
+include_once __DIR__.'/countries.php';
 
 class Authentication extends Restapi{
 	
 	function __construct(){
 		parent::__construct();
-		$this->fbLogin();
+		
+		if(isset($_POST['action']) && $_POST['action']==='login'){
+			if($this->areFieldsValid()){
+				$this->nonfbLogin();
+			}else{
+				$this->response("Invalid Fields!",400);
+			}	
+		}else if(isset($_POST['action']) && $_POST['action']==='register'){
+			
+			if($this->areFieldsValid()){
+			
+			$isCountryValid = new Countries();
+			
+			if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
+				$this->response("Invalid email!",400);
+			}
+	
+			else if($isCountryValid->isCountryValid($_POST['country'])===false){
+				$this->response("Invalid country!",400);
+			}
+
+			else if($_POST['password']!=$_POST['confirmPassword']){
+				$this->response("Passwords don't match!",400);
+			}
+			
+			else{
+				$this->register();
+			}	
+
+		}
+		else{
+			$this->response("Invalid Fields!",400);
+		}
+		}
+		else if(isset($_POST['action']) && $_POST['action']==='logout'){
+			$this->storeTokenInDB();
+		}
+		else{
+			$this->fbLogin();	
+		}
+		
 	}
 	
-	private function nonFBLogin(){
-		//store data inside the array to pass back
-		$token = NULL;	
+	private function nonfbLogin(){
+
+		$token = NULL;
+				
 		$email = $_POST["email"];
 		$password = $_POST["password"];
-		$table = "User";
+		
+		$table = "user";
 		$columns = array("userId","email","password");
 		$where = array("email");
 		$values = array($email);
 		$limOff = array();
 		
-		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);		
+		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);
+		
+		try{
+				
 		$this->connect();
+		
 		$stmt = $this->conn->prepare($sql);
+		
 		$stmt->execute($values);
+		
 		$result = $stmt->fetchAll();
 		
 		if(count($result)===1){
-		/* Since email is a unique keywe would expect there to be only 1 result */	
+		
+		/**
+		Since email is a unique key
+		we would expect there to be only 1 result
+		**/
 			$object = $result[0];
+			
 			if($email === $object['email'] && password_verify($password,$object['password'])){
-				$tokenCreator = TokenCreator::createToken($object['userId']);
+		
+				$tokenCreator = TokenCreator::createToken($object['userId'],false);
 				$token = $tokenCreator->getToken();			
 			}
+
+		}
+		
+		}catch(Exception $e){
+			$token = null;
+			$this->response($e->getMessage(), 500);
 		}
 
 		$this->disconnect();		
 		// return all our data to an AJAX call
 		echo $token;
+
 	}
 
 	private function fBLogin(){
@@ -177,27 +239,48 @@ class Authentication extends Restapi{
 		
 	}
 
+	/**
+	Token is considered invalid when user logs out
+	Store it in db
+	*/
 	private function storeTokenInDB(){
+
+		$tokenCreator = TokenCreator::initParseToken($_POST["token"]);
+		$parsedToken = $tokenCreator->getToken();		
 		$table="invalid_token";
-		$columns=array("tokenId","expiry_time");
-		$values=array();
+		$columns = array('tokenId',"token","expiryTime");
+		$where = array('tokenId');
 		$limOff = array();
-		$where=array();
-		
-		$sql = $this->prepareInsertSql($table,$columns,$where,$limOff);
-		
-		
-			$this->connect();
 			
-			//TODO
-			//Also, if token is already expired. Don't bother to store in db
-			
-			$this->disconnect();
+		//only insert if token hasn't expired yet
+		$currTime = time();
+		$expiryTime = $parsedToken->getClaim('exp');
 		
+		try{
+		
+		$this->connect();
+			
+			if($currTime <= $expiryTime){
+
+					//register it to db
+					$values = array($parsedToken->getHeader('jti'), $parsedToken,$expiryTime);
+					$sql = $this->prepareInsertSql($table, $columns, $where, $limOff);
+					$stmt = $this->conn->prepare($sql);
+					$stmt->execute($values);
+					
+				$this->disconnect();
+				$this->response("success",200);
+			}
+		}catch(Exception $e){
+			$this->response("error occurred",200);
+		}
+	
+	
+	
 	}
 
-	private function register(){
-
+private function register(){
+		
 		$token = NULL;
 
 		$result = NULL;
@@ -222,35 +305,80 @@ class Authentication extends Restapi{
 		
 		$sql = $this->prepareInsertSql($table, $columns, $where, $limOff);
 		
-		try{	
-			$this->connect();
-			$stmt = $this->conn->prepare($sql);
+		try{
+				
+		$this->connect();
+		$stmt = $this->conn->prepare($sql);
+		
+		$result = $stmt->execute($values);
+		
+		//retrieve user ID so we can create token....
+		$columns=array("userId");
+		$values = array($email);
+		$where=array("email");
+		
+		$sql = $this->prepareSelectSql($table, $columns, $where ,$limOff);
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute($values);
+		
+		$result = $stmt->fetchAll();
+		$result = $result[0];
+		
+		//merge fb account if fb account exists
+		$table = "fbuser";
+		$columns=array("*");
+		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute($values);
+		
+		$check = $stmt->fetchAll();
+		
+		if(count($check)===1){
+			$check = $check[0];
 			
-			$result = $stmt->execute($values);
+			if($check["isMerged"]==="0"){
+			//merge accounts	
+			$fbTable = "fbuser";
+			$columns = array("userId","isMerged");
+			$where = array("id");
+			$values = array($result['userId'], 1, $check['id']);
+			$sql = $this->prepareUpdateSql($fbTable, $columns, $where);
 			
-			//retrieve user ID....
-			$columns=array("userId");
-			$values = array($email);
-			$where=array("email");
-			
-			$sql = $this->prepareSelectSql($table, $columns, $where ,$limOff);
 			$stmt = $this->conn->prepare($sql);
 			$stmt->execute($values);
-			
-			$result = $stmt->fetchAll();
-			$result = $result[0];
-			
-			$tokenCreator = TokenCreator::createToken($result['userId']);
-			$token = $tokenCreator->getToken();
+			}
+
+		}
 		
-		} catch (Exception $e) {
+		$tokenCreator = TokenCreator::createToken($result['userId'],false);
+		$token = $tokenCreator->getToken();
+		
+		}catch (Exception $e) {
 			$token = "error";
+			$this->response($e->getMessage(), 500);
 		}
 
 		$this->disconnect();
 		
 		// return all our data to an AJAX call
 		echo $token;
+	}
+	
+		private function areFieldsValid(){
+		foreach($_POST as $key=>$value){
+			if(empty($_POST[$key]) || ctype_space($_POST[$key])){
+				return false;
+			}
+			
+			if($key==="email"){
+				if(!filter_var($value,FILTER_VALIDATE_EMAIL)){
+					$this->response("Invalid Email!",400);
+				}
+			}
+			
+		}
+		
+		return true;
 	}
 	
 }

@@ -1,6 +1,7 @@
 var authentication = (function(){
 	
 	function accountLogout(){
+		
 		FB.getLoginStatus(function(response) {
 	        if (response && response.status === 'connected') {
 	            FB.logout(function(response) {
@@ -8,8 +9,7 @@ var authentication = (function(){
 	                window.location="/";
 	            });
 	        }else {
-	        	localStorage.setItem("token", null);
-	            window.location="/";
+				logout();
 	        }
     	});
 	}
