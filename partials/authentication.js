@@ -9,7 +9,7 @@ var authentication = (function(){
 	                window.location="/";
 	            });
 	        }else {
-				logout();
+				nonFBController.logout();
 	        }
     	});
 	}

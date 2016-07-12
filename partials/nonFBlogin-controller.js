@@ -1,267 +1,234 @@
 console.log(localStorage.getItem("token"));
 
 /**
- * Attach submit handler to Login button
+ * Handler for login button
  */
- $(document).ready(function() {
+$(document).ready(function() {
 		
-$("#form").submit(function(event){
-	
-	/**
-	 * Stop from submitting normally
-	 */
+	$("#form").submit(function(event){
+
 	event.preventDefault();
-	
-	/**
-	 * Handle form validation first.
-	 * If it contains valid fields, we make AJAX call
-	 */
-	
-	/**
-	 * Retrieve action attribute;URL to send it to
-	 */
+
 	var $form = $(this),
 	url = $form.attr('action');
-	
-	/**
-	 * Send data using AJAX call
-	 */
-	var data = {'email': $("#email").val(), 'password': $("#password").val(), 'action':'login'};
-	
-	 if(validateForm(true) === true){
-	
-	$.ajax({
-		type: 'POST',
-		url: url, 
-		data: data, 
-		timeout: 3000,
-		success: function(data) {
-			console.log(data); 		
-			if(data != ""){
 
-				document.getElementById('error_email').innerHTML = "";
-				document.getElementById('error_password').innerHTML = "";
+	var data = {
+				'email': $("#email").val(), 
+				'password': $("#password").val(), 
+				'action':'login'
+				};
+
+		 if(validate.login() === true){
 	
-				localStorage.setItem("token",data);
-				
-				window.location="/partials/main-page.html";
-				
-			}else{
-				document.getElementById('error_email').innerHTML = "Incorrect email/password!";
-				
+			$.ajax({
+				type: 'POST',
+				url: url, 
+				data: data, 
+				timeout: 3000,
+				success: function(data) {
+				console.log(data); 		
+					if(data != ""){
+						clearErrorDivs.login();
+						localStorage.setItem("token",data);
+						window.location="/partials/main-page.html";
+					}else{
+						document.getElementById('error_email').innerHTML = "Incorrect email/password!";
+						localStorage.setItem("token",null);
+					}
+				},
+				error: function(data) {
+				console.log(data);
+				document.getElementById('error_email').innerHTML = data.responseJSON;
 				localStorage.setItem("token",null);
+				}
+			});
+	}
+	});
+
+	/**
+ 	* Handler for register button
+ 	*/
+	$("#form2").submit(function(event){
+		event.preventDefault();
+		var $form = $(this),
+		url = $form.attr('action');
+
+		if(validate.register() === true){
+		
+			console.log("form is valid");
+
+			var data = {
+			'email': $("#emailRegister").val(), 
+			'password': $("#passwordRegister").val(),
+			'confirmPassword': $("#confirmPassword").val(),
+			'firstName':$('#firstName').val(),
+			'lastName':$('#lastName').val(),
+			'city':$('#city').val(),
+			'country': getKeyByValue($('#country').val()), //store as country code in db
+			'action':'register'
+			};
+		
+			$.ajax({
+				type: 'POST',
+				url: url, 
+				data: data, 
+				timeout: 3000,
+				success: function(data) {		
+				if(data != "error"){
+					console.log(data);
+					localStorage.setItem("token",data);
+				
+					//clear any existing error messages first
+					clearErrorDivs.register();
+					
+					window.location="/partials/main-page.html";
+				}else{
+					localStorage.setItem("token",null);
+					document.getElementById('error_emailRegister').innerHTML = $("#emailRegister").val() + " already exists!";
+				}
+			},
+			error: function(data) {
+				console.log(data);
+				document.getElementById('error_emailRegister').innerHTML = data.responseJSON;
+				localStorage.setItem("token",null);	
 			}
-		},
-		error: function(data) {
-			console.log(data);
-			document.getElementById('error_email').innerHTML = data.responseJSON;
-			localStorage.setItem("token",null);
-			
+			});	
+		
+		}else{
+			console.log("form is invalid");
 		}
 	});
-	
-	 }
 
-}
-);
-
-
-$("#form2").submit(function(event){
-event.preventDefault();
-	var $form = $(this),
-	url = $form.attr('action');
-
-	if(validateForm(false) === true){
-		
-		console.log("form is valid");
-		/**
-	 * Send data using AJAX call
-	 */
-	var data = {
-	'email': $("#emailRegister").val(), 
-	'password': $("#passwordRegister").val(),
-	'confirmPassword': $("#confirmPassword").val(),
-	'firstName':$('#firstName').val(),
-	'lastName':$('#lastName').val(),
-	 'city':$('#city').val(),
-	'country': getKeyByValue($('#country').val()), //store as country code in db
-	'action':'register'
-	};
-		
-		$.ajax({
-		type: 'POST',
-		url: url, 
-		data: data, 
-		timeout: 3000,
-		success: function(data) {		
-			if(data != "error"){
-			console.log(data);
-			
-			localStorage.setItem("token",data);
-				
-		//clear any existing error messages first
-		document.getElementById('error_emailRegister').innerHTML = "";
-		document.getElementById('error_passwordRegister').innerHTML = "";
-		document.getElementById('error_confirmPassword').innerHTML = "";
-		document.getElementById('error_firstName').innerHTML = "";
-		document.getElementById('error_lastName').innerHTML = "";
-		document.getElementById('error_city').innerHTML = "";
-		document.getElementById('error_country').innerHTML = "";
-		window.location="/partials/main-page.html";
-			}else{
-				localStorage.setItem("token",null);
-				document.getElementById('error_emailRegister').innerHTML = $("#emailRegister").val() + " already exists!";
-			}
-		},
-		error: function(data) {
-			console.log(data);
-			document.getElementById('error_emailRegister').innerHTML = data.responseJSON;
-			localStorage.setItem("token",null);
-			
-		}
-	});	
-		
-	}else{
-		console.log("form is invalid");
-	}
 });
 
- });
-
-/**
- * Validates form
- * True if form is valid
- */
-function validateForm(isLoginForm){
-		
-		var isValid = true;
-		
-		if(isLoginForm === false){
-			
-		//clear any existing error messages first
-		document.getElementById('error_emailRegister').innerHTML = "";
-		document.getElementById('error_passwordRegister').innerHTML = "";
-		document.getElementById('error_confirmPassword').innerHTML = "";
-		document.getElementById('error_firstName').innerHTML = "";
-		document.getElementById('error_lastName').innerHTML = "";
-		document.getElementById('error_city').innerHTML = "";
-		document.getElementById('error_country').innerHTML = "";
-		
-		
-		// if($("#emailRegister").val() === "" || !validateEmail($("#emailRegister").val()) || hasWhiteSpace($("#emailRegister").val()) ){
-		// 	document.getElementById('error_emailRegister').innerHTML = "<p>Please provide a valid email!</p>";
-		// 	isValid = false;
-		// }
-		
-		// if($("#passwordRegister").val() === "" || hasWhiteSpace( $("#passwordRegister").val())){
-		// 	document.getElementById('error_passwordRegister').innerHTML += "<p>Please provide a valid password!</p>";
-		// 	isValid= false;
-		// }
-		
-		// if($("#passwordRegister").val().length <= 6){
-		// 	document.getElementById('error_passwordRegister').innerHTML += "<p>Length of password must be > 6!</p>";
-		// 	isValid= false;
-		// }
-			
-		// if($("#passwordRegister").val() !== $("#confirmPassword").val() ){
-		// 	document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
-		// 	isValid= false;
-		// }
-			
-		// if($("#firstName").val() === "" || hasWhiteSpace( $("#firstName").val())){
-		// 	document.getElementById('error_firstName').innerHTML += "<p>Please provide a valid first name!</p>";
-		// 	isValid= false;
-		// }
-		
-		// if($("#lastName").val() === "" || hasWhiteSpace( $("#lastName").val())){
-		// 	document.getElementById('error_lastName').innerHTML += "<p>Please provide a valid last name!</p>";
-		// 	isValid= false;
-		// }
-		
-		// if($("#city").val() === "" || hasWhiteSpace( $("#city").val())){
-		// 	document.getElementById('error_city').innerHTML += "<p>Please provide a valid city!</p>";
-		// 	isValid= false;
-		// }
-		
-		// if($("#country").val() === "" || hasWhiteSpace( $("#country").val())|| getKeyByValue($("#country").val() ) === undefined ){
-		// 	document.getElementById('error_country').innerHTML += "<p>Please provide a valid country!</p>";
-		// 	isValid= false;
-		// }
-		
-	}else{
-		
-		//clear any existing error messages first
-		document.getElementById('error_email').innerHTML = "";
-		document.getElementById('error_password').innerHTML = "";
-		
-		// if($("#email").val() === "" || !validateEmail($("#email").val()) || hasWhiteSpace($("#email").val()) ){
-		// 	document.getElementById('error_email').innerHTML = "<p>Please provide a valid email!</p>";
-		// 	isValid = false;
-		// }
-		
-
-		// if($("#password").val() === "" || hasWhiteSpace( $("#password").val())){
-		// 	document.getElementById('error_password').innerHTML += "<p>Please provide a valid password!</p>";
-		// 	isValid= false;
-		// }
-		
-	}
-
-	return isValid;
-}
-
-/**
- * Returns true if valid email entered. False otherwise.
- */
-function validateEmail(input){
+var validate = (function(){
 	
-	atpos = input.indexOf("@");
-	dotpos = input.lastIndexOf(".");
-	
-	if(atpos < 1 || (dotpos - atpos <2 )){
-		return false;
-	}
-	
-	return true;
-}
-
-/**
- * Returns true if there are white spaces
- */
-function hasWhiteSpace(s) {
-  
-  if (!/\S/.test(s)) {
-    // string is not empty and not just whitespace
-	return true;
-}
-
-return false;
-
-}
-
-function logout(){
-
-		var data = {token: localStorage.getItem("token"),'action':'logout'};
-			//make ajax call to handle token invalidation
-		$.ajax({
-		type: 'POST',
-		data: data,
-		url: "/controllers/authentication",
-		dataType: 'json',
-		success: function(data) {
-			var data = data;
-			console.log(data);
-			localStorage.setItem("token",null);
-			window.location="/"; 		
-
+	return {
+		
+		hasWhiteSpace : function(str){
+			 if (!/\S/.test(str)) {
+				return true;
+			}
+			return false;
 		},
-		error: function(data) {
-			var data = data;
-			console.log(data);
+		
+		login: function(){
+			var isValid = true;
 			
+			clearErrorDivs.login();
+			
+			if($("#email").val() === "" || validate.hasWhiteSpace($("#email").val()) ){
+				document.getElementById('error_email').innerHTML = "<p>Please provide a valid email!</p>";
+				isValid = false;
+			}
+			
+	
+			if($("#password").val() === "" || validate.hasWhiteSpace( $("#password").val())){
+				document.getElementById('error_password').innerHTML += "<p>Please provide a valid password!</p>";
+				isValid= false;
+			}
+			
+			return isValid;
+		},
+		
+		register: function(){
+			var isValid = true;
+			
+			//clear any existing error messages first
+			clearErrorDivs.register();
+
+			if($("#emailRegister").val() === "" || validate.hasWhiteSpace($("#emailRegister").val()) ){
+				document.getElementById('error_emailRegister').innerHTML = "<p>Please provide a valid email!</p>";
+				isValid = false;
+			}
+			
+			if($("#passwordRegister").val() === "" || validate.hasWhiteSpace( $("#passwordRegister").val())){
+				document.getElementById('error_passwordRegister').innerHTML += "<p>Please provide a valid password!</p>";
+				isValid= false;
+			}
+			
+			// if($("#passwordRegister").val().length <= 6){
+			// 	document.getElementById('error_passwordRegister').innerHTML += "<p>Length of password must be > 6!</p>";
+			// 	isValid= false;
+			// }
+				
+			if($("#passwordRegister").val() !== $("#confirmPassword").val() ){
+				document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
+				isValid= false;
+			}
+				
+			if($("#firstName").val() === "" || validate.hasWhiteSpace( $("#firstName").val())){
+				document.getElementById('error_firstName').innerHTML += "<p>Please provide a valid first name!</p>";
+				isValid= false;
+			}
+			
+			if($("#lastName").val() === "" || validate.hasWhiteSpace( $("#lastName").val())){
+				document.getElementById('error_lastName').innerHTML += "<p>Please provide a valid last name!</p>";
+				isValid= false;
+			}
+			
+			if($("#city").val() === "" || validate.hasWhiteSpace( $("#city").val())){
+				document.getElementById('error_city').innerHTML += "<p>Please provide a valid city!</p>";
+				isValid= false;
+			}
+			
+			if($("#country").val() === "" || validate.hasWhiteSpace( $("#country").val())|| getKeyByValue($("#country").val() ) === undefined ){
+				document.getElementById('error_country').innerHTML += "<p>Please provide a valid country!</p>";
+				isValid= false;
+			}
+			
+			return isValid;
 		}
-	});
+	}
+	
+})();
 
-			
+var clearErrorDivs = (function(){
+	
+	return{
+		register : function(){
+			document.getElementById('error_emailRegister').innerHTML = "";
+			document.getElementById('error_passwordRegister').innerHTML = "";
+			document.getElementById('error_confirmPassword').innerHTML = "";
+			document.getElementById('error_firstName').innerHTML = "";
+			document.getElementById('error_lastName').innerHTML = "";
+			document.getElementById('error_city').innerHTML = "";
+			document.getElementById('error_country').innerHTML = "";	
+		},
+		
+		login : function(){
+			document.getElementById('error_email').innerHTML = "";
+			document.getElementById('error_password').innerHTML = "";
+		}
+	}
+	
+})();
 
-}
+var nonFBController = (function(){
+	return{
+	
+	logout:	function(){
+		
+		var data = {token: localStorage.getItem("token"),'action':'logout'};
+		//make ajax call to handle token invalidation
+				$.ajax({
+				type: 'POST',
+				data: data,
+				url: "/controllers/authentication",
+				dataType: 'json',
+				success: function(data) {
+					var data = data;
+					console.log(data);
+					localStorage.setItem("token",null);
+					window.location="/"; 		
+		
+				},
+				error: function(data) {
+					var data = data;
+					console.log(data);
+					
+				}
+			});
+	}
+	}
+})();

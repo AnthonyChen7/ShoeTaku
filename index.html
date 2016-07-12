@@ -49,8 +49,6 @@
                                 <a class="social_box fb">
                                     <span class="icon_title">Login With Facebook </span>
                                     <span class="fb_login">
-                                        <!--<fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();">
-                                        </fb:login-button>-->
                                          <fb:login-button  scope="public_profile,email" onlogin="checkLoginState();">
                                         </fb:login-button>
                                     </span>
@@ -87,8 +85,7 @@
                         <span class="header_title">Login</span>
                     </div>
                     
-                    <!--<form id="form" method="post" action="/controllers/login" onsubmit="return validateForm(true)">-->
-                    <form id="form" method="post" action="/controllers/authentication" onsubmit="return validateForm(true)">
+                    <form id="form" method="post" action="/controllers/authentication" onsubmit="return validate.login()">
                         <br>
 
                         <label>Email</label>
@@ -124,7 +121,6 @@
                         <span class="header_title">Register</span>
                     </div>
                     
-                    <!--<form id="form2" method="post" action = "/controllers/register">-->
                     <form id="form2" method="post" action = "/controllers/authentication">
                         <div style="color: red;"> <u>ALL</u> fields are required!</div>
                         <br>
