@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    clearErrors.accountLabels();
+    clearErrorDivs.accountLabels();
     console.log(localStorage.getItem("token"));
    // make ajax call to populate fields in account.html
     $.ajax(
@@ -52,7 +52,7 @@ $(document).ready(function(){
     'token':localStorage.getItem("token")
 	};
     
-    clearErrors.accountLabels();
+    clearErrorDivs.accountLabels();
     
         if(validate.account() === true){
         
@@ -96,7 +96,7 @@ $('#password_setting_form').submit(function(event){
 	var $form = $(this),
 	url = $form.attr('action');
 
-    clearErrors.passwordLabels();
+    clearErrorDivs.passwordLabels();
     document.getElementById('error_save_password').innerHTML = "";
 
         if(validate.password()===true){
@@ -147,24 +147,4 @@ $('#password_setting_form').submit(function(event){
 
 });
 
-var clearErrors = (function(){
-    
-    return{
-        accountLabels : function(){
-                document.getElementById('firstName_account_error').innerHTML = "";
-                document.getElementById('lastName_account_error').innerHTML="";
-                document.getElementById('city_account_error').innerHTML="";
-                document.getElementById('country_account_error').innerHTML="";
-                document.getElementById('save_message').innerHTML ="";
-        },
-        
-        passwordLabels : function(){
-                document.getElementById('error_old_password').innerHTML = "";
-                document.getElementById('error_new_password').innerHTML="";
-                document.getElementById('error_confirm_password').innerHTML="";
-                document.getElementById('error_save_password').innerHTML=""; 
-        }
-    }
-    
-})();
 
