@@ -53,7 +53,8 @@ $(document).ready(function(){
 	};
     
     clearErrors.accountLabels();
-        if(isFormValid() === true){
+    
+        if(validate.account() === true){
         
         $.ajax({
 		type: 'POST',
@@ -97,8 +98,8 @@ $('#password_setting_form').submit(function(event){
 
     clearErrors.passwordLabels();
     document.getElementById('error_save_password').innerHTML = "";
-    
-    if(isValidPasswordForm()===true){
+
+        if(validate.password()===true){
         
         var data = {
             "old_password": $("#old_password").val(),
@@ -146,33 +147,6 @@ $('#password_setting_form').submit(function(event){
 
 });
 
-function isFormValid(){
-    var isValid = true;
-    
-        if($("#firstName_account").val() === "" || validate.hasWhiteSpace( $("#firstName_account").val())){
-			document.getElementById('firstName_account_error').innerHTML = "<p>Please provide a valid first name!</p>";
-			isValid= false;
-		}
-		
-		if($("#lastName_account").val() === "" || validate.hasWhiteSpace( $("#lastName_account").val())){
-			document.getElementById('lastName_account_error').innerHTML = "<p>Please provide a valid last name!</p>";
-			isValid= false;
-		}
-		
-		if($("#city_account").val() === "" || validate.hasWhiteSpace( $("#city_account").val())){
-			document.getElementById('city_account_error').innerHTML = "<p>Please provide a valid city!</p>";
-			isValid= false;
-		}
-		
-		if($("#country_account").val() === "" || validate.hasWhiteSpace( $("#country_account").val())|| getKeyByValue($("#country_account").val() ) === undefined ){
-			document.getElementById('country_account_error').innerHTML = "<p>Please provide a valid country!</p>";
-			isValid= false;
-		}
-    
-    
-    return isValid;
-}
-
 var clearErrors = (function(){
     
     return{
@@ -193,25 +167,4 @@ var clearErrors = (function(){
     }
     
 })();
-
-function isValidPasswordForm(){
-    var isValid = true;
-    
-        if($("#old_password").val() === "" || validate.hasWhiteSpace( $("#old_password").val())){
-			document.getElementById('error_old_password').innerHTML = "<p>Please provide a valid old password!</p>";
-			isValid= false;
-		}
-		
-		if($("#new_password").val() === "" || validate.hasWhiteSpace( $("#new_password").val())){
-			document.getElementById('error_new_password').innerHTML = "<p>Please provide a valid new password!</p>";
-			isValid= false;
-		}
-		
-		if($("#confirm_new_password").val() != $("#new_password").val() ){
-			document.getElementById('error_new_password').innerHTML = "<p>New password do not match!</p>";
-			isValid= false;
-		}
-    
-    return isValid;
-}
 
