@@ -199,7 +199,22 @@ var clearErrorDivs = (function(){
 		login : function(){
 			document.getElementById('error_email').innerHTML = "";
 			document.getElementById('error_password').innerHTML = "";
-		}
+		},
+		
+		 accountLabels : function(){
+                document.getElementById('firstName_account_error').innerHTML = "";
+                document.getElementById('lastName_account_error').innerHTML="";
+                document.getElementById('city_account_error').innerHTML="";
+                document.getElementById('country_account_error').innerHTML="";
+                document.getElementById('save_message').innerHTML ="";
+        },
+        
+        passwordLabels : function(){
+                document.getElementById('error_old_password').innerHTML = "";
+                document.getElementById('error_new_password').innerHTML="";
+                document.getElementById('error_confirm_password').innerHTML="";
+                document.getElementById('error_save_password').innerHTML=""; 
+        }
 	}
 	
 })();

@@ -1,6 +1,5 @@
 $(document).ready(function(){
-    
-    clearErrorDivs();
+    clearErrors.accountLabels();
     console.log(localStorage.getItem("token"));
    // make ajax call to populate fields in account.html
     $.ajax(
@@ -53,7 +52,7 @@ $(document).ready(function(){
     'token':localStorage.getItem("token")
 	};
     
-    clearErrorDivs();
+    clearErrors.accountLabels();
         if(isFormValid() === true){
         
         $.ajax({
@@ -95,8 +94,8 @@ $('#password_setting_form').submit(function(event){
      event.preventDefault();
 	var $form = $(this),
 	url = $form.attr('action');
-    
-    clearPasswordDivs();
+
+    clearErrors.passwordLabels();
     document.getElementById('error_save_password').innerHTML = "";
     
     if(isValidPasswordForm()===true){
@@ -150,62 +149,69 @@ $('#password_setting_form').submit(function(event){
 function isFormValid(){
     var isValid = true;
     
-        // if($("#firstName_account").val() === "" || hasWhiteSpace( $("#firstName_account").val())){
-		// 	document.getElementById('firstName_account_error').innerHTML = "<p>Please provide a valid first name!</p>";
-		// 	isValid= false;
-		// }
+        if($("#firstName_account").val() === "" || validate.hasWhiteSpace( $("#firstName_account").val())){
+			document.getElementById('firstName_account_error').innerHTML = "<p>Please provide a valid first name!</p>";
+			isValid= false;
+		}
 		
-		// if($("#lastName_account").val() === "" || hasWhiteSpace( $("#lastName_account").val())){
-		// 	document.getElementById('lastName_account_error').innerHTML = "<p>Please provide a valid last name!</p>";
-		// 	isValid= false;
-		// }
+		if($("#lastName_account").val() === "" || validate.hasWhiteSpace( $("#lastName_account").val())){
+			document.getElementById('lastName_account_error').innerHTML = "<p>Please provide a valid last name!</p>";
+			isValid= false;
+		}
 		
-		// if($("#city_account").val() === "" || hasWhiteSpace( $("#city_account").val())){
-		// 	document.getElementById('city_account_error').innerHTML = "<p>Please provide a valid city!</p>";
-		// 	isValid= false;
-		// }
+		if($("#city_account").val() === "" || validate.hasWhiteSpace( $("#city_account").val())){
+			document.getElementById('city_account_error').innerHTML = "<p>Please provide a valid city!</p>";
+			isValid= false;
+		}
 		
-		// if($("#country_account").val() === "" || hasWhiteSpace( $("#country_account").val())|| getKeyByValue($("#country_account").val() ) === undefined ){
-		// 	document.getElementById('country_account_error').innerHTML = "<p>Please provide a valid country!</p>";
-		// 	isValid= false;
-		// }
+		if($("#country_account").val() === "" || validate.hasWhiteSpace( $("#country_account").val())|| getKeyByValue($("#country_account").val() ) === undefined ){
+			document.getElementById('country_account_error').innerHTML = "<p>Please provide a valid country!</p>";
+			isValid= false;
+		}
     
     
     return isValid;
 }
 
-function clearErrorDivs(){
-    document.getElementById('firstName_account_error').innerHTML = "";
-    document.getElementById('lastName_account_error').innerHTML="";
-    document.getElementById('city_account_error').innerHTML="";
-    document.getElementById('country_account_error').innerHTML="";
-    document.getElementById('save_message').innerHTML ="";
-}
+var clearErrors = (function(){
+    
+    return{
+        accountLabels : function(){
+                document.getElementById('firstName_account_error').innerHTML = "";
+                document.getElementById('lastName_account_error').innerHTML="";
+                document.getElementById('city_account_error').innerHTML="";
+                document.getElementById('country_account_error').innerHTML="";
+                document.getElementById('save_message').innerHTML ="";
+        },
+        
+        passwordLabels : function(){
+                document.getElementById('error_old_password').innerHTML = "";
+                document.getElementById('error_new_password').innerHTML="";
+                document.getElementById('error_confirm_password').innerHTML="";
+                document.getElementById('error_save_password').innerHTML=""; 
+        }
+    }
+    
+})();
 
 function isValidPasswordForm(){
     var isValid = true;
     
-        // if($("#old_password").val() === "" || hasWhiteSpace( $("#old_password").val())){
-		// 	document.getElementById('error_old_password').innerHTML = "<p>Please provide a valid old password!</p>";
-		// 	isValid= false;
-		// }
+        if($("#old_password").val() === "" || validate.hasWhiteSpace( $("#old_password").val())){
+			document.getElementById('error_old_password').innerHTML = "<p>Please provide a valid old password!</p>";
+			isValid= false;
+		}
 		
-		// if($("#new_password").val() === "" || hasWhiteSpace( $("#new_password").val())){
-		// 	document.getElementById('error_new_password').innerHTML = "<p>Please provide a valid new password!</p>";
-		// 	isValid= false;
-		// }
+		if($("#new_password").val() === "" || validate.hasWhiteSpace( $("#new_password").val())){
+			document.getElementById('error_new_password').innerHTML = "<p>Please provide a valid new password!</p>";
+			isValid= false;
+		}
 		
-		// if($("#confirm_new_password").val() != $("#new_password").val() ){
-		// 	document.getElementById('error_new_password').innerHTML = "<p>New password do not match!</p>";
-		// 	isValid= false;
-		// }
+		if($("#confirm_new_password").val() != $("#new_password").val() ){
+			document.getElementById('error_new_password').innerHTML = "<p>New password do not match!</p>";
+			isValid= false;
+		}
     
     return isValid;
 }
 
-function clearPasswordDivs(){
-   document.getElementById('error_old_password').innerHTML = "";
-    document.getElementById('error_new_password').innerHTML="";
-    document.getElementById('error_confirm_password').innerHTML="";
-    document.getElementById('error_save_password').innerHTML=""; 
-}

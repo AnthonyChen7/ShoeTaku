@@ -23,9 +23,6 @@ window.fbAsyncInit = function () {
         version    : 'v2.0'
     });
     
-
-//checkLoginState(); 
-
 /**
  * Set up success login/login event
  */
@@ -45,8 +42,8 @@ var login_event = function(response) {
         url = "/controllers/authentication";
         $.ajax({ 
         type: 'POST',
-        url: url, // URL to the PHP file which will insert new value in the database
-        data: response, // We send the data string
+        url: url,
+        data: response, 
         timeout: 3000,
         success: function(response) {
 
@@ -63,36 +60,7 @@ var login_event = function(response) {
         }
       });
     });
-  }
-
-  //window.location="/partials/main-page.html"
-  // if (response.status === 'connected') {
-  //   var url = "/controllers/authentcation";
-  //   var data = {
-  //     email:
-  //     fName:
-  //     lName:
-  //     city:
-  //     countryCode:
-  //     }
-  //   $.ajax({ // jQuery Ajax
-  //     type: 'POST',
-  //     url: url, // URL to the PHP file which will insert new value in the database
-  //     data: data, // We send the data string
-  //     dataType: 'json', // Json format
-  //     timeout: 3000,
-  //     success: function(data) {
-
-        
-  //       window.location="/partials/main-page.html";
-  //     },
-  //     error: function(data) {
-  //       // for debugging purpose
-  //       alert("error");
-  //     }
-  //   });
-  // }
-  
+  }  
 }
 
 
@@ -121,22 +89,11 @@ Fired everytime user changes fb login status
 Call with results from FB.getLoginStatus()
 */
 function loginStatusChangeCallback(response) {    
-    /**
-     * Retreives login status:
-     * 
-     * 1. logged into app ; 'connected'
-     * 2. logged into fb but not app; 'not_authorized'
-     * 3. not logged into fb and not sure if logged into app; unknown
-     */
+
      console.log("response.status is " + response.status);
      
     if (response.status === 'connected') {
     // Logged into your app and Facebook.
-    
-    //Ensures page will not attempt to keep re-loading     
-      // if(window.location.href.indexOf("/partials/main-page.html") <= -1) {
-       //window.location="/partials/main-page.html";
-    // }
 
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
