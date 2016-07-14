@@ -1,104 +1,11 @@
 console.log(localStorage.getItem("token"));
 
 /**
- * Handler for login button
+ * Init Handler for login and register button
  */
 $(document).ready(function() {
-		
-	$("#form").submit(function(event){
-
-	event.preventDefault();
-
-	var $form = $(this),
-	url = $form.attr('action');
-
-	var data = {
-				'email': $("#email").val(), 
-				'password': $("#password").val(), 
-				'action':'login'
-				};
-
-		 if(validate.login() === true){
-	
-			$.ajax({
-				type: 'POST',
-				url: url, 
-				data: data, 
-				timeout: 3000,
-				success: function(data) {
-				console.log(data); 		
-					if(data != ""){
-						clearErrorDivs.login();
-						localStorage.setItem("token",data);
-						window.location="/partials/main-page.html";
-					}else{
-						document.getElementById('error_email').innerHTML = "Incorrect email/password!";
-						localStorage.setItem("token",null);
-					}
-				},
-				error: function(data) {
-				console.log(data);
-				document.getElementById('error_email').innerHTML = data.responseJSON;
-				localStorage.setItem("token",null);
-				}
-			});
-	}
-	});
-
-	/**
- 	* Handler for register button
- 	*/
-	$("#form2").submit(function(event){
-		event.preventDefault();
-		var $form = $(this),
-		url = $form.attr('action');
-
-		if(validate.register() === true){
-		
-			console.log("form is valid");
-
-			var data = {
-			'email': $("#emailRegister").val(), 
-			'password': $("#passwordRegister").val(),
-			'confirmPassword': $("#confirmPassword").val(),
-			'firstName':$('#firstName').val(),
-			'lastName':$('#lastName').val(),
-			'city':$('#city').val(),
-			'country': getKeyByValue($('#country').val()), //store as country code in db
-			'action':'register'
-			};
-		
-			$.ajax({
-				type: 'POST',
-				url: url, 
-				data: data, 
-				timeout: 3000,
-				success: function(data) {		
-				if(data != "error"){
-					console.log(data);
-					localStorage.setItem("token",data);
-				
-					//clear any existing error messages first
-					clearErrorDivs.register();
-					
-					window.location="/partials/main-page.html";
-				}else{
-					localStorage.setItem("token",null);
-					document.getElementById('error_emailRegister').innerHTML = $("#emailRegister").val() + " already exists!";
-				}
-			},
-			error: function(data) {
-				console.log(data);
-				document.getElementById('error_emailRegister').innerHTML = data.responseJSON;
-				localStorage.setItem("token",null);	
-			}
-			});	
-		
-		}else{
-			console.log("form is invalid");
-		}
-	});
-
+		nonFBController.loginButtonHandler();
+		nonFBController.registerButtonHandler();
 });
 
 var validate = (function(){
@@ -270,28 +177,126 @@ var clearErrorDivs = (function(){
 var nonFBController = (function(){
 	return{
 	
-	logout:	function(){
+		logout:	function(){
+			
+			var data = {token: localStorage.getItem("token"),'action':'logout'};
+			//make ajax call to handle token invalidation
+					$.ajax({
+					type: 'POST',
+					data: data,
+					url: "/controllers/authentication",
+					dataType: 'json',
+					success: function(data) {
+						var data = data;
+						console.log(data);
+						localStorage.setItem("token",null);
+						window.location="/"; 		
+			
+					},
+					error: function(data) {
+						var data = data;
+						console.log(data);
+						
+					}
+				});
+		},
 		
-		var data = {token: localStorage.getItem("token"),'action':'logout'};
-		//make ajax call to handle token invalidation
-				$.ajax({
-				type: 'POST',
-				data: data,
-				url: "/controllers/authentication",
-				dataType: 'json',
-				success: function(data) {
-					var data = data;
-					console.log(data);
-					localStorage.setItem("token",null);
-					window.location="/"; 		
-		
-				},
-				error: function(data) {
-					var data = data;
-					console.log(data);
-					
+		loginButtonHandler : function(){
+			$("#form").submit(function(event){
+
+				event.preventDefault();
+			
+				var $form = $(this),
+				url = $form.attr('action');
+			
+				var data = {
+							'email': $("#email").val(), 
+							'password': $("#password").val(), 
+							'action':'login'
+							};
+			
+					if(validate.login() === true){
+				
+						$.ajax({
+							type: 'POST',
+							url: url, 
+							data: data, 
+							timeout: 3000,
+							success: function(data) {
+							console.log(data); 		
+								if(data != ""){
+									clearErrorDivs.login();
+									localStorage.setItem("token",data);
+									window.location="/partials/main-page.html";
+								}else{
+									document.getElementById('error_email').innerHTML = "Incorrect email/password!";
+									localStorage.setItem("token",null);
+								}
+							},
+							error: function(data) {
+							console.log(data);
+							document.getElementById('error_email').innerHTML = data.responseJSON;
+							localStorage.setItem("token",null);
+							}
+						});
 				}
 			});
-	}
+		},
+		
+		registerButtonHandler : function(){
+			/**
+				* Handler for register button
+				*/
+				$("#form2").submit(function(event){
+					event.preventDefault();
+					var $form = $(this),
+					url = $form.attr('action');
+			
+					if(validate.register() === true){
+					
+						console.log("form is valid");
+			
+						var data = {
+						'email': $("#emailRegister").val(), 
+						'password': $("#passwordRegister").val(),
+						'confirmPassword': $("#confirmPassword").val(),
+						'firstName':$('#firstName').val(),
+						'lastName':$('#lastName').val(),
+						'city':$('#city').val(),
+						'country': getKeyByValue($('#country').val()), //store as country code in db
+						'action':'register'
+						};
+					
+						$.ajax({
+							type: 'POST',
+							url: url, 
+							data: data, 
+							timeout: 3000,
+							success: function(data) {		
+							if(data != "error"){
+								console.log(data);
+								localStorage.setItem("token",data);
+							
+								//clear any existing error messages first
+								clearErrorDivs.register();
+								
+								window.location="/partials/main-page.html";
+							}else{
+								localStorage.setItem("token",null);
+								document.getElementById('error_emailRegister').innerHTML = $("#emailRegister").val() + " already exists!";
+							}
+						},
+						error: function(data) {
+							console.log(data);
+							document.getElementById('error_emailRegister').innerHTML = data.responseJSON;
+							localStorage.setItem("token",null);	
+						}
+						});	
+					
+					}else{
+						console.log("form is invalid");
+					}
+				});
+		}
 	}
 })();
