@@ -5,7 +5,7 @@ require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '/vendor/autoload.php' );
 require_once(__DIR__.'/restapi.php');
 include_once __DIR__.'/tokencreator.php';
 include_once __DIR__.'/tokenverify.php';
-include_once __DIR__.'/countries.php';
+include_once __DIR__.'/validate.php';
 
 use Lcobucci\JWT\ValidationData;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
@@ -21,13 +21,14 @@ class AccountSettings extends Restapi{
 		parent::__construct();
 		
 		$this->signer = new Sha256();
+		$validate = new ValidateForms();
 
 		if(isset($_POST['action'])&&!empty($_POST['action'])&& $_POST['action']==='retrieve'){
 			$this->retrieveInfo();
 		}
 		else if(isset($_POST['action'])&&!empty($_POST['action'])&& $_POST['action']==='update'){
-			
-			if($this->areFieldsValid()){
+
+			if($validate->isUpdateFormValid()){
 				$this->updateInfo();
 			}else{
 				$this->response("Invalid fields!",400);
@@ -35,7 +36,7 @@ class AccountSettings extends Restapi{
 			
 		
 		}else{
-			if($this->areFieldsValid()){
+			if($validate->isPasswordFormValid()){
 
 			$this->changePassword();
 

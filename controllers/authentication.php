@@ -6,45 +6,29 @@ This class handles the non-FB authentication
 
 require_once(__DIR__.'/restapi.php');
 include_once(__DIR__.'/tokencreator.php');
-include_once __DIR__.'/countries.php';
+include_once (__DIR__.'/validate.php');
 
 class Authentication extends Restapi{
 	
 	function __construct(){
 		parent::__construct();
 		
+		$validate = new ValidateForms();
+		
 		if(isset($_POST['action']) && $_POST['action']==='login'){
-			if($this->areFieldsValid()){
+			if($validate->isLoginFormValid()){
 				$this->nonfbLogin();
 			}else{
 				$this->response("Invalid Fields!",400);
 			}	
 		}else if(isset($_POST['action']) && $_POST['action']==='register'){
 			
-			if($this->areFieldsValid()){
-			
-			$isCountryValid = new Countries();
-			
-			if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
-				$this->response("Invalid email!",400);
-			}
-	
-			else if($isCountryValid->isCountryValid($_POST['country'])===false){
-				$this->response("Invalid country!",400);
-			}
-
-			else if($_POST['password']!=$_POST['confirmPassword']){
-				$this->response("Passwords don't match!",400);
-			}
-			
-			else{
+			if($validate->isRegisterFormValid()){
 				$this->register();
-			}	
+			}else{
+				$this->response("Invalid Fields!",400);
+			}
 
-		}
-		else{
-			$this->response("Invalid Fields!",400);
-		}
 		}
 		else if(isset($_POST['action']) && $_POST['action']==='logout'){
 			$this->storeTokenInDB();

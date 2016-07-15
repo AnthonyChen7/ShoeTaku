@@ -94,7 +94,7 @@ var accountController = (function(){
                     error: function(data) {
                         var data = data;
                         console.log(data);
-                        document.getElementById('save_message').innerHTML = "Error! Changes not saved!"; 
+                        document.getElementById('save_message').innerHTML = data.responseJSON;; 
                     }
                 });
                     
@@ -119,6 +119,7 @@ var accountController = (function(){
                     var data = {
                         "old_password": $("#old_password").val(),
                         "new_password": $("#new_password").val(),
+                        "confirm_new_password": $("#confirm_new_password").val(),
                         'token':localStorage.getItem("token")
                     }
                     
@@ -149,7 +150,7 @@ var accountController = (function(){
                         error:function(data){
                             var data = data;
                             console.log(data);
-                            document.getElementById('error_save_password').innerHTML = "Password not successfully changed!";   
+                            document.getElementById('error_save_password').innerHTML = data.responseJSON;;   
                         }
                     });
                     
