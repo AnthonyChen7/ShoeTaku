@@ -348,23 +348,6 @@ private function register(){
 		echo $token;
 	}
 	
-		private function areFieldsValid(){
-		foreach($_POST as $key=>$value){
-			if(empty($_POST[$key]) || ctype_space($_POST[$key])){
-				return false;
-			}
-			
-			if($key==="email"){
-				if(!filter_var($value,FILTER_VALIDATE_EMAIL)){
-					$this->response("Invalid Email!",400);
-				}
-			}
-			
-		}
-		
-		return true;
-	}
-	
 }
 
 

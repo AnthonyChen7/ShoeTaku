@@ -24,16 +24,16 @@ var validate = (function(){
 			
 			clearErrorDivs.login();
 			
-			// if($("#email").val() === "" || validate.hasWhiteSpace($("#email").val()) ){
-			// 	document.getElementById('error_email').innerHTML = "<p>Please provide a valid email!</p>";
-			// 	isValid = false;
-			// }
+			if($("#email").val() === "" || validate.hasWhiteSpace($("#email").val()) ){
+				document.getElementById('error_email').innerHTML = "<p>Please provide a valid email!</p>";
+				isValid = false;
+			}
 			
 	
-			// if($("#password").val() === "" || validate.hasWhiteSpace( $("#password").val())){
-			// 	document.getElementById('error_password').innerHTML += "<p>Please provide a valid password!</p>";
-			// 	isValid= false;
-			// }
+			if($("#password").val() === "" || validate.hasWhiteSpace( $("#password").val())){
+				document.getElementById('error_password').innerHTML += "<p>Please provide a valid password!</p>";
+				isValid= false;
+			}
 			
 			return isValid;
 		},
@@ -44,45 +44,45 @@ var validate = (function(){
 			//clear any existing error messages first
 			clearErrorDivs.register();
 
-			// if($("#emailRegister").val() === "" || validate.hasWhiteSpace($("#emailRegister").val()) ){
-			// 	document.getElementById('error_emailRegister').innerHTML = "<p>Please provide a valid email!</p>";
-			// 	isValid = false;
-			// }
+			if($("#emailRegister").val() === "" || validate.hasWhiteSpace($("#emailRegister").val()) ){
+				document.getElementById('error_emailRegister').innerHTML = "<p>Please provide a valid email!</p>";
+				isValid = false;
+			}
 			
-			// if($("#passwordRegister").val() === "" || validate.hasWhiteSpace( $("#passwordRegister").val())){
-			// 	document.getElementById('error_passwordRegister').innerHTML += "<p>Please provide a valid password!</p>";
-			// 	isValid= false;
-			// }
+			if($("#passwordRegister").val() === "" || validate.hasWhiteSpace( $("#passwordRegister").val())){
+				document.getElementById('error_passwordRegister').innerHTML += "<p>Please provide a valid password!</p>";
+				isValid= false;
+			}
 			
-			// if($("#passwordRegister").val().length <= 6){
-			// 	document.getElementById('error_passwordRegister').innerHTML += "<p>Length of password must be > 6!</p>";
-			// 	isValid= false;
-			// }
+			if($("#passwordRegister").val().length <= 6){
+				document.getElementById('error_passwordRegister').innerHTML += "<p>Length of password must be > 6!</p>";
+				isValid= false;
+			}
 				
-			// if($("#passwordRegister").val() !== $("#confirmPassword").val() ){
-			// 	document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
-			// 	isValid= false;
-			// }
+			if($("#passwordRegister").val() !== $("#confirmPassword").val() ){
+				document.getElementById('error_confirmPassword').innerHTML += "<p>Passwords don't match!</p>";
+				isValid= false;
+			}
 				
-			// if($("#firstName").val() === "" || validate.hasWhiteSpace( $("#firstName").val())){
-			// 	document.getElementById('error_firstName').innerHTML += "<p>Please provide a valid first name!</p>";
-			// 	isValid= false;
-			// }
+			if($("#firstName").val() === "" || validate.hasWhiteSpace( $("#firstName").val())){
+				document.getElementById('error_firstName').innerHTML += "<p>Please provide a valid first name!</p>";
+				isValid= false;
+			}
 			
-			// if($("#lastName").val() === "" || validate.hasWhiteSpace( $("#lastName").val())){
-			// 	document.getElementById('error_lastName').innerHTML += "<p>Please provide a valid last name!</p>";
-			// 	isValid= false;
-			// }
+			if($("#lastName").val() === "" || validate.hasWhiteSpace( $("#lastName").val())){
+				document.getElementById('error_lastName').innerHTML += "<p>Please provide a valid last name!</p>";
+				isValid= false;
+			}
 			
-			// if($("#city").val() === "" || validate.hasWhiteSpace( $("#city").val())){
-			// 	document.getElementById('error_city').innerHTML += "<p>Please provide a valid city!</p>";
-			// 	isValid= false;
-			// }
+			if($("#city").val() === "" || validate.hasWhiteSpace( $("#city").val())){
+				document.getElementById('error_city').innerHTML += "<p>Please provide a valid city!</p>";
+				isValid= false;
+			}
 			
-			// if($("#country").val() === "" || validate.hasWhiteSpace( $("#country").val())|| getKeyByValue($("#country").val() ) === undefined ){
-			// 	document.getElementById('error_country').innerHTML += "<p>Please provide a valid country!</p>";
-			// 	isValid= false;
-			// }
+			if($("#country").val() === "" || validate.hasWhiteSpace( $("#country").val())|| getKeyByValue($("#country").val() ) === undefined ){
+				document.getElementById('error_country').innerHTML += "<p>Please provide a valid country!</p>";
+				isValid= false;
+			}
 			
 			return isValid;
 		},
@@ -90,20 +90,20 @@ var validate = (function(){
 		password : function(){
 			    var isValid = true;
     
-        // if($("#old_password").val() === "" || validate.hasWhiteSpace( $("#old_password").val())){
-		// 	document.getElementById('error_old_password').innerHTML = "<p>Please provide a valid old password!</p>";
-		// 	isValid= false;
-		// }
+        if($("#old_password").val() === "" || validate.hasWhiteSpace( $("#old_password").val())){
+			document.getElementById('error_old_password').innerHTML = "<p>Please provide a valid old password!</p>";
+			isValid= false;
+		}
 		
-		// if($("#new_password").val() === "" || validate.hasWhiteSpace( $("#new_password").val())){
-		// 	document.getElementById('error_new_password').innerHTML = "<p>Please provide a valid new password!</p>";
-		// 	isValid= false;
-		// }
+		if($("#new_password").val() === "" || validate.hasWhiteSpace( $("#new_password").val())){
+			document.getElementById('error_new_password').innerHTML = "<p>Please provide a valid new password!</p>";
+			isValid= false;
+		}
 		
-		// if($("#confirm_new_password").val() != $("#new_password").val() ){
-		// 	document.getElementById('error_new_password').innerHTML = "<p>New password do not match!</p>";
-		// 	isValid= false;
-		// }
+		if($("#confirm_new_password").val() != $("#new_password").val() ){
+			document.getElementById('error_new_password').innerHTML = "<p>New password do not match!</p>";
+			isValid= false;
+		}
     
     	return isValid;
 		},
@@ -111,25 +111,25 @@ var validate = (function(){
 		account : function(){
 		var isValid = true;
     
-        // if($("#firstName_account").val() === "" || validate.hasWhiteSpace( $("#firstName_account").val())){
-		// 	document.getElementById('firstName_account_error').innerHTML = "<p>Please provide a valid first name!</p>";
-		// 	isValid= false;
-		// }
+        if($("#firstName_account").val() === "" || validate.hasWhiteSpace( $("#firstName_account").val())){
+			document.getElementById('firstName_account_error').innerHTML = "<p>Please provide a valid first name!</p>";
+			isValid= false;
+		}
 		
-		// if($("#lastName_account").val() === "" || validate.hasWhiteSpace( $("#lastName_account").val())){
-		// 	document.getElementById('lastName_account_error').innerHTML = "<p>Please provide a valid last name!</p>";
-		// 	isValid= false;
-		// }
+		if($("#lastName_account").val() === "" || validate.hasWhiteSpace( $("#lastName_account").val())){
+			document.getElementById('lastName_account_error').innerHTML = "<p>Please provide a valid last name!</p>";
+			isValid= false;
+		}
 		
-		// if($("#city_account").val() === "" || validate.hasWhiteSpace( $("#city_account").val())){
-		// 	document.getElementById('city_account_error').innerHTML = "<p>Please provide a valid city!</p>";
-		// 	isValid= false;
-		// }
+		if($("#city_account").val() === "" || validate.hasWhiteSpace( $("#city_account").val())){
+			document.getElementById('city_account_error').innerHTML = "<p>Please provide a valid city!</p>";
+			isValid= false;
+		}
 		
-		// if($("#country_account").val() === "" || validate.hasWhiteSpace( $("#country_account").val())|| getKeyByValue($("#country_account").val() ) === undefined ){
-		// 	document.getElementById('country_account_error').innerHTML = "<p>Please provide a valid country!</p>";
-		// 	isValid= false;
-		// }
+		if($("#country_account").val() === "" || validate.hasWhiteSpace( $("#country_account").val())|| getKeyByValue($("#country_account").val() ) === undefined ){
+			document.getElementById('country_account_error').innerHTML = "<p>Please provide a valid country!</p>";
+			isValid= false;
+		}
     
     
     	return isValid;

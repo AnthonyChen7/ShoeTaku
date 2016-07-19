@@ -225,24 +225,7 @@ class AccountSettings extends Restapi{
 		
 		return $result;
 	}
-	
-	private function areFieldsValid(){
-		
-		$isCountryValid = new Countries();
 
-		foreach($_POST as $key=>$value){
-			if(empty($_POST[$key]) || ctype_space($_POST[$key])){
-				return false;
-			}
-
-		}
-			
-		if( isset($_POST['country']) && $isCountryValid->isCountryValid($_POST['country'])===false){
-			$this->response("Invalid country!",400);
-		}
-		
-		return true;
-	}
 }
 
 ?>
