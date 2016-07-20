@@ -106,7 +106,7 @@ class ValidateForms extends Restapi {
 		return true;
 	}
 	
-		function isPasswordFormValid(){
+	function isPasswordFormValid(){
 		
 		$isCountryValid = new Countries();
 		
@@ -123,6 +123,18 @@ class ValidateForms extends Restapi {
 		}
 		else if($_POST['new_password'] != $_POST['confirm_new_password']){
 			$this->response(PASSWORD_NOT_MATCH,400);
+		}
+		
+		return true;
+	}
+	
+	function isForgotPasswordFormValid(){
+		
+		if(empty($_POST['email']) || ctype_space( $_POST['email'] )  ){
+			$this->response(INVALID_EMAIL,400);
+		}
+		else if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
+			$this->response(INVALID_EMAIL,400);
 		}
 		
 		return true;

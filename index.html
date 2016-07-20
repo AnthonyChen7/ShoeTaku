@@ -123,9 +123,10 @@
                          Please enter a valid email for a password reset link to be sent to!   
                         </p>
                         
-                            <form>
+                            <form id="password_form" method="post">
                                 <label>Email</label>
-                                <input type="email">
+                                <input type="email" id="email_password">
+                                <div id="error_email_password"></div>
                                 
                                 <div class="action_btns">
                                     <div class="one_half">
@@ -133,7 +134,7 @@
                                     </div>
                              
                                     <div class="one_half last">
-                                        <input type="submit" id="register" value="Register" class="btn btn_red">
+                                        <input type="submit" id="forgot_password" value="Submit" class="btn btn_red">
                                     </div>
                                 </div>
                             </form>

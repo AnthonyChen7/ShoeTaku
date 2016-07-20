@@ -6,6 +6,7 @@ console.log(localStorage.getItem("token"));
 $(document).ready(function() {
 		nonFBController.loginButtonHandler();
 		nonFBController.registerButtonHandler();
+		nonFBController.forgotPassword();
 });
 
 var validate = (function(){
@@ -297,6 +298,28 @@ var nonFBController = (function(){
 						console.log("form is invalid");
 					}
 				});
+		},
+		
+		forgotPassword : function(){
+			$("#password_form").submit(function(event){
+				document.getElementById('error_email_password').innerHTML = "";
+				event.preventDefault();
+				
+				var data = {'email':$('#email_password').val()};
+				
+				$.ajax({
+					type:"POST",
+					url: "/controllers/forgotPassword",
+					data:data,
+					success : function(data){
+						console.log(data);
+					},
+					error: function(data){
+						console.log(data);
+						document.getElementById('error_email_password').innerHTML = data.responseJSON;
+					}
+				});
+			});
 		}
 	}
 })();
