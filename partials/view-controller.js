@@ -22,7 +22,7 @@ var constants = (function(){
 var controller= (function(){
 	var controllerPhp = "/partials/view-controller.php";
 	var currentPage = "";
-	var pages= ["sell","wanted","account"];
+	var pages= ["main","sell","wanted","account"];
 	var $partialView = $("#partial_view");
 	function determineCurrentPage(){
 		if (currentPage == "" || currentPage == null)
