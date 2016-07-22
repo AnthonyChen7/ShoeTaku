@@ -31,9 +31,9 @@ isMerged TINYINT NOT NULL DEFAULT 0
 
 CREATE TABLE Shoe (
 shoeId INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-brand VARCHAR(20) NOT NULL,
-model VARCHAR(25) NOT NULL,
-size DECIMAL(3,1) NOT NULL,
+brand VARCHAR(20),
+model VARCHAR(25),
+size DECIMAL(3,1),
 itemCondition ENUM('1','2','3','4','5'),
 description TEXT,
 imageUrl VARCHAR(50),
