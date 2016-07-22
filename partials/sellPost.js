@@ -6,16 +6,16 @@ function createShoePost(){
 	var size = $('#sellShoeSize').val();
 	var itemCondition = $('#sellShoeCond').val();
 	var description = $('#sellShoeDescription').val();
-	
+
 	var price = $('#sellShoePrice').val();
 	
 	var url = '/controllers/shoe';
 	var data ={
-		title: title
-		shoeBrand : brand,
-		shoeModel : model,
-		shoeSize : size,
-		itemCondition : itemCondition,
+		title: title,
+		brand : brand,
+		model : model,
+		size : size,
+		cond : itemCondition,
 		description : description
 	};
 
@@ -23,7 +23,7 @@ function createShoePost(){
 		type:'POST',
 		url : url,
 		data : data,//JSON.stringify(data),
-		//dataType : 'json',
+		dataType : 'json',
 		timeout : 3000,
 		success: function(data){
 			var data = data;
@@ -37,12 +37,18 @@ function createShoePost(){
 	});
 }
 
-$(document).ready(function() {
+function closeModal(){
+	$("#createSellShoeButton").click(function(){
+        $("#createSellPost").modal('hide');
+    });
+}
 
+$(document).ready(function() {
 	$('#createShoePost').submit(function(event){
 		console.log("in submit");
 		event.preventDefault();
 		createShoePost();
+		closeModal();
 	});
 });
 
