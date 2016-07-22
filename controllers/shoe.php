@@ -182,12 +182,12 @@ class Shoe extends Restapi
 	private function createShoe()
 	{
 		$table = "Shoe";
-		$title = null;//$_POST["title"];		
-		 $brand = null;//$_POST["brand"];
-		 $model = null;//null//$_POST["model"];
-		 $size = null;//$_POST["size"];
-		 $itemCnd = null;//$_POST["itemCondition"];
-		 $description =null;// $_POST["description"];
+		$title = $_POST["title"];		
+		 $brand = $_POST["brand"];
+		 $model = $_POST["model"];
+		 $size = $_POST["size"];
+		 $itemCnd = $_POST["itemCondition"];
+		 $description = $_POST["description"];
 		 $ownerId =1;//$_POST["ownerId"];
 		 $isWanted = 0;
 		 $url = null;
@@ -247,7 +247,6 @@ class Shoe extends Restapi
 		$this->disconnect();
 
 		return $result;
-		//echo $result;
 	}
 
 	private function editShoe($id)

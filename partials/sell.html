@@ -47,7 +47,6 @@
 </div> -->
 
 
-
 	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#createSellPost">I want to sell my shoes!</button>
 	<!-- Modal -->
 	<div class="modal fade" id="createSellPost" role="dialog">
@@ -65,31 +64,81 @@
 		          			<div class="input-group col-xs-12">
 		          				<input class="form-control" type="text" name="title" id="sellPostTitle">
 		          			</div>
-							  <input type="submit" value="Submit">
+		          		</div>
+		          		<div class="form-group">
+		          			<label for="sellShoeBrand">Shoe Brand:</label>
+		          			<div class="input-group col-xs-12">
+		          				<select class="form-control" name="brand" id="sellShoeBrand" required>>
+		          					<option disabled selected value> -- Select a Brand -- </option>
+		          					<option value="Nike">Nike</option>
+		          					<option value="Jordan">Jordan</option>
+		          					<option value="Adidas">Adidas</option>
+		          					<option value="Puma">Puma</option>
+		          					<option value="etc">Etc</option>
+		          				</select>
+		          			</div>
+		          		</div>
+		          		<div class="form-group">
+		          			<label for="sellShoeModel">Shoe Model:</label>
+		          			<div class="input-group col-xs-12">
+		          				<input class="form-control" type="text" name="model" id="sellShoeModel">
+		          			</div>
+		          		</div>
+		          		<div class="form-group">
+		          			<label for="sellShoeSize">Shoe Size: (IN US)</label>
+		          			<div class="input-group col-xs-12">
+		          				<select class="form-control" name="size" id="sellShoeSize" required>
+		          					<option disabled selected value> -- Select a Size -- </option>
+									<option value=14>US 14</option>
+									<option value=13>US 13</option>
+									<option value=12>US 12</option>
+									<option value=11>US 11</option>
+									<option value=10>US 10</option>
+									<option value=9>US 9</option>
+									<option value=8>US 8</option>
+									<option value=7>US 7</option>
+									<option value=6>US 6</option>
+									<option value=5>US 5</option>
+		          				</select>
+		          			</div>
+		          		</div>
+		          		<div class="form-group">
+		          			<label for="sellShoeCond">Shoes Condition:</label>
+		          			<div class="input-group col-xs-12">
+		          				<select class="form-control" name="size" id="sellShoeCond" required>
+		          					<option disabled selected value> -- Select a Quality -- </option>
+									<option value=5>Brand New</option>
+									<option value=4>Passed as Deadstock / worn once or twice</option>
+									<option value=3>Worn less than 10 times</option>
+									<option value=2>Used</option>
+									<option value=1>Beaters</option>
+		          				</select>
+		          			</div>
+		          		</div>
+		          		<div class="form-group">
+		          			<label for="sellShoeDescription">Shoe Description:</label>
+		          			<div class="input-group col-xs-12">
+		          				<input class="form-control" type="text" name="description" id="sellShoeDescription">
+		          			</div>
+		          		</div>
+		          		<div class="form-group">
+		          			<label for="sellShoePrice">Price:</label>
+		          			<div class="input-group col-xs-12">
+		          				<input class="form-control" type="text" name="price" id="sellShoePrice">
+		          			</div>
 		          		</div>
 		        	</div>
+		        	<div class="modal-footer">
+						<button type="button" class="btn btn-blog pull-left" data-dismiss="modal">
+						Close
+						</button>
+						<button type="submit" class="btn btn-blog pull-right">
+						Create
+						</button>
+					</div>
 		        </form>
-		        <div class="modal-footer">
-		        	<!--<button type="submit" class="btn btn-default" data-dismiss="modal">Submit</button>
-		          	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-		        </div>
 		    </div>
 	    </div>
 	</div>
 
-			
-
-
-
-
-
-
-
-
-
-
-
-		</div>
-		<!--<script src="pagination.js"></script>-->
-		   <!--  // <script src="/components/jquery/jquery-2.2.3.js" type="text/javascript" charset="utf-8"></script> -->
-<script src="/partials/app.js" type="text/javascript" charset="utf-8"></script>
+<script src="/partials/sellPost.js" type="text/javascript" charset="utf-8"></script>
