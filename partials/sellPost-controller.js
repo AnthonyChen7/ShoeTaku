@@ -1,3 +1,9 @@
+function clearForm(){
+	$('#createShoePost').each(function(){
+    	this.reset();
+	});
+}
+
 function createShoePost(){
 	var title = $('#sellPostTitle').val();
 	console.log(title);
@@ -12,10 +18,10 @@ function createShoePost(){
 	var url = '/controllers/shoe';
 	var data ={
 		title: title,
-		brand : brand,
-		model : model,
-		size : size,
-		cond : itemCondition,
+		shoeBrand : brand,
+		shoeModel : model,
+		shoeSize : size,
+		itemCondition : itemCondition,
 		description : description
 	};
 
@@ -26,6 +32,7 @@ function createShoePost(){
 		dataType : 'json',
 		timeout : 3000,
 		success: function(data){
+			clearForm();
 			var data = data;
 			console.log("ajax call complete2");
 			console.log(data);
@@ -38,9 +45,7 @@ function createShoePost(){
 }
 
 function closeModal(){
-	$("#createSellShoeButton").click(function(){
-        $("#createSellPost").modal('hide');
-    });
+    $('#createSellPost').modal('hide');
 }
 
 $(document).ready(function() {
@@ -48,6 +53,8 @@ $(document).ready(function() {
 		console.log("in submit");
 		event.preventDefault();
 		createShoePost();
+	});
+	$('#createSellShoeButton').click(function(){
 		closeModal();
 	});
 });
