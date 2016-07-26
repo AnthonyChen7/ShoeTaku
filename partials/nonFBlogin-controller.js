@@ -313,10 +313,12 @@ var nonFBController = (function(){
 					data:data,
 					success : function(data){
 						console.log(data);
+						document.getElementById('error_email_password').innerHTML = data;
 					},
 					error: function(data){
+
 						console.log(data);
-						document.getElementById('error_email_password').innerHTML = data.responseJSON;
+						document.getElementById('error_email_password').innerHTML = data;
 					}
 				});
 			});

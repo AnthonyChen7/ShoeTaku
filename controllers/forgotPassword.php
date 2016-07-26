@@ -29,9 +29,9 @@ class ForgotPassword extends Restapi{
 		// 0 = off (for production use)
 		// 1 = client messages
 		// 2 = client and server messages
-		$mail->SMTPDebug = 3;
+		//$mail->SMTPDebug = 3;
 		//Ask for HTML-friendly debug output
-		$mail->Debugoutput = 'html';
+		//$mail->Debugoutput = 'html';
 		
 		//Set the encryption system to use - ssl (deprecated) or tls
 		$mail->SMTPSecure = 'ssl';
@@ -48,10 +48,12 @@ class ForgotPassword extends Restapi{
 		$mail->Body = "Body";
 		
 		if(!$mail->send()){
-			echo "Message could not be sent";
-			echo 'Mailer Error: ' . $mail->ErrorInfo;
+			// echo "Message could not be sent";
+			// echo 'Mailer Error: ' . $mail->ErrorInfo;
+			$this->response("Password reset link not successfully sent to email!",400);
 		}else{
-			echo 'Message sent';
+			//echo 'Message sent';
+			$this->response("Password reset link successfully sent to email!",200);
 		}
 
 	}
