@@ -20,6 +20,7 @@ class ForgotPassword extends Restapi{
 	}
 	
 	private function forgotPassword(){
+
 		$mail = new PHPMailer;
 		
 		$mail->IsSMTP();
@@ -47,15 +48,45 @@ class ForgotPassword extends Restapi{
 		$mail->Subject = "Subject";
 		$mail->Body = "Body";
 		
-		if(!$mail->send()){
+		//check if email exists first
+		$table = "user";
+		$columns = array("email");
+		$where = array("email");
+		$values = array($_POST['email']);
+		$limOff = array();
+		
+		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
+		
+		try{
+			
+		$this->connect();
+		
+		$stmt = $this->conn->prepare($sql);
+		
+		$stmt->execute($values);
+		
+		$result = $stmt->fetchAll();
+		
+		if(count($result)===1){
+			
+			if(!$mail->send()){
 			// echo "Message could not be sent";
 			// echo 'Mailer Error: ' . $mail->ErrorInfo;
-			$this->response("Password reset link not successfully sent to email!",400);
+			$this->response("Password reset link not successfully sent to email!",500);
 		}else{
 			//echo 'Message sent';
 			$this->response("Password reset link successfully sent to email!",200);
 		}
-
+	
+		}else{
+			$this->response("Email does not exist!",500);
+		}
+			
+		}catch(Exception $e){
+			$this->response("Email does not exist!", 500);
+		}
+		
+		
 	}
 	
 	

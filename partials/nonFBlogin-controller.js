@@ -318,7 +318,7 @@ var nonFBController = (function(){
 					error: function(data){
 
 						console.log(data);
-						document.getElementById('error_email_password').innerHTML = data;
+						document.getElementById('error_email_password').innerHTML = data.responseJSON;
 					}
 				});
 			});
