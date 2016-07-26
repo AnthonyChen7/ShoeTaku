@@ -11,7 +11,7 @@ function createShoePost(){
 	
 	var url = '/controllers/shoe';
 	var data ={
-		title: title
+		title: title,
 		shoeBrand : brand,
 		shoeModel : model,
 		shoeSize : size,

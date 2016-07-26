@@ -183,9 +183,9 @@ class Shoe extends Restapi
 	{
 		$table = "Shoe";
 		$title = $_POST["title"];		
-		 $brand = $_POST["brand"];
-		 $model = $_POST["model"];
-		 $size = $_POST["size"];
+		 $brand = $_POST["shoeBrand"];
+		 $model = $_POST["shoeModel"];
+		 $size = $_POST["shoeSize"];
 		 $itemCnd = $_POST["itemCondition"];
 		 $description = $_POST["description"];
 		 $ownerId =1;//$_POST["ownerId"];
