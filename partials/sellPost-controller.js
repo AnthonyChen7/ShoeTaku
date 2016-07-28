@@ -6,7 +6,6 @@ function clearForm(){
 
 function createShoePost(){
 	var title = $('#sellPostTitle').val();
-	console.log(title);
 	var brand = $('#sellShoeBrand').val();
 	var model = $('#sellShoeModel').val();
 	var size = $('#sellShoeSize').val();
@@ -14,6 +13,23 @@ function createShoePost(){
 	var description = $('#sellShoeDescription').val();
 
 	var price = $('#sellShoePrice').val();
+
+	if(title =='' || title.length > 30){
+		alert("title cannot be left empty or exceed 30 chars");
+		return false;
+	}
+	if(brand ==''){
+		alert("brand cannot be left empty");
+		return false;
+	}
+	if(model =='' || model.length > 25){
+		alert("model cannot be left empty or exceed 25 chars");
+		return false;
+	}
+	if(description == ''){
+		alert("description cannot be left empty");
+		return false;
+	}
 	
 	var url = '/controllers/shoe';
 	var data ={
@@ -53,9 +69,19 @@ $(document).ready(function() {
 		console.log("in submit");
 		event.preventDefault();
 		createShoePost();
+
+		return function(e){
+			alert(e);
+			// if return successful, close modal
+		}
 	});
+
+	// this should not happen if false is returned from submitForm
 	$('#createSellShoeButton').click(function(){
 		closeModal();
 	});
 });
+
+
+
 
