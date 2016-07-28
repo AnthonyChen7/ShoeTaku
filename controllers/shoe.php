@@ -182,15 +182,33 @@ class Shoe extends Restapi
 	private function createShoe()
 	{
 		$table = "Shoe";
-		$title = $_POST["title"];		
-		 $brand = $_POST["shoeBrand"];
-		 $model = $_POST["shoeModel"];
-		 $size = $_POST["shoeSize"];
-		 $itemCnd = $_POST["itemCondition"];
-		 $description = $_POST["description"];
-		 $ownerId =1;//$_POST["ownerId"];
-		 $isWanted = 0;
-		 $url = null;
+		$title = $_POST["title"];
+		if($title == null || (strlen($title)>30)){
+			return false;
+		}		
+		$brand = $_POST["shoeBrand"];
+		if($brand == "-- Select a Brand --" || $brand == null){
+			return false;
+		}
+		$model = $_POST["shoeModel"];
+		if($model == null || (strlen($model)>25)){
+			return false;
+		}
+		$size = $_POST["shoeSize"];
+		if($size == 15){
+			return false;
+		}
+		$itemCnd = $_POST["itemCondition"];
+		if($itemCnd == 6){
+			return false;
+		}
+		$description = $_POST["description"];
+		if($description == null){
+			return false;
+		}
+		$ownerId =1;//$_POST["ownerId"];
+		$isWanted = 0;
+		$url = null;
 		
 		// if(isset($_POST["image"]))
 		// {
