@@ -2,23 +2,23 @@ console.log(localStorage.getItem("token"));
 
 /**
  * Init Handler for login and register button
+ * Redirect user if token hasn't expired
  */
 $(document).ready(function() {
 
 		if(localStorage.getItem("token") != null  && window.location.href.indexOf("/partials/main-page.html") <= -1 ){
-		$.ajax({
-			type:'POST',
-			url:"/controllers/authentication",
-			dataType: "json",
-			data: {"token":localStorage.getItem("token"), "action":"redirect"},
-			success : function(data){
-				window.location.href="/partials/main-page.html";
-			},
-			error: function(data){
-				
-			}
-		});
-		
+			$.ajax({
+				type:'POST',
+				url:"/controllers/authentication",
+				dataType: "json",
+				data: {"token":localStorage.getItem("token"), "action":"redirect"},
+				success : function(data){
+					window.location.href="/partials/main-page.html";
+				},
+				error: function(data){
+					
+				}
+			});
 		}
 		
 		nonFBController.loginButtonHandler();
