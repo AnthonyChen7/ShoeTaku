@@ -16,7 +16,6 @@ private $token;
 private $signer;
 private $data;
 
-
 function __construct($token,$userId) {	
 $this->token = (new Parser())->parse((string) $token); // Parses from a string
 $this->data = new ValidationData(); // It will use the current time to validate (iat, nbf and exp)
@@ -24,6 +23,7 @@ $this->data->setIssuer(ISSUER);
 $this->data->setId($userId);
 $this->signer = new Sha256();	
 }
+
 
 //If token hasn't been messed with and hasn't expire, true is returned
 function isTokenValid(){

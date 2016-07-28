@@ -5,8 +5,11 @@ This class handles the non-FB authentication
 */
 
 require_once(__DIR__.'/restapi.php');
-include_once(__DIR__.'/tokencreator.php');
+include_once __DIR__.'/tokencreator.php';
+include_once __DIR__.'/tokenverify.php';
 include_once (__DIR__.'/validate.php');
+
+use Lcobucci\JWT\Parser;
 
 class Authentication extends Restapi{
 	
@@ -33,10 +36,31 @@ class Authentication extends Restapi{
 		else if(isset($_POST['action']) && $_POST['action']==='logout'){
 			$this->storeTokenInDB();
 		}
+		else if(isset($_POST['action']) && $_POST['action']==='redirect'){
+			$this->redirectPage();
+		}
 		else{
 			$this->fbLogin();	
 		}
 		
+	}
+	
+	private function redirectPage(){
+		
+		//var_dump("in here");
+		
+		$token = $_POST['token'];
+		$parsedToken = TokenCreator::initParseToken($token);
+		
+		$tokenVerify = new TokenVerify($token, $parsedToken->getToken()->getHeader('jti'));
+		
+		if($tokenVerify->isTokenValid()){
+			$this->response("success",200);
+		}else{
+			$this->response("fail",500);
+		}
+		
+		 
 	}
 	
 	private function nonfbLogin(){
