@@ -152,6 +152,27 @@ var validate = (function(){
     
     
     	return isValid;
+		},
+		
+		resetPassword : function(){
+			var isValid = true;
+			
+			if($("#reset_new_password").val() === "" || validate.hasWhiteSpace( $("#reset_new_password").val())){
+			document.getElementById('error_reset_new_password').innerHTML = "<p>Please provide a valid new password!</p>";
+			isValid= false;
+			}
+			
+			if($("#reset_confirm_new_password").val() === "" || validate.hasWhiteSpace( $("#reset_confirm_new_password").val())){
+			document.getElementById('error_reset_confirm_new_password').innerHTML = "<p>Please confirm a valid new password!</p>";
+			isValid= false;
+			}
+			
+			if( $("#reset_new_password").val() != $('#reset_confirm_new_password').val() ){
+			document.getElementById('error_reset_new_password').innerHTML = "<p>Passwords don't match!</p>";
+			isValid= false;	
+			}
+			
+			return isValid;
 		}
 	}
 	
@@ -188,7 +209,12 @@ var clearErrorDivs = (function(){
                 document.getElementById('error_new_password').innerHTML="";
                 document.getElementById('error_confirm_password').innerHTML="";
                 document.getElementById('error_save_password').innerHTML=""; 
-        }
+        },
+		
+		resetPassword : function(){
+			 document.getElementById('error_reset_new_password').innerHTML="";
+             document.getElementById('error_reset_confirm_new_password').innerHTML="";
+		}
 	}
 	
 })();
