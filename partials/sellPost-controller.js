@@ -14,28 +14,38 @@ function createShoePost(){
 	var price = $('#sellShoePrice').val();
 	price = parseInt(price);
 
+	var isPostValid = true;
+
 	if(title =='' || title.length > 30){
-		alert("title cannot be left empty or exceed 30 chars");
-		return false;
+		document.getElementById("title_sell_error").innerHTML = "Title cannot be left empty or exceed 30 chars!";
+		isPostValid =  false;
 	}
 	if(brand =='' || brand =='-- Select a Brand --'){
-		alert("you must choose brand");
-		return false;
+		document.getElementById("brand_sell_error").innerHTML = "You must choose a brand!";
+		isPostValid =  false;
 	}
 	if(model =='' || model.length > 25){
-		alert("model cannot be left empty or exceed 25 chars");
-		return false;
+		document.getElementById("model_sell_error").innerHTML = "Model cannot be left empty or exceeh 25 chars!";
+		isPostValid = false;
 	}
-	if(itemCondition == 7 || itemCondition == ''){
-		alert("you must choose item condition");
-		return false;
+	if(size == 15){
+		document.getElementById("size_sell_error").innerHTML = "You must choose the size of the shoes!";
+		isPostValid = false;
+	}	
+	if(itemCondition == 6 || itemCondition == ''){
+		document.getElementById("condition_sell_error").innerHTML = "You must choose item condition!";
+		isPostValid = false;
 	}
 	if(description == ''){
-		alert("description cannot be left empty");
-		return false;
+		document.getElementById("description_sell_error").innerHTML = "Description must be filled!";
+		isPostValid = false;
 	}
-	if(price < 0){
-		alert("price cannot be a negative value");
+	if(price < 0 || isNaN(price)){
+		document.getElementById("price_sell_error").innerHTML = "Price cannot be a negative value or word(s)!"
+		isPostValid = false;
+	}
+
+	if(!isPostValid){
 		return false;
 	}
 	
@@ -48,22 +58,27 @@ function createShoePost(){
 		itemCondition : itemCondition,
 		description : description
 	};
+	console.log("url is " +url);
 
 	$.ajax({
 		type:'POST',
 		url : url,
-		data : data,//JSON.stringify(data),
+		data : data,
 		dataType : 'json',
 		timeout : 3000,
 		success: function(data){
 			clearForm();
+			if(data){
+				closeModal();
+				$('.sell_error').html('');
+			}
 			var data = data;
 			console.log(data);
 		},
 		error: function(data){
 			clearForm();
 			var data = data;
-			console.log(data);
+			console.log("error: " + data);
 		}
 	});
 
@@ -84,11 +99,6 @@ $(document).ready(function() {
 			return false;
 		}
 		alert("Your post has been created");
-	});
-
-	// this should not happen if false is returned from submitForm
-	$('#createSellShoeButton').click(function(){
-		closeModal();
 	});
 });
 

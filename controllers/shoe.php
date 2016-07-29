@@ -206,8 +206,14 @@ class Shoe extends Restapi
 		if($description == null){
 			return false;
 		}
+		// get userID
 		$ownerId =1;//$_POST["ownerId"];
+
+		// 0 is for sell
+		// 1 is for buy
 		$isWanted = 0;
+
+		// imgur API 
 		$url = null;
 		
 		// if(isset($_POST["image"]))
@@ -267,11 +273,16 @@ class Shoe extends Restapi
 		return $result;
 	}
 
+	// pass shoeID and find corresponding userID
 	private function editShoe($id)
 	{
 
 	}
 
+
+	/** 
+	whats the difference between getShoes and getShoe
+	*/
 	private function getShoes()
 	{
 
@@ -281,6 +292,7 @@ class Shoe extends Restapi
 	{
 
 	}
+
 
 	private function deleteShoe($id)
 	{
