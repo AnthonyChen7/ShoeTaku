@@ -20,6 +20,7 @@ class ForgotPassword extends Restapi{
 	}
 	
 	private function forgotPassword(){
+
 		$mail = new PHPMailer;
 		
 		$mail->IsSMTP();
@@ -41,21 +42,61 @@ class ForgotPassword extends Restapi{
 		$mail->SMTPAuth = true;
 		$mail->Username = 'shoetaku97@gmail.com';
 		$mail->Password = 'shoetaku123';
+		$mail->isHTML(true); 
 		
-		$mail->setFrom("from@example.com");
+		$mail->setFrom('shoetaku97@gmail.com', 'ShoeTaku');
 		$mail->addAddress($_POST['email']);
-		$mail->Subject = "Subject";
-		$mail->Body = "Body";
+		$mail->Subject = "Forgot Password";
+		$mail->Body = "Hello, " . $_POST['email'] . 
+					  "<br/ >
+						<br />
+						You have requested to reset your password, please click on the password reset link below. 
+						<br />
+						<a href='www.google.ca'>Link goes here</a>
+						<br/>
+						<br />
+						If you didn't request this, please ignore this email.
+						<br />
+						<br />
+						Sincerely, 
+						<br / >
+						ShoeTaku";
 		
-		if(!$mail->send()){
-			// echo "Message could not be sent";
-			// echo 'Mailer Error: ' . $mail->ErrorInfo;
-			$this->response("Password reset link not successfully sent to email!",400);
+		//check if email exists first
+		$table = "user";
+		$columns = array("email");
+		$where = array("email");
+		$values = array($_POST['email']);
+		$limOff = array();
+		
+		$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
+		
+		try{
+			
+		$this->connect();
+		
+		$stmt = $this->conn->prepare($sql);
+		
+		$stmt->execute($values);
+		
+		$result = $stmt->fetchAll();
+		
+		if(count($result)===1){
+			if(!$mail->send()){
+				$this->response("Password reset link not successfully sent to email!",500);
+			}else{
+				$this->response("Password reset link successfully sent to email!",200);
+			}
+	
 		}else{
-			//echo 'Message sent';
-			$this->response("Password reset link successfully sent to email!",200);
+			$this->response("Email does not exist!",500);
 		}
-
+			
+		}catch(Exception $e){
+			$this->response("Email does not exist!", 500);
+		}
+		
+		
 	}
 	
 	
