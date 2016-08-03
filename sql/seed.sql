@@ -19,7 +19,7 @@ countryCode VARCHAR(10)
 );
 
 CREATE TABLE Password_Change_Requests(
-    id VARCHAR(50) NOT NULL PRIMARY KEY,
+    id BIGINT(50) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     expiryTime BIGINT(25) NOT NULL,
     userId INT(50) NOT NULL
 );

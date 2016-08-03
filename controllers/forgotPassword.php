@@ -67,10 +67,28 @@ class ForgotPassword extends Restapi{
 		$stmt->execute($values);
 		
 		$result = $stmt->fetchAll();
-		//var_dump($result);
+		
+		$this->disconnect();
+		
 		if(count($result)===1){
 					
 					$object = $result[0];
+					
+					$this->connect();
+					
+					$table = "password_change_requests";
+					$columns=array("expiryTime","userId");
+					$values = array(time(),$object['userId']);
+					$sql = $this->prepareInsertSql($table,$columns);
+					
+					$stmt = $this->conn->prepare($sql);
+		
+					$stmt->execute($values);
+					
+					// $this->conn->lastInsertId();
+					
+					$this->disconnect();
+					
 					$mail->Body = "Hello, " . $_POST['email'] . 
 					  "<br/ >
 						<br />
@@ -87,18 +105,19 @@ class ForgotPassword extends Restapi{
 						ShoeTaku Administrator";
 			
 			if(!$mail->send()){
-	
 				$this->response("Password reset link not successfully sent to email!",500);
-			}else{
+			}else{	
 				$this->response("Password reset link successfully sent to email!",200);
 			}
 	
 		}else{
 			$this->response("Email does not exist!",500);
 		}
+		
+		
 			
 		}catch(Exception $e){
-			$this->response("Email does not exist!", 500);
+			$this->response($e->getMessage(), 500);
 		}
 		
 		
