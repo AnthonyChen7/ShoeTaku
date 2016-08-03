@@ -51,7 +51,7 @@ class ForgotPassword extends Restapi{
 		
 		//check if email exists first
 		$table = "user";
-		$columns = array("email");
+		$columns = array("userId,email");
 		$where = array("email");
 		$values = array($_POST['email']);
 		$limOff = array();
@@ -69,13 +69,14 @@ class ForgotPassword extends Restapi{
 		$result = $stmt->fetchAll();
 		//var_dump($result);
 		if(count($result)===1){
-			
+					
+					$object = $result[0];
 					$mail->Body = "Hello, " . $_POST['email'] . 
 					  "<br/ >
 						<br />
 						You have requested to reset your password, please click on the password reset link below. 
 						<br />
-						<a href='http://localhost:8080/partials/reset-password.html'>Link goes here</a>
+						<a href='http://localhost:8080/partials/reset-password.html?userId=" . $object['userId'] . " '>http://localhost:8080/partials/reset-password.html?userId=" . $object['userId'] . "</a>
 						<br/>
 						<br />
 						If you didn't request this, please ignore this email.
