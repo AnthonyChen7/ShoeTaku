@@ -85,7 +85,7 @@ class ForgotPassword extends Restapi{
 		
 					$stmt->execute($values);
 					
-					// $this->conn->lastInsertId();
+					$idInserted = $this->conn->lastInsertId();
 					
 					$this->disconnect();
 					
@@ -94,7 +94,7 @@ class ForgotPassword extends Restapi{
 						<br />
 						You have requested to reset your password, please click on the password reset link below. 
 						<br />
-						<a href='http://localhost:8080/partials/reset-password.html?userId=" . $object['userId'] . " '>http://localhost:8080/partials/reset-password.html?userId=" . $object['userId'] . "</a>
+						<a href='http://localhost:8080/partials/reset-password.html?id=" . $idInserted . " '>http://localhost:8080/partials/reset-password.html?id=" . $idInserted . "</a>
 						<br/>
 						<br />
 						If you didn't request this, please ignore this email.
