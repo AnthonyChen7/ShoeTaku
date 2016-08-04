@@ -1,10 +1,10 @@
 function clearForm(){
-	$('#createShoePost').each(function(){
+	$('#sellPostSubmit').each(function(){
     	this.reset();
 	});
 }
 
-function createShoePost(){
+function createSellPost(){
 	var title = $('#sellPostTitle').val();
 	var brand = $('#sellShoeBrand').val();
 	var model = $('#sellShoeModel').val();
@@ -63,7 +63,7 @@ function createShoePost(){
 	$.ajax({
 		type:'POST',
 		url : url,
-		data : data,
+		data : JSON.stringify(data),
 		dataType : 'json',
 		timeout : 3000,
 		success: function(data){
@@ -92,9 +92,9 @@ function closeModal(){
 }
 
 $(document).ready(function() {
-	$('#createShoePost').submit(function(event){
+	$('#sellPostSubmit').submit(function(event){
 		event.preventDefault();
-		if(!createShoePost()){
+		if(!createSellPost()){
 			alert("Post Registration not successful, try again.");
 			return false;
 		}

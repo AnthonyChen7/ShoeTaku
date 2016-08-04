@@ -80,6 +80,17 @@ isSold TINYINT NOT NULL DEFAULT 0,
 FOREIGN KEY (shoeId) REFERENCES Shoe (shoeId) ON DELETE CASCADE
 );
 
+INSERT INTO Sell(title,price,shoeId,created) VALUES("testing",8,1,"");
+INSERT INTO Sell(title,price,shoeId,created) VALUES("testing2",9,2,"");
+INSERT INTO Sell(title,price,shoeId,created) VALUES("testing3",10,3,"");
+INSERT INTO Sell(title,price,shoeId,created) VALUES("testing4",11,4,"");
+INSERT INTO Sell(title,price,shoeId,created) VALUES("testing5",12,5,"");
+INSERT INTO Sell(title,price,shoeId,created) VALUES("testing6",13,6,"");
+INSERT INTO Sell(title,price,shoeId,created) VALUES("testing7",14,7,"");
+INSERT INTO Sell(title,price,shoeId,created) VALUES("testing8",15,8,"");
+INSERT INTO Sell(title,price,shoeId,created) VALUES("testing9",16,9,"");
+INSERT INTO Sell(title,price,shoeId,created) VALUES("testing10",17,10,"");
+
 CREATE TABLE Like_Shoe
 (
 userId INT(11) NOT NULL,
