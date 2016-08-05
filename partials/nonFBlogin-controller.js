@@ -6,20 +6,20 @@ console.log(localStorage.getItem("token"));
  */
 $(document).ready(function() {
 
-		if(localStorage.getItem("token") != null  && window.location.href.indexOf("/partials/main-page.html") <= -1 ){
-			$.ajax({
-				type:'POST',
-				url:"/controllers/authentication",
-				dataType: "json",
-				data: {"token":localStorage.getItem("token"), "action":"redirect"},
-				success : function(data){
-					window.location.href="/partials/main-page.html";
-				},
-				error: function(data){
+		// if(localStorage.getItem("token") != null  && window.location.href.indexOf("/partials/main-page.html") <= -1 ){
+		// 	$.ajax({
+		// 		type:'POST',
+		// 		url:"/controllers/authentication",
+		// 		dataType: "json",
+		// 		data: {"token":localStorage.getItem("token"), "action":"redirect"},
+		// 		success : function(data){
+		// 			window.location.href="/partials/main-page.html";
+		// 		},
+		// 		error: function(data){
 					
-				}
-			});
-		}
+		// 		}
+		// 	});
+		// }
 		
 		nonFBController.loginButtonHandler();
 		nonFBController.registerButtonHandler();
@@ -152,6 +152,27 @@ var validate = (function(){
     
     
     	return isValid;
+		},
+		
+		resetPassword : function(){
+			var isValid = true;
+			
+			if($("#reset_new_password").val() === "" || validate.hasWhiteSpace( $("#reset_new_password").val())){
+			document.getElementById('error_reset_new_password').innerHTML = "<p>Please provide a valid new password!</p>";
+			isValid= false;
+			}
+			
+			if($("#reset_confirm_new_password").val() === "" || validate.hasWhiteSpace( $("#reset_confirm_new_password").val())){
+			document.getElementById('error_reset_confirm_new_password').innerHTML = "<p>Please confirm a valid new password!</p>";
+			isValid= false;
+			}
+			
+			if( $("#reset_new_password").val() != $('#reset_confirm_new_password').val() ){
+			document.getElementById('error_reset_new_password').innerHTML = "<p>Passwords don't match!</p>";
+			isValid= false;	
+			}
+			
+			return isValid;
 		}
 	}
 	
@@ -188,7 +209,12 @@ var clearErrorDivs = (function(){
                 document.getElementById('error_new_password').innerHTML="";
                 document.getElementById('error_confirm_password').innerHTML="";
                 document.getElementById('error_save_password').innerHTML=""; 
-        }
+        },
+		
+		resetPassword : function(){
+			 document.getElementById('error_reset_new_password').innerHTML="";
+             document.getElementById('error_reset_confirm_new_password').innerHTML="";
+		}
 	}
 	
 })();

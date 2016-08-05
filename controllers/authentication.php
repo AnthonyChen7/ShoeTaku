@@ -47,8 +47,6 @@ class Authentication extends Restapi{
 	
 	private function redirectPage(){
 		
-		//var_dump("in here");
-		
 		$token = $_POST['token'];
 		$parsedToken = TokenCreator::initParseToken($token);
 		
