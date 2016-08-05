@@ -11,6 +11,8 @@ class ResetPassword extends Restapi{
 	
 	private function resetPassword(){
 		
+		//TODO encryption...
+		
 		//Get the URL
 		$url = $_SERVER['HTTP_REFERER'];
 		
@@ -21,12 +23,42 @@ class ResetPassword extends Restapi{
 		$confirm = $_POST['confirm_new_password'];
 		
 		try{
+			//retrieve user id from id in URL
+			$this->connect();
 			
-			//TODO retrieve user id from pass table
-			//TODO update user table with new password
+			$table = "password_change_requests";
+			$where = array('id');
+			$columns = array("userId");
+			$limOff = array();
+			
+			$values = array($parts['id']);
+			$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);
+			$stmt = $this->conn->prepare($sql);
+			$stmt->execute($values);
+
+			$result=$stmt->fetchAll();
+			
+			if(count($result)==1){
+				$result = $result[0];
+			}else{
+				$this->response("Unable to reset password",500);
+			}
+			
+			$table = "user";
+			$where = array('userId');
+			$columns = array("password");
+
+			$values = array(password_hash($newPassword, PASSWORD_BCRYPT), $result['userId']);
+			$sql = $this->prepareUpdateSql($table, $columns, $where);
+			$stmt = $this->conn->prepare($sql);
+			$stmt->execute($values);
+			
+			$this->disconnect();
+			
+			$this->response("success",200);
 			
 		}catch(Exception $e){
-			
+			$this->response($e->getMessage(), 500);
 		}
 	}
 	
