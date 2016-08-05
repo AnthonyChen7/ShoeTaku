@@ -16,16 +16,15 @@ $(document).ready(function(){
 				url:"/controllers/resetPassword",
 				data: data,
 				dataType: "json",
-				//dataType: "text",
 				success: function(data){
 					var data = data;
 					console.log(data);
-					document.getElementById('reset_confirm_new_password').innerHTML="Password successfully resetted!";
+					document.getElementById('error_reset_confirm_new_password').innerHTML="Password successfully resetted!";
 				},
 				error: function(data){
 					var data = data;
 					console.log(data);
-					document.getElementById('reset_confirm_new_password').innerHTML=data;
+					document.getElementById('error_reset_confirm_new_password').innerHTML=data.responseJSON;
 				}
 			});
 		}
