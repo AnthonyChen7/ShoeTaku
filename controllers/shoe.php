@@ -26,37 +26,29 @@ class Shoe extends Restapi
 		$requestArray = explode("/", $_REQUEST['x']);
 		$length = count($requestArray);
 		$json = file_get_contents("php://input");
+		// $this->response($json,200);
+		$elementCount;
 		$data;
 		if ($json){
-				$data = json_decode($json, TRUE);
-				// json error detector
-				// switch(json_last_error())
-			 //        {
-			 //            case JSON_ERROR_DEPTH:
-			 //                $error =  ' - Maximum stack depth exceeded';
-			 //                break;
-			 //            case JSON_ERROR_CTRL_CHAR:
-			 //                $error = ' - Unexpected control character found';
-			 //                break;
-			 //            case JSON_ERROR_SYNTAX:
-			 //                $error = ' - Syntax error, malformed JSON';
-			 //                break;
-			 //            case JSON_ERROR_NONE:
-			 //            default:
-			 //                $error = '';                    
-			 //        }
-			 //        if (!empty($error))
-			 //            throw new Exception('JSON Error: '.$error);
-			}
+			$data = json_decode($json, TRUE);
+			$elementCount  = count($data);
+		}
 		
 		if ($method == 'POST'){
 			// Base case: /controllers/shoe   Create a new Shoe
+
 			if ($length == 1){
-				if(isset($data)){
-
+				// pagination 
+				if($elementCount == 2){
 					$page = $data['page'];
-					$per_page = $data['per_page']; 
-
+					$per_page = $data['per_page'];
+					// if($page!=1){
+					// 	$this->response($page,200);
+					// }
+					if($page < 1){
+						$pageNumError = "Current Page cannot be less than 1";
+						$this->response($pageNumError,400);
+					}
 
 					if($page != 1){
 						$start = ($page - 1) * $per_page;
@@ -65,17 +57,16 @@ class Shoe extends Restapi
 					}
 
 					$numArticles = $this->getTotalNumberOfPosts($data);
-
-					$numPage = ceil($numArticles[0] / $per_page); // Total number of page
+					$totalNumPage = ceil($numArticles[0] / $per_page); // Total number of page
 
 					$result['articleList'] = $this->getListofSellPosts($data,$start);
-					$result['page'] = $page;
-					$result['numPage'] = $numPage;
-
-					$result['convertJSON'] = $this->getListofSellPosts($data,$start);
+					$result['totalNumPage'] = $totalNumPage;
+ 				}
+ 				// create shoe button
+ 				else if($elementCount == 6){
+ 					$result = $this->createShoe($data);
  				}
 				else{
-					$result = $this->createShoe();
 				}
 				
 				$this->response($result, 200);
@@ -98,7 +89,6 @@ class Shoe extends Restapi
 			}
 		}
 
-
 		if ($method == 'DELETE'){
 			if ($length == 1) $result = false;
 			if ($length == 2){
@@ -107,21 +97,16 @@ class Shoe extends Restapi
 					$result = $this->deleteShoe($id);
 			}
 		}
-
 		if ($result){
 			// if good request
-
 		}else{
 			// if bad request
-
 		}
-
-
 	}
 
 	private function getListofSellPosts($data,$start){
-		$table = "Shoe";
-		$columns = array("shoeId,brand,model");
+		$table = "Sell";
+		$columns = array("title,price,created");
 		$where = array();
 		$limOff = array(4,$start);
 
@@ -134,36 +119,24 @@ class Shoe extends Restapi
 
 		$shoeInfo_array = array();
 		$shoePostList_array["shoePostArray"] = array();
-
-		// {"shoePostArray" : [
-		// 	{"shoeId" : "shoeId", "brand" : "shoeBrand", "model" : "shoeModel"},
-		// 	{"shoeId" : "shoeId", "brand" : "shoeBrand", "model" : "shoeModel"},
-		// 	{"shoeId" : "shoeId", "brand" : "shoeBrand", "model" : "shoeModel"},
-		// 	{"shoeId" : "shoeId", "brand" : "shoeBrand", "model" : "shoeModel"}
-		// ]}
 		
 		while( $result = $stmt->fetch() ) {
-
-			$shoeInfo_array["shoeId"] = $result->shoeId;
-			$shoeInfo_array["brand"] = $result->brand;
-			$shoeInfo_array["model"] = $result->model;
+			$shoeInfo_array["title"] = $result->title;
+			$shoeInfo_array["price"] = $result->price;
+			$shoeInfo_array["created"] = $result->created;
 
 			array_push($shoePostList_array["shoePostArray"], $shoeInfo_array);
-			// $articleList .= '<div id = "sellPost" class="well well-sm">' . $result->shoeId . '. <b>' . $result->brand . '</b><p>' . $result->model . '</p></div>';
 		}
 
-
-		$json_string = json_encode($shoePostList_array);
 		$this->disconnect();
 
-		return $json_string;
+		return $shoePostList_array;
 
 	}
 
 	private function getTotalNumberOfPosts($data){
-		$totalNumOfPosts = $data["totalNumberOfPost"];
 
-		$table = "Shoe";
+		$table = "Sell";
 		$columns = array("count(*)");
 		$where = array();
 		$limOff = array();
@@ -179,42 +152,48 @@ class Shoe extends Restapi
 		return $result;
 	}
 
-	private function createShoe()
+	private function createShoe($data)
 	{
 		$table = "Shoe";
-		$title = $_POST["title"];
+		$title = $data["title"];
 		if($title == null || (strlen($title)>30)){
 			return false;
 		}		
-		$brand = $_POST["shoeBrand"];
+		$brand = $data["shoeBrand"];
 		if($brand == "-- Select a Brand --" || $brand == null){
 			return false;
 		}
-		$model = $_POST["shoeModel"];
+		$model = $data["shoeModel"];
 		if($model == null || (strlen($model)>25)){
 			return false;
 		}
-		$size = $_POST["shoeSize"];
+		$size = $data["shoeSize"];
 		if($size == 15){
 			return false;
 		}
-		$itemCnd = $_POST["itemCondition"];
+		$itemCnd = $data["itemCondition"];
 		if($itemCnd == 6){
 			return false;
 		}
-		$description = $_POST["description"];
+		$description = $data["description"];
 		if($description == null){
 			return false;
 		}
-		$ownerId =1;//$_POST["ownerId"];
+		// get userID
+		$ownerId =1;//$data["ownerId"];
+
+		// 0 is for sell
+		// 1 is for buy
 		$isWanted = 0;
+
+		// imgur API 
 		$url = null;
 		
-		// if(isset($_POST["image"]))
+		// if(isset($data["image"]))
 		// {
-		// 	$img = $_POST["image"];
+		// 	$img = $data["image"];
 
-		// 	if (isset($_POST['submit'])){ 
+		// 	if (isset($data['submit'])){ 
 		// 		if($img['name']==''){  
 		// 			echo "<h2>An Image Please.</h2>";
 		// 		}else{
@@ -238,8 +217,8 @@ class Shoe extends Restapi
 		// 			$url = $pms['data']['link'];
 		// 	 	}
 		// 	}
-		// }else if(isset($_POST["url"])){
-		// 	$url = $_POST["url"];
+		// }else if(isset($data["url"])){
+		// 	$url = $data["url"];
 
 		// }else{
 		// 	// No $url is set
@@ -267,11 +246,16 @@ class Shoe extends Restapi
 		return $result;
 	}
 
+	// pass shoeID and find corresponding userID
 	private function editShoe($id)
 	{
 
 	}
 
+
+	/** 
+	whats the difference between getShoes and getShoe
+	*/
 	private function getShoes()
 	{
 
@@ -281,6 +265,7 @@ class Shoe extends Restapi
 	{
 
 	}
+
 
 	private function deleteShoe($id)
 	{
