@@ -38,7 +38,7 @@ class Shoe extends Restapi
 			// Base case: /controllers/shoe   Create a new Shoe
 
 			if ($length == 1){
-				// pagination 
+				// handles pagination
 				if($elementCount == 2){
 					$page = $data['page'];
 					$per_page = $data['per_page'];

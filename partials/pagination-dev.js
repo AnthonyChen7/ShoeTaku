@@ -2,9 +2,10 @@ function renderPagination(page){
 	var page = page;
 	var pagination = '';
 	var articleList = '';
+	var per_page = 4;
 	var url = "/controllers/shoe";
 
-	var data = {page:page, per_page:4};
+	var data = {page:page, per_page: per_page};
 
 	$.ajax({
 
@@ -14,11 +15,8 @@ function renderPagination(page){
 		dataType:'json',
 		timeout:3000,
 		success: function(data){
-			console.log("returned data is: " + data);
 			var totalNumPage = data['totalNumPage'];
 			var rawArticleList = data['articleList']['shoePostArray'];
-			console.log("raw article list is: "+rawArticleList);
-			console.log("first element of the raw article list is : "+rawArticleList[0]);
 
 			for(j=0; j < rawArticleList.length; j++){
 				articleList += '<div id="postTitle" class="col-md-4"><a href="">';
@@ -32,10 +30,9 @@ function renderPagination(page){
 				articleList += postCreated;
 				articleList += '</div>';
 			}
-			if(rawArticleList.length != 4){
+			if(rawArticleList.length != per_page){
 				var k = rawArticleList.length;
-				for(; k < 4; k ++){
-					console.log("making blank");
+				for(; k < per_page; k ++){
 					articleList += '<div id="postTitle" class="col-md-4"><a href="">';
 					postTitle = '&nbsp';
 					articleList += postTitle;
@@ -70,29 +67,31 @@ function renderPagination(page){
 	});
 }
 
+function getSellPost(){
+	alert("individual post is clicked");
+
+}
+
 function bringFirstSellPage(){
 	var page = 1;
 	var pagination = '';
+	var per_page = 4;
 	var articleList = '';
 	var url = "/controllers/shoe";
 
-	var data = {page:page, per_page:4};
+	var data = {page:page, per_page:per_page};
 
 	$.ajax({
-
 		type: 'POST',
 		url:url,
 		data:JSON.stringify(data),
 		dataType:'json',
 		timeout:3000,
 		success: function(data){
-			console.log("returned data is: " + data);
 			var totalNumPage = data['totalNumPage'];
 			var rawArticleList = data['articleList']['shoePostArray'];
-			console.log(rawArticleList);
-			console.log(rawArticleList[0]);
 
-			for(j=0; j < 4; j++){
+			for(j=0; j < rawArticleList.length; j++){
 				articleList += '<div id="postTitle" class="col-md-4"><a href="">';
 				postTitle = rawArticleList[j]["title"];
 				articleList += postTitle;
@@ -103,6 +102,21 @@ function bringFirstSellPage(){
 				postCreated = rawArticleList[j]["created"];
 				articleList += postCreated;
 				articleList += '</div>';
+			}
+			if(rawArticleList.length != per_page){
+				var k = rawArticleList.length;
+				for(; k < per_page; k ++){
+					articleList += '<div id="postTitle" class="col-md-4"><a href="">';
+					postTitle = '&nbsp';
+					articleList += postTitle;
+					articleList += '</a></div> <div id="postPrice" class="col-md-4">';
+					postPrice = '&nbsp';
+					articleList += postPrice;
+					articleList += '</div> <div id="postCreated" class="col-md-4">';
+					postCreated = '&nbsp';
+					articleList += postCreated;
+					articleList += '</div>';
+				}
 			}
 			$("#articleArea").html(articleList);
 
@@ -128,12 +142,18 @@ function bringFirstSellPage(){
 
 $('document').ready(function(){
 	$('#sellPage').on('click',function(e){
-		console.log("the user has clicked sellpage");
 		bringFirstSellPage();
+		$('#postTitle').on('click', function(e){
+			e.preventDefault();
+			getSellPost();
+		});
 	});
 	$('#listofPages').on('click','a', function(e){
-		console.log("the user has clicked buttons");
 		var page = this.id;
 		renderPagination(page);
+		$('#postTitle').on('click', function(e){
+			e.preventDefault();
+			getSellPost();
+		});
 	});
 });
