@@ -7,7 +7,7 @@ require_once(__DIR__.'/validate.php');
 require(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\phpmailer\phpmailer\PHPMailerAutoload.php' );
 
 //in sec
-define("EXPIRY_TIME",8640);
+define("EXPIRY_TIME",120);
 
 class ForgotPassword extends Restapi{
 	
@@ -112,7 +112,7 @@ class ForgotPassword extends Restapi{
 		
 					$stmt->execute($values);
 					
-				 $idInserted = $this->conn->lastInsertId();
+				 	$idInserted = $this->conn->lastInsertId();
 					
 					$this->disconnect();
 					
@@ -121,7 +121,7 @@ class ForgotPassword extends Restapi{
 						<br />
 						You have requested to reset your password, please click on the password reset link below. 
 						<br />
-						<a href='http://localhost:8080/partials/reset-password.html?userId=" . $object['userId'] . "&id=" . $idInserted ." '> http://localhost:8080/partials/reset-password.html?userId=" . $object['userId'] . "&id=" . $idInserted . "</a>
+						<a href='http://localhost:8080/partials/reset-password.html?id=" . $idInserted ." '> http://localhost:8080/partials/reset-password.html?id=" . $idInserted . "</a>
 						<br/>
 						<br />
 						If you didn't request this, please ignore this email.

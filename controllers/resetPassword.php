@@ -47,7 +47,14 @@ class ResetPassword extends Restapi{
 			
 			if(count($result)==1){
 				$result = $result[0];
+				
+				if(time() > $result['expiryTime']){
+					$this->disconnect();
+					$this->response("This password reset link has expired!",500);
+				}
+				
 			}else{
+				$this->disconnect();
 				$this->response("Unable to reset password",500);
 			}
 			
