@@ -33,9 +33,10 @@ class ResetPassword extends Restapi{
 			$this->connect();
 			
 			$table = "password_change_requests";
-			$where = array('id');
-			$columns = array("userId");
+			$columns = array("userId","expiryTime");
 			$limOff = array();
+
+			$where = array('id');
 			
 			$values = array($parts['id']);
 			$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);

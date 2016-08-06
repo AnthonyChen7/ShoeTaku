@@ -6,6 +6,9 @@ require_once(__DIR__.'/validate.php');
 
 require(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\phpmailer\phpmailer\PHPMailerAutoload.php' );
 
+//in sec
+define("EXPIRY_TIME",8640);
+
 class ForgotPassword extends Restapi{
 	
 	function __construct(){
@@ -49,7 +52,7 @@ class ForgotPassword extends Restapi{
 		$mail->Subject = "Forgot Password";
 
 		
-		//check if email exists first
+		//check if email exists first in db
 		$table = "user";
 		$columns = array("userId,email");
 		$where = array("email");
@@ -76,16 +79,40 @@ class ForgotPassword extends Restapi{
 					
 					$this->connect();
 					
+					//check if there was already a password request within the last 24 hours
 					$table = "password_change_requests";
+					$columns=array("expiryTime");
+					$values = array($object['userId']);
+					$where = array("userId");
+					$limOff = array();
+					
+					$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
+					
+					$stmt = $this->conn->prepare($sql);
+		
+					$stmt->execute($values);
+					$temp = $stmt->fetchAll();
+					
+					if(count($temp > 0)){
+						foreach($temp as $value){
+							if(time() < $value['expiryTime']){
+								//there is already a non-expired record
+								$this->disconnect();
+								$this->response("A password reset link has already been sent to the specified email!",500);
+							}
+						}
+					}
+					
+					// no record exists or record is already expired... so insert
 					$columns=array("expiryTime","userId");
-					$values = array(time(),$object['userId']);
+					$values = array(time()+EXPIRY_TIME,$object['userId']);
 					$sql = $this->prepareInsertSql($table,$columns);
 					
 					$stmt = $this->conn->prepare($sql);
 		
 					$stmt->execute($values);
 					
-					$idInserted = $this->conn->lastInsertId();
+				 $idInserted = $this->conn->lastInsertId();
 					
 					$this->disconnect();
 					
@@ -94,7 +121,7 @@ class ForgotPassword extends Restapi{
 						<br />
 						You have requested to reset your password, please click on the password reset link below. 
 						<br />
-						<a href='http://localhost:8080/partials/reset-password.html?id=" . $idInserted . " '>http://localhost:8080/partials/reset-password.html?id=" . $idInserted . "</a>
+						<a href='http://localhost:8080/partials/reset-password.html?userId=" . $object['userId'] . "&id=" . $idInserted ." '> http://localhost:8080/partials/reset-password.html?userId=" . $object['userId'] . "&id=" . $idInserted . "</a>
 						<br/>
 						<br />
 						If you didn't request this, please ignore this email.
