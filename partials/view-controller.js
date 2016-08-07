@@ -85,5 +85,9 @@ $(document).ready(function(){
 		controller.sendRequest($(this).data('page'));
 		$(".nav").find(".active").removeClass("active");
 		$(this).parent().addClass("active");
-	});	
+	});
+	$("a .page").click(function(){
+		console.log("a clicked");
+		controller.sendRequest($(this).data('page'));
+	});
 });

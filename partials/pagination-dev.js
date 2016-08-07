@@ -2,7 +2,7 @@ function renderPagination(page){
 	var page = page;
 	var pagination = '';
 	var articleList = '';
-	var per_page = 4;
+	var per_page = 6;
 	var url = "/controllers/shoe";
 
 	var data = {page:page, per_page: per_page};
@@ -18,34 +18,35 @@ function renderPagination(page){
 			var totalNumPage = data['totalNumPage'];
 			var rawArticleList = data['articleList']['shoePostArray'];
 
-			for(j=0; j < rawArticleList.length; j++){
-				articleList += '<div class="col-md-4 postTitle"><a href="#">';
-				postTitle = rawArticleList[j]["title"];
-				articleList += postTitle;
-				articleList += '</a></div> <div class="col-md-4">';
-				postPrice = rawArticleList[j]["price"];
-				articleList += postPrice;
-				articleList += '</div> <div class="postCreated" class="col-md-4">';
-				postCreated = rawArticleList[j]["created"];
-				articleList += postCreated;
-				articleList += '</div>';
-			}
-			if(rawArticleList.length != per_page){
-				var k = rawArticleList.length;
-				for(; k < per_page; k ++){
-					articleList += '<div class="col-md-4" postTitle><a href="#">';
-					postTitle = '&nbsp';
-					articleList += postTitle;
-					articleList += '</a></div> <div class="col-md-4">';
-					postPrice = '&nbsp';
-					articleList += postPrice;
-					articleList += '</div> <div class="postCreated" class="col-md-4">';
-					postCreated = '&nbsp';
-					articleList += postCreated;
-					articleList += '</div>';
+			$(".postTitle a").each(function(i){
+					if(i < per_page && i >= rawArticleList.length){
+						$(this).empty();
+					}else{
+						shoeId = rawArticleList[i]["shoeId"];
+						postTitle = rawArticleList[i]["title"];
+						$(this).html(postTitle);
+						newUrl = "#/posts?id=" + shoeId;
+						$(this).attr("href", newUrl);
+					} 
+			});	
+
+			$(".postPrice").each(function(i){
+				if(i < per_page && i >= rawArticleList.length){
+					$(this).empty();
+				}else{
+					postPrice = rawArticleList[i]["price"];
+					$(this).html(postPrice);
 				}
-			}
-			$("#articleArea").html(articleList);
+			});
+
+			$(".postCreated").each(function(i){
+				if(i < per_page && i >= rawArticleList.length){
+					$(this).empty();
+				}else{
+					postCreated = rawArticleList[i]["created"]
+					$(this).html(postCreated);
+				}					
+			});
 
 			pagination += '<div class="cell_disabled"><span>First</span></div><div class="cell_disabled"><span>Previous</span></div>';
 			for(i=1; i < (totalNumPage+1); i++){
@@ -75,7 +76,7 @@ function getSellPost(){
 function bringFirstSellPage(){
 	var page = 1;
 	var pagination = '';
-	var per_page = 4;
+	var per_page = 6;
 	var articleList = '';
 	var url = "/controllers/shoe";
 
@@ -91,34 +92,35 @@ function bringFirstSellPage(){
 			var totalNumPage = data['totalNumPage'];
 			var rawArticleList = data['articleList']['shoePostArray'];
 
-			for(j=0; j < rawArticleList.length; j++){
-				articleList += '<div class="col-md-4 postTitle"><a href="#">';
-				postTitle = rawArticleList[j]["title"];
-				articleList += postTitle;
-				articleList += '</a></div> <div class="col-md-4">';
-				postPrice = rawArticleList[j]["price"];
-				articleList += postPrice;
-				articleList += '</div><div class="postCreated" class="col-md-4">';
-				postCreated = rawArticleList[j]["created"];
-				articleList += postCreated;
-				articleList += '</div>';
-			}
-			if(rawArticleList.length != per_page){
-				var k = rawArticleList.length;
-				for(; k < per_page; k ++){
-					articleList += '<div class="col-md-4 postTitle"><a href="#">';
-					postTitle = '&nbsp';
-					articleList += postTitle;
-					articleList += '</a></div> <div class="col-md-4">';
-					postPrice = '&nbsp';
-					articleList += postPrice;
-					articleList += '</div><div class="postCreated" class="col-md-4">';
-					postCreated = '&nbsp';
-					articleList += postCreated;
-					articleList += '</div>';
+			$(".postTitle a").each(function(i){
+					if(i < per_page && i >= rawArticleList.length){
+						$(this).empty();
+					}else{
+						shoeId = rawArticleList[i]["shoeId"];
+						postTitle = rawArticleList[i]["title"];
+						$(this).html(postTitle);
+						newUrl = "#/posts?id=" + shoeId;
+						$(this).attr("href", newUrl);
+					} 
+			});	
+
+			$(".postPrice").each(function(i){
+				if(i < per_page && i >= rawArticleList.length){
+					$(this).empty();
+				}else{
+					postPrice = rawArticleList[i]["price"];
+					$(this).html(postPrice);
 				}
-			}
-			$("#articleArea").html(articleList);
+			});
+
+			$(".postCreated").each(function(i){
+				if(i < per_page && i >= rawArticleList.length){
+					$(this).empty();
+				}else{
+					postCreated = rawArticleList[i]["created"]
+					$(this).html(postCreated);
+				}					
+			});
 
 			pagination += '<div class="cell_disabled"><span>First</span></div><div class="cell_disabled"><span>Previous</span></div>';
 			for(i=1; i < (totalNumPage+1); i++){
@@ -148,7 +150,7 @@ $('document').ready(function(){
 		var page = this.id;
 		renderPagination(page);
 	});
-	$('.postTitle').on('click', function(){
+	$('a .page').on('click', function(){
 			alert("user clicked the title");
 			console.log('bug');
 			getSellPost();

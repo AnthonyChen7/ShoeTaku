@@ -106,9 +106,9 @@ class Shoe extends Restapi
 
 	private function getListofSellPosts($data,$start){
 		$table = "Sell";
-		$columns = array("title,price,created");
+		$columns = array("shoeId,title,price,created");
 		$where = array();
-		$limOff = array(4,$start);
+		$limOff = array(6,$start);
 
 		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);
 		$this->connect();
@@ -121,6 +121,7 @@ class Shoe extends Restapi
 		$shoePostList_array["shoePostArray"] = array();
 		
 		while( $result = $stmt->fetch() ) {
+			$shoeInfo_array["shoeId"] = $result->shoeId;
 			$shoeInfo_array["title"] = $result->title;
 			$shoeInfo_array["price"] = $result->price;
 			$shoeInfo_array["created"] = $result->created;
