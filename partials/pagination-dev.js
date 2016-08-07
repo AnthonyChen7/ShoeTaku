@@ -19,13 +19,13 @@ function renderPagination(page){
 			var rawArticleList = data['articleList']['shoePostArray'];
 
 			for(j=0; j < rawArticleList.length; j++){
-				articleList += '<div id="postTitle" class="col-md-4"><a href="">';
+				articleList += '<div class="col-md-4 postTitle"><a href="#">';
 				postTitle = rawArticleList[j]["title"];
 				articleList += postTitle;
-				articleList += '</a></div> <div id="postPrice" class="col-md-4">';
+				articleList += '</a></div> <div class="col-md-4">';
 				postPrice = rawArticleList[j]["price"];
 				articleList += postPrice;
-				articleList += '</div> <div id="postCreated" class="col-md-4">';
+				articleList += '</div> <div class="postCreated" class="col-md-4">';
 				postCreated = rawArticleList[j]["created"];
 				articleList += postCreated;
 				articleList += '</div>';
@@ -33,13 +33,13 @@ function renderPagination(page){
 			if(rawArticleList.length != per_page){
 				var k = rawArticleList.length;
 				for(; k < per_page; k ++){
-					articleList += '<div id="postTitle" class="col-md-4"><a href="">';
+					articleList += '<div class="col-md-4" postTitle><a href="#">';
 					postTitle = '&nbsp';
 					articleList += postTitle;
-					articleList += '</a></div> <div id="postPrice" class="col-md-4">';
+					articleList += '</a></div> <div class="col-md-4">';
 					postPrice = '&nbsp';
 					articleList += postPrice;
-					articleList += '</div> <div id="postCreated" class="col-md-4">';
+					articleList += '</div> <div class="postCreated" class="col-md-4">';
 					postCreated = '&nbsp';
 					articleList += postCreated;
 					articleList += '</div>';
@@ -92,13 +92,13 @@ function bringFirstSellPage(){
 			var rawArticleList = data['articleList']['shoePostArray'];
 
 			for(j=0; j < rawArticleList.length; j++){
-				articleList += '<div id="postTitle" class="col-md-4"><a href="">';
+				articleList += '<div class="col-md-4 postTitle"><a href="#">';
 				postTitle = rawArticleList[j]["title"];
 				articleList += postTitle;
-				articleList += '</a></div> <div id="postPrice" class="col-md-4">';
+				articleList += '</a></div> <div class="col-md-4">';
 				postPrice = rawArticleList[j]["price"];
 				articleList += postPrice;
-				articleList += '</div> <div id="postCreated" class="col-md-4">';
+				articleList += '</div><div class="postCreated" class="col-md-4">';
 				postCreated = rawArticleList[j]["created"];
 				articleList += postCreated;
 				articleList += '</div>';
@@ -106,13 +106,13 @@ function bringFirstSellPage(){
 			if(rawArticleList.length != per_page){
 				var k = rawArticleList.length;
 				for(; k < per_page; k ++){
-					articleList += '<div id="postTitle" class="col-md-4"><a href="">';
+					articleList += '<div class="col-md-4 postTitle"><a href="#">';
 					postTitle = '&nbsp';
 					articleList += postTitle;
-					articleList += '</a></div> <div id="postPrice" class="col-md-4">';
+					articleList += '</a></div> <div class="col-md-4">';
 					postPrice = '&nbsp';
 					articleList += postPrice;
-					articleList += '</div> <div id="postCreated" class="col-md-4">';
+					articleList += '</div><div class="postCreated" class="col-md-4">';
 					postCreated = '&nbsp';
 					articleList += postCreated;
 					articleList += '</div>';
@@ -143,17 +143,14 @@ function bringFirstSellPage(){
 $('document').ready(function(){
 	$('#sellPage').on('click',function(e){
 		bringFirstSellPage();
-		$('#postTitle').on('click', function(e){
-			e.preventDefault();
-			getSellPost();
-		});
 	});
 	$('#listofPages').on('click','a', function(e){
 		var page = this.id;
 		renderPagination(page);
-		$('#postTitle').on('click', function(e){
-			e.preventDefault();
+	});
+	$('.postTitle').on('click', function(){
+			alert("user clicked the title");
+			console.log('bug');
 			getSellPost();
-		});
 	});
 });
