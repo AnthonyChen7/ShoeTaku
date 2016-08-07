@@ -1,17 +1,23 @@
 <?php
 
 require_once(__DIR__.'/restapi.php');
+include_once __DIR__.'/validate.php';
 
 class ResetPassword extends Restapi{
-	
+
 	function __construct(){
 		parent::__construct();
-		$this->resetPassword();
+		
+		$validate = new ValidateForms();
+		if($validate->isResetPasswordFormValid()){
+			$this->resetPassword();
+		}
+		
 	}
 	
 	private function resetPassword(){
 		
-		//TODO encryption...
+		//TODO encryption & expiry time validation
 		
 		//Get the URL
 		$url = $_SERVER['HTTP_REFERER'];

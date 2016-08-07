@@ -128,6 +128,21 @@ class ValidateForms extends Restapi {
 		return true;
 	}
 	
+	function isResetPasswordFormValid(){
+		if(empty($_POST['new_password']) || ctype_space( $_POST['new_password'] )  ){
+			$this->response("Please enter a new valid password!",400);
+		}
+		
+		if(empty($_POST['confirm_new_password']) || ctype_space( $_POST['confirm_new_password'] )  ){
+			$this->response(INVALID_CONFIRM_PASSWORD,400);
+		}
+		else if($_POST['new_password'] != $_POST['confirm_new_password']){
+			$this->response(PASSWORD_NOT_MATCH,400);
+		}
+		
+		return true;
+	}
+	
 	function isForgotPasswordFormValid(){
 		
 		if(empty($_POST['email']) || ctype_space( $_POST['email'] )  ){
