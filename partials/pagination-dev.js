@@ -150,9 +150,7 @@ $('document').ready(function(){
 		var page = this.id;
 		renderPagination(page);
 	});
-	$('a .page').on('click', function(){
-			alert("user clicked the title");
-			console.log('bug');
-			getSellPost();
+	$(".postTitle a").click(function(){
+		console.log("a clicked");
 	});
 });
