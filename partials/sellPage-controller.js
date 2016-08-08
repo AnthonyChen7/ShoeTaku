@@ -103,6 +103,10 @@ $(document).ready(function() {
 		}
 		alert("Your post has been created");
 	});
+
+	$(".postTitle a").click(function(){
+		console.log("a clicked");
+	});
 });
 
 

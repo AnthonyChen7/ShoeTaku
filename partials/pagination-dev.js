@@ -150,7 +150,4 @@ $('document').ready(function(){
 		var page = this.id;
 		renderPagination(page);
 	});
-	$(".postTitle a").click(function(){
-		console.log("a clicked");
-	});
 });
