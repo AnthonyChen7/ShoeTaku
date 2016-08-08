@@ -63,7 +63,8 @@ class Shoe extends Restapi
 					$result['totalNumPage'] = $totalNumPage;
  				}
  				// create shoe button
- 				else if($elementCount == 6){
+ 				// 7 json objects passed on from sellPage-controller.js
+ 				else if($elementCount == 7){
  					$result = $this->createShoe($data);
  				}
 				else{
@@ -181,11 +182,10 @@ class Shoe extends Restapi
 			return false;
 		}
 		// get userID
-		$ownerId =1;//$data["ownerId"];
+		$ownerId = 1;//$data["ownerId"];
 
-		// 0 is for sell
-		// 1 is for buy
-		$isWanted = 0;
+		// 0 is for sell 1 is for buy
+		$isWanted = $data["isWanted"];
 
 		// imgur API 
 		$url = null;
@@ -239,6 +239,7 @@ class Shoe extends Restapi
 			//$this->redirect($_SERVER['SERVER_NAME']);
 
 		} catch (Exception $e) {
+			error_log("db exception");
 			$result = FALSE;
 			//c$this->redirect($_SERVER['SERVER_NAME']);
 		}

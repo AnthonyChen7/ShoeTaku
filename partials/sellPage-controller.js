@@ -13,6 +13,8 @@ function createSellPost(){
 	var description = $('#sellShoeDescription').val();
 	var price = $('#sellShoePrice').val();
 	price = parseInt(price);
+	// 1 is for sell
+	var isWanted = 1;
 
 	var isPostValid = true;
 
@@ -56,6 +58,7 @@ function createSellPost(){
 		shoeModel : model,
 		shoeSize : size,
 		itemCondition : itemCondition,
+		isWanted : isWanted,
 		description : description
 	};
 	console.log("url is " +url);
