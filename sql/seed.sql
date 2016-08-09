@@ -19,7 +19,7 @@ countryCode VARCHAR(10)
 );
 
 CREATE TABLE Password_Change_Requests(
-    token VARCHAR(200) NOT NULL PRIMARY KEY,
+    token VARCHAR(251) NOT NULL PRIMARY KEY,
     expiryTime BIGINT(25) NOT NULL
 );
 
@@ -120,7 +120,7 @@ CREATE TABLE Invalid_Token
 (
 dbId BigINT(25)  NOT NULL PRIMARY KEY AUTO_INCREMENT,
 tokenId VARCHAR(30) NOT NULL,
-token VARCHAR(200) NOT NULL,
+token VARCHAR(251) NOT NULL,
 expiryTime BIGINT(25) NOT NULL
 );
 
