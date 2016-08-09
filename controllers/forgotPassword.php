@@ -7,7 +7,7 @@ require_once(__DIR__.'/validate.php');
 require(realpath($_SERVER["DOCUMENT_ROOT"]) . '\vendor\phpmailer\phpmailer\PHPMailerAutoload.php' );
 
 //in sec
-define("EXPIRY_TIME",120);
+define("EXPIRY_TIME",0);
 
 class ForgotPassword extends Restapi{
 	
