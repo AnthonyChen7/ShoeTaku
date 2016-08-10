@@ -81,40 +81,41 @@ class ForgotPassword extends Restapi{
 					$this->connect();
 					
 					//check if there was already a password request within the last 24 hours
-					$table = "password_change_requests";
-					$columns=array("expiryTime");
-					$values = array($object['userId']);
-					$where = array("userId");
-					$limOff = array();
+					 $table = "password_change_requests";
+					// $columns=array("expiryTime");
+					// $values = array($object['userId']);
+					// $where = array("userId");
+					// $limOff = array();
 					
-					$sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
+					// $sql = $this->prepareSelectSql($table,$columns,$where,$limOff);
 					
-					$stmt = $this->conn->prepare($sql);
+					// $stmt = $this->conn->prepare($sql);
 		
-					$stmt->execute($values);
-					$temp = $stmt->fetchAll();
+					// $stmt->execute($values);
+					// $temp = $stmt->fetchAll();
 					
-					if(count($temp > 0)){
-						foreach($temp as $value){
-							if(time() < $value['expiryTime']){
-								//there is already a non-expired record
-								$this->disconnect();
-								$this->response("A password reset link has already been sent to the specified email!",500);
-							}
-						}
-					}
+					// if(count($temp > 0)){
+					// 	foreach($temp as $value){
+					// 		if(time() < $value['expiryTime']){
+					// 			//there is already a non-expired record
+					// 			$this->disconnect();
+					// 			$this->response("A password reset link has already been sent to the specified email!",500);
+					// 		}
+					// 	}
+					// }
 					
 					// no record exists or record is already expired... so insert
-					$columns=array("expiryTime","userId");
-					$values = array(time()+EXPIRY_TIME,$object['userId']);
+					$columns=array("expiryTime","token", "userId");
+					$tokenCreator = TokenCreator::createToken($object['userId'],false);
+					$token = $tokenCreator->getToken();
+
+					$values = array($token->getClaim('exp'),$token,$object['userId']);
 					$sql = $this->prepareInsertSql($table,$columns);
 					
 					$stmt = $this->conn->prepare($sql);
 		
 					$stmt->execute($values);
-					
-				 	$idInserted = $this->conn->lastInsertId();
-					
+
 					$this->disconnect();
 					
 					$mail->Body = "Hello, " . $_POST['email'] . 
@@ -122,7 +123,7 @@ class ForgotPassword extends Restapi{
 						<br />
 						You have requested to reset your password, please click on the password reset link below. 
 						<br />
-						<a href='http://localhost:8080/partials/reset-password.html?id=" . $idInserted ." '> http://localhost:8080/partials/reset-password.html?id=" . $idInserted . "</a>
+						<a href='http://localhost:8080/partials/reset-password.html?id=" . $token ." '> http://localhost:8080/partials/reset-password.html?id=" . $token . "</a>
 						<br/>
 						<br />
 						If you didn't request this, please ignore this email.

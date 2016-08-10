@@ -20,7 +20,8 @@ countryCode VARCHAR(10)
 
 CREATE TABLE Password_Change_Requests(
     token VARCHAR(251) NOT NULL PRIMARY KEY,
-    expiryTime BIGINT(25) NOT NULL
+    expiryTime BIGINT(25) NOT NULL,
+    userId BIGINT(25) NOT NULL
 );
 
 CREATE TABLE FBUser (
