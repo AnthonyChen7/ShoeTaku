@@ -18,9 +18,7 @@ class ResetPassword extends Restapi{
 	}
 	
 	private function resetPassword(){
-		
-		//TODO encryption & expiry time validation
-		
+
 		//Get the URL
 		$url = $_SERVER['HTTP_REFERER'];
 		
@@ -38,7 +36,7 @@ class ResetPassword extends Restapi{
 			$tokenVerifier = new TokenVerify($parts['id'],$parsedToken->getToken()->getHeader('jti'));
 			
 			if(!$tokenVerifier->isTokenValid()){
-			$this->response("Invalid URL!",500);
+			$this->response("The link has expired or the URL is invalid!",500);
 			}
 			
 			$this->connect();
@@ -81,10 +79,10 @@ class ResetPassword extends Restapi{
 					$this->response("Unable to reset password",500);
 				}
 				
-				// if(time() > $result['expiryTime']){
-				// 	$this->disconnect();
-				// 	$this->response("This password reset link has expired!",500);
-				// }
+				if(time() > $result['expiryTime']){
+					$this->disconnect();
+					$this->response("This password reset link has expired!",500);
+				}
 				
 			}else{
 				$this->disconnect();
