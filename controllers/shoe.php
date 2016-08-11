@@ -63,7 +63,8 @@ class Shoe extends Restapi
 					$result['totalNumPage'] = $totalNumPage;
  				}
  				// create shoe button
- 				else if($elementCount == 6){
+ 				// 7 json objects passed on from sellPage-controller.js
+ 				else if($elementCount == 7){
  					$result = $this->createShoe($data);
  				}
 				else{
@@ -106,9 +107,9 @@ class Shoe extends Restapi
 
 	private function getListofSellPosts($data,$start){
 		$table = "Sell";
-		$columns = array("title,price,created");
+		$columns = array("shoeId,title,price,created");
 		$where = array();
-		$limOff = array(4,$start);
+		$limOff = array(6,$start);
 
 		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);
 		$this->connect();
@@ -121,6 +122,7 @@ class Shoe extends Restapi
 		$shoePostList_array["shoePostArray"] = array();
 		
 		while( $result = $stmt->fetch() ) {
+			$shoeInfo_array["shoeId"] = $result->shoeId;
 			$shoeInfo_array["title"] = $result->title;
 			$shoeInfo_array["price"] = $result->price;
 			$shoeInfo_array["created"] = $result->created;
@@ -180,11 +182,10 @@ class Shoe extends Restapi
 			return false;
 		}
 		// get userID
-		$ownerId =1;//$data["ownerId"];
+		$ownerId = 1;//$data["ownerId"];
 
-		// 0 is for sell
-		// 1 is for buy
-		$isWanted = 0;
+		// 0 is for sell 1 is for buy
+		$isWanted = $data["isWanted"];
 
 		// imgur API 
 		$url = null;
@@ -238,6 +239,7 @@ class Shoe extends Restapi
 			//$this->redirect($_SERVER['SERVER_NAME']);
 
 		} catch (Exception $e) {
+			error_log("db exception");
 			$result = FALSE;
 			//c$this->redirect($_SERVER['SERVER_NAME']);
 		}
