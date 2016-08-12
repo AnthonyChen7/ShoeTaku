@@ -143,9 +143,7 @@ function bringFirstSellPage(){
 }
 
 $('document').ready(function(){
-	$('#sellPage').on('click',function(e){
-		bringFirstSellPage();
-	});
+	bringFirstSellPage();
 	$('#listofPages').on('click','a', function(e){
 		var page = this.id;
 		renderPagination(page);

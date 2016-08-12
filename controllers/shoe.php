@@ -1,6 +1,8 @@
 <?php
 
 require_once(__DIR__.'/restapi.php');
+include(__DIR__.'/tokencreator.php');
+include(__DIR__.'/tokenverify.php');
 
 class shoeInfo {
 
@@ -64,7 +66,7 @@ class Shoe extends Restapi
  				}
  				// create shoe button
  				// 7 json objects passed on from sellPage-controller.js
- 				else if($elementCount == 7){
+ 				else if($elementCount == 8){
  					$result = $this->createShoe($data);
  				}
 				else{
@@ -158,6 +160,15 @@ class Shoe extends Restapi
 	{
 		$table = "Shoe";
 		$title = $data["title"];
+
+		$token = $data['token'];
+		$parsedToken = TokenCreator::initParseToken( $token );
+		$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
+		if(!($tokenVerifier->isTokenValid())){
+			return false;
+		}
+		$userID = $parsedToken->getToken()->getHeader('jti');
+		
 		if($title == null || (strlen($title)>30)){
 			return false;
 		}		

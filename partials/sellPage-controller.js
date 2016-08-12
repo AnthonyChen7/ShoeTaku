@@ -59,7 +59,8 @@ function createSellPost(){
 		shoeSize : size,
 		itemCondition : itemCondition,
 		isWanted : isWanted,
-		description : description
+		description : description,
+		token : localStorage.getItem("token")
 	};
 	console.log("url is " +url);
 
@@ -102,10 +103,6 @@ $(document).ready(function() {
 			return false;
 		}
 		alert("Your post has been created");
-	});
-
-	$(".postTitle a").click(function(){
-		console.log("a clicked");
 	});
 });
 

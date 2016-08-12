@@ -86,9 +86,4 @@ $(document).ready(function(){
 		$(".nav").find(".active").removeClass("active");
 		$(this).parent().addClass("active");
 	});
-
-	// $(".postTitle a").click(function(){
-	// 	console.log("a clicked");
-	// });
-
 });
