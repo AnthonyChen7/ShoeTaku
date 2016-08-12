@@ -22,8 +22,9 @@ var constants = (function(){
 var controller= (function(){
 	var controllerPhp = "/partials/view-controller.php";
 	var currentPage = "";
-	var pages= ["home","dashboard","sell","wanted","account","reset-password","sellPost"];
+	var pages= ["home","dashboard","sell","wanted","account","reset-password","sellPost",];
 	var $partialView = $("#partial_view");
+	
 	function determineCurrentPage(){
 		if (currentPage == "" || currentPage == null)
 			return constants.DEFAULT;
@@ -44,6 +45,9 @@ var controller= (function(){
 			data: param,
 			success: function(data, textStatus, jqXHR){
 				var $html = $.parseHTML(data, keepScripts = true);
+
+				currentPage = page;
+
 				$partialView.empty();
 				$partialView.append($html);
 			},
@@ -57,6 +61,11 @@ var controller= (function(){
 	}
 
 	return {
+		
+		getCurrentPage: function(){
+			return determineCurrentPage();	
+		},
+		
 		getPages: function(){
 			return pages;
 		},
@@ -79,9 +88,13 @@ var controller= (function(){
 })();
 
 $(document).ready(function(){
-	controller.setupAjax();
-	controller.sendRequest("dashboard");
-	$("li .page").click(function(){
+	if($(this).data('page')==undefined){
+		controller.setupAjax();
+		controller.sendRequest("dashboard");
+	}
+		
+		$("li .page").click(function(){
+		controller.setupAjax();
 		controller.sendRequest($(this).data('page'));
 		$(".nav").find(".active").removeClass("active");
 		$(this).parent().addClass("active");

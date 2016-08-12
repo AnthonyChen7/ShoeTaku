@@ -4,12 +4,14 @@
 
 require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '/vendor/autoload.php' );
 
+include_once __DIR__.'/generateRandomString.php';
+
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Parser;
 
 //time is in seconds
-define("EXPIRATION_TIME",100000);
+define("EXPIRATION_TIME",8640);
 
 define("RANDOM_STRING", '70bpyytrEVHXNC99PvjKfNcgHLwByB2B9eGExqiBYSG6LdnjdT2q9nARwCKWVNy');
 define("ISSUER", 'ShoeTaku');
@@ -19,9 +21,11 @@ class TokenCreator{
 
 private $token;
 private $signer;
+private $stringGenerator;
 
 function __construct(){
 		$this->signer = new Sha256();
+		$this->stringGenerator = new GenerateRandomString();
 }
 
 public static function createToken( $userId, $isFb ) {
@@ -32,6 +36,7 @@ public static function createToken( $userId, $isFb ) {
                         ->setIssuedAt(time()) 
                         ->setExpiration(time() + EXPIRATION_TIME)
 						->set('isFb', $isFb) 
+						->set('random_string', $instance->stringGenerator->generateRandomString())
 						->sign($instance->signer, RANDOM_STRING) 
                         ->getToken();
 
