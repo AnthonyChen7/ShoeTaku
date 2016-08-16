@@ -7,6 +7,8 @@ $(document).ready(function(){
     accountController.updateAccountInfo();
 
     accountController.changePassword();
+    
+    accountController.goBackToAccountPage();
 });
 
 var accountController = (function(){
@@ -160,6 +162,18 @@ var accountController = (function(){
                 } 
                     
                 });
+      },
+      
+      goBackToAccountPage : function(){
+          
+          $('#back-button').click(
+              function(e){
+                  controller.setupAjax();
+		          controller.sendRequest("account");
+              }
+          );
+          
+          
       } 
       
     }
