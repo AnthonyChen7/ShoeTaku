@@ -22,7 +22,7 @@ var constants = (function(){
 var controller= (function(){
 	var controllerPhp = "/partials/view-controller.php";
 	var currentPage = "";
-	var pages= ["home","dashboard","sell","wanted","account","reset-password","sellPost",];
+	var pages= ["home","dashboard","sell","wanted","account","reset-password","sellPost",'account-settings'];
 	var $partialView = $("#partial_view");
 	
 	function determineCurrentPage(){
@@ -88,6 +88,7 @@ var controller= (function(){
 })();
 
 $(document).ready(function(){
+	
 	if($(this).data('page')==undefined){
 		controller.setupAjax();
 		controller.sendRequest("dashboard");
@@ -100,13 +101,6 @@ $(document).ready(function(){
 	});
 
 	$("#sellPage").click(function(){
-		controller.setupAjax();
-		controller.sendRequest($(this).data('page'));
-		$(".nav").find(".active").removeClass("active");
-		$(this).parent().addClass("active");
-	});
-		
-	$("li .page").click(function(){
 		controller.setupAjax();
 		controller.sendRequest($(this).data('page'));
 		$(".nav").find(".active").removeClass("active");
