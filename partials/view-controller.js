@@ -56,6 +56,11 @@ var controller= (function(){
 			},
 			complete: function(jqXHR, textStatus){
 				debug.log("ajax call complete");
+				if(page == "sell"){
+					$("#aritcleArea").click(function(){
+						console.log("123");
+					});
+				}
 			}
 		})
 	}
@@ -88,7 +93,7 @@ var controller= (function(){
 })();
 
 $(document).ready(function(){
-	
+
 	if($(this).data('page')==undefined){
 		controller.setupAjax();
 		controller.sendRequest("dashboard");
@@ -101,6 +106,22 @@ $(document).ready(function(){
 	});
 
 	$("#sellPage").click(function(){
+		controller.setupAjax();
+		controller.sendRequest($(this).data('page'));
+		$(".nav").find(".active").removeClass("active");
+		$(this).parent().addClass("active");
+
+		console.log("render");
+	});
+
+	$("#wantedPage").click(function(){
+		controller.setupAjax();
+		controller.sendRequest($(this).data('page'));
+		$(".nav").find(".active").removeClass("active");
+		$(this).parent().addClass("active");
+	});
+
+	$("#accountPage").click(function(){
 		controller.setupAjax();
 		controller.sendRequest($(this).data('page'));
 		$(".nav").find(".active").removeClass("active");
