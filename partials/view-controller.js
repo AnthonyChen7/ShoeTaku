@@ -92,11 +92,25 @@ $(document).ready(function(){
 		controller.setupAjax();
 		controller.sendRequest("dashboard");
 	}
-		
-		$("li .page").click(function(){
+
+	$("#mainDashBoard").click(function(){
+		controller.setupAjax();
+		controller.sendRequest("dashboard");
+		$(".nav").find(".active").removeClass("active");
+	});
+
+	$("#sellPage").click(function(){
 		controller.setupAjax();
 		controller.sendRequest($(this).data('page'));
 		$(".nav").find(".active").removeClass("active");
 		$(this).parent().addClass("active");
 	});
+		
+	$("li .page").click(function(){
+		controller.setupAjax();
+		controller.sendRequest($(this).data('page'));
+		$(".nav").find(".active").removeClass("active");
+		$(this).parent().addClass("active");
+	});
+
 });
