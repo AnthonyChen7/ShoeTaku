@@ -169,7 +169,7 @@ var accountController = (function(){
           $('#back-button').click(
               function(e){
                   controller.setupAjax();
-		          controller.sendRequest("account");
+		          // controller.sendRequest("account");
               }
           );
           
