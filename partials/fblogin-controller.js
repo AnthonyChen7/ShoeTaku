@@ -49,7 +49,7 @@ var login_event = function(response) {
 
           if (response && response["token"] != ""){
             localStorage.setItem("token",response["token"]);
-            window.location="/partials/main-page.html"
+            window.location="/partials/dashboard.html"
 
           }
         },

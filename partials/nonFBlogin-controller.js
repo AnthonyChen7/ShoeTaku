@@ -272,7 +272,7 @@ var nonFBController = (function(){
 								if(data != ""){
 									clearErrorDivs.login();
 									localStorage.setItem("token",data);
-									window.location="/partials/main-page.html";
+									window.location="/partials/dashboard.html";
 								}else{
 									document.getElementById('error_email').innerHTML = "Incorrect email/password!";
 									localStorage.setItem("token",null);
@@ -325,7 +325,7 @@ var nonFBController = (function(){
 								//clear any existing error messages first
 								clearErrorDivs.register();
 								
-								window.location="/partials/main-page.html";
+								window.location="/partials/dashboard.html";
 							}else{
 								localStorage.setItem("token",null);
 								document.getElementById('error_emailRegister').innerHTML = $("#emailRegister").val() + " already exists!";
