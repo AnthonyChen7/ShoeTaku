@@ -2,7 +2,7 @@ function renderPagination(page){
 	var page = page;
 	var pagination = '';
 	var articleList = '';
-	var per_page = 6;
+	var per_page = 10;
 	var url = "/controllers/shoe";
 
 	var data = {page:page, per_page: per_page};
@@ -76,7 +76,7 @@ function getSellPost(){
 function bringFirstSellPage(){
 	var page = 1;
 	var pagination = '';
-	var per_page = 6;
+	var per_page = 10;
 	var articleList = '';
 	var url = "/controllers/shoe";
 

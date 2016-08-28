@@ -102,14 +102,10 @@ class Shoe extends Restapi
 	}
 
 	private function getListofSellPosts($data,$start){
-		$table = "Sell";
-		$columns = array("shoeId,title,price,created");
-		$where = array();
-		$limOff = array(6,$start);
-
+		
 		$sql = "SELECT shoeId,title,price,created
 				FROM Sell 
-				ORDER BY created DESC LIMIT 6 OFFSET ". $start;
+				ORDER BY created DESC LIMIT 10 OFFSET ". $start;
 
 		$this->connect();
 		$stmt = $this->conn->prepare($sql);

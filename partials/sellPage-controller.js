@@ -100,10 +100,11 @@ $(document).ready(function() {
 	$('#sellPostSubmit').submit(function(event){
 		event.preventDefault();
 		if(!createSellPost()){
+			// create another css modal for this
 			alert("Post Registration not successful, try again.");
 			return false;
 		}else{
-			alert("Your post has been created");
+			location.reload();
 		}
 		
 	});
