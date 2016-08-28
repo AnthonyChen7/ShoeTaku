@@ -2,8 +2,7 @@ $(document).ready(function(){
 	$('#account_info').click(function(){
 
 		//re-direct to account-settings page
-		controller.setupAjax();
-		controller.sendRequest("account-settings");
+		window.location="http://localhost:8080/partials/account-settings.html";
 
 	});
 	

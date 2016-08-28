@@ -168,8 +168,7 @@ var accountController = (function(){
           
           $('#back-button').click(
               function(e){
-                  controller.setupAjax();
-		          // controller.sendRequest("account");
+                  window.location="http://localhost:8080/partials/account.html";
               }
           );
           
