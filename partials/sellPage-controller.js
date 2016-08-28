@@ -60,6 +60,7 @@ function createSellPost(){
 		itemCondition : itemCondition,
 		isWanted : isWanted,
 		description : description,
+		price: price,
 		token : localStorage.getItem("token")
 	};
 	console.log("url is " +url);
@@ -101,8 +102,10 @@ $(document).ready(function() {
 		if(!createSellPost()){
 			alert("Post Registration not successful, try again.");
 			return false;
+		}else{
+			alert("Your post has been created");
 		}
-		alert("Your post has been created");
+		
 	});
 });
 
