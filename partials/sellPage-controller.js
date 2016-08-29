@@ -60,6 +60,7 @@ function createSellPost(){
 		itemCondition : itemCondition,
 		isWanted : isWanted,
 		description : description,
+		price: price,
 		token : localStorage.getItem("token")
 	};
 	console.log("url is " +url);
@@ -99,10 +100,13 @@ $(document).ready(function() {
 	$('#sellPostSubmit').submit(function(event){
 		event.preventDefault();
 		if(!createSellPost()){
+			// create another css modal for this
 			alert("Post Registration not successful, try again.");
 			return false;
+		}else{
+			location.reload();
 		}
-		alert("Your post has been created");
+		
 	});
 });
 

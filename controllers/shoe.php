@@ -4,14 +4,6 @@ require_once(__DIR__.'/restapi.php');
 include(__DIR__.'/tokencreator.php');
 include(__DIR__.'/tokenverify.php');
 
-class shoeInfo {
-
-	public $shoeID;
-	public $shoeBrand;
-	public $shoeModel;
-
-}
-
 class Shoe extends Restapi
 {
 
@@ -63,10 +55,11 @@ class Shoe extends Restapi
 
 					$result['articleList'] = $this->getListofSellPosts($data,$start);
 					$result['totalNumPage'] = $totalNumPage;
+
  				}
  				// create shoe button
  				// 7 json objects passed on from sellPage-controller.js
- 				else if($elementCount == 8){
+ 				else if($elementCount == 9){
  					$result = $this->createShoe($data);
  				}
 				else{
@@ -105,15 +98,15 @@ class Shoe extends Restapi
 		}else{
 			// if bad request
 		}
+
 	}
 
 	private function getListofSellPosts($data,$start){
-		$table = "Sell";
-		$columns = array("shoeId,title,price,created");
-		$where = array();
-		$limOff = array(6,$start);
+		
+		$sql = "SELECT shoeId,title,price,created
+				FROM Sell 
+				ORDER BY created DESC LIMIT 10 OFFSET ". $start;
 
-		$sql = $this->prepareSelectSql($table, $columns, $where, $limOff);
 		$this->connect();
 		$stmt = $this->conn->prepare($sql);
 		$stmt->execute();
@@ -193,10 +186,12 @@ class Shoe extends Restapi
 			return false;
 		}
 		// get userID
-		$ownerId = 1;//$data["ownerId"];
+		$ownerId = 3;//$data["ownerId"];
 
-		// 0 is for sell 1 is for buy
+		// 1 is for sell
+		// 0 is for buy
 		$isWanted = $data["isWanted"];
+		$price = $data["price"];
 
 		// imgur API 
 		$url = null;
@@ -241,12 +236,13 @@ class Shoe extends Restapi
 		$values = array($brand, $model, $size, $itemCnd, $description, $url, $ownerId, $isWanted);
 		$sql = $this->prepareInsertSql($table, $columns, $limOff);
 
+
 		try
 		{
 			$this->connect();
 			$stmt = $this->conn->prepare($sql);
 			$result = $stmt->execute($values);
-
+			$shoeId = $this->conn->lastInsertId();
 			//$this->redirect($_SERVER['SERVER_NAME']);
 
 		} catch (Exception $e) {
@@ -254,9 +250,36 @@ class Shoe extends Restapi
 			$result = FALSE;
 			//c$this->redirect($_SERVER['SERVER_NAME']);
 		}
+		
 		$this->disconnect();
 
-		return $result;
+		// SELL shoe creation
+		if($isWanted == 1){
+			$table = "Sell";
+			$limOff = array();
+			$created = date("Y-m-d H:i:s"); ;
+			$columns = array("title", "price", "shoeId","created");
+			$values = array($title, $price, $shoeId, $created);
+			$sql = $this->prepareInsertSql($table, $columns, $limOff);
+
+			try
+			{
+				$this->connect();
+				$stmt = $this->conn->prepare($sql);
+				$result = $stmt->execute($values);
+				//$this->redirect($_SERVER['SERVER_NAME']);
+
+			} catch (Exception $e) {
+				error_log("db exception");
+				$result = FALSE;
+				//c$this->redirect($_SERVER['SERVER_NAME']);
+			}
+			$this->disconnect();
+		}
+				
+		// }
+		
+		return $sql;
 	}
 
 	// pass shoeID and find corresponding userID

@@ -2,7 +2,7 @@ function renderPagination(page){
 	var page = page;
 	var pagination = '';
 	var articleList = '';
-	var per_page = 6;
+	var per_page = 10;
 	var url = "/controllers/shoe";
 
 	var data = {page:page, per_page: per_page};
@@ -69,14 +69,14 @@ function renderPagination(page){
 }
 
 function getSellPost(){
-	alert("individual post is clicked");
+	console.log("individual post is clicked");
 
 }
 
-function bringFirstSellPage(){
+function bringFirstWantedPage(){
 	var page = 1;
 	var pagination = '';
-	var per_page = 6;
+	var per_page = 10;
 	var articleList = '';
 	var url = "/controllers/shoe";
 
@@ -143,9 +143,13 @@ function bringFirstSellPage(){
 }
 
 $('document').ready(function(){
-	bringFirstSellPage();
+	bringFirstWantedPage();
 	$('#listofPages').on('click','a', function(e){
 		var page = this.id;
 		renderPagination(page);
+	});
+	$(".postTitle a").on('click',function(){
+		console.log("anchor clicked");
+		getSellPost();
 	});
 });

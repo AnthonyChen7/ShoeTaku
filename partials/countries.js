@@ -277,5 +277,9 @@ for(var key in isoCountries){
 	options += '<option value="'+getCountryName(key)+'"/>';
 }
 
-document.getElementById("countryList").innerHTML = options;
+$(document).ready(function(){
+    document.getElementById("countryList").innerHTML = options;
+});
+
+
 
