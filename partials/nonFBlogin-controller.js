@@ -1,25 +1,24 @@
 console.log(localStorage.getItem("token"));
+		
+		if(localStorage.getItem("token") != null  && location.pathname==='/' ){
+			$.ajax({
+				type:'POST',
+				url:"/controllers/authentication",
+				dataType: "json",
+				data: {"token":localStorage.getItem("token"), "action":"redirect"},
+				success : function(data){
+					window.location.href="/partials/dashboard.html";
+				},
+				error: function(data){
+				}
+			});
+		}
 
 /**
  * Init Handler for login and register button
  * Redirect user if token hasn't expired
  */
 $(document).ready(function() {
-
-		// if(localStorage.getItem("token") != null  && window.location.href.indexOf("/partials/main-page.html") <= -1 ){
-		// 	$.ajax({
-		// 		type:'POST',
-		// 		url:"/controllers/authentication",
-		// 		dataType: "json",
-		// 		data: {"token":localStorage.getItem("token"), "action":"redirect"},
-		// 		success : function(data){
-		// 			window.location.href="/partials/main-page.html";
-		// 		},
-		// 		error: function(data){
-					
-		// 		}
-		// 	});
-		// }
 		
 		nonFBController.loginButtonHandler();
 		nonFBController.registerButtonHandler();
@@ -195,15 +194,7 @@ var clearErrorDivs = (function(){
 			document.getElementById('error_email').innerHTML = "";
 			document.getElementById('error_password').innerHTML = "";
 		},
-		
-		 accountLabels : function(){
-                document.getElementById('firstName_account_error').innerHTML = "";
-                document.getElementById('lastName_account_error').innerHTML="";
-                document.getElementById('city_account_error').innerHTML="";
-                document.getElementById('country_account_error').innerHTML="";
-                document.getElementById('save_message').innerHTML ="";
-        },
-        
+		        
         passwordLabels : function(){
                 document.getElementById('error_old_password').innerHTML = "";
                 document.getElementById('error_new_password').innerHTML="";

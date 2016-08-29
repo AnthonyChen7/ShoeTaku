@@ -27,7 +27,7 @@ var accountController = (function(){
                         if(data.error!=null){
                             document.getElementById('save_message').innerHTML = data.error; 
                         }else if(data != null){
-                                document.getElementById("firstName_account").value = data.firstName;
+                            document.getElementById("firstName_account").value = data.firstName;
                             document.getElementById("lastName_account").value = data.lastName;
                             document.getElementById("city_account").value = data.city;
                             document.getElementById("country_account").value = getCountryName(data.countryCode);
@@ -176,8 +176,19 @@ var accountController = (function(){
       } 
       
     }
-    
-    
+
+})();
+
+var clearErrorDivs = (function(){
+    return {
+        accountLabels : function(){
+                document.getElementById('firstName_account_error').innerHTML = "";
+                document.getElementById('lastName_account_error').innerHTML="";
+                document.getElementById('city_account_error').innerHTML="";
+                document.getElementById('country_account_error').innerHTML="";
+                document.getElementById('save_message').innerHTML ="";
+        }
+    }
 })();
 
 
