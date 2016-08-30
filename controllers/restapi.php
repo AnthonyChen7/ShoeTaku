@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__.'/rest.inc.php');
+require_once __DIR__.'/tokenverify.php';
 
 class Restapi extends Rest
 {
@@ -22,6 +23,18 @@ class Restapi extends Rest
 		$requestArray = explode("/", $_REQUEST['x']);
 		$cont = $requestArray[0];
 		$fileName = $cont.".php";
+
+		if($cont == 'accountSettings'){
+			//check token validation here
+			$token = $_POST['token'];
+
+			$parsedToken = TokenCreator::initParseToken( $token );
+			$tokenVerifier = new TokenVerify($token,$parsedToken->getToken()->getHeader('jti'));
+
+			if(!$tokenVerifier->isTokenValid()){
+				$this->response(TIMED_OUT,500);
+			}
+		}
 
 		if (file_exists($fileName)){
 			require_once(__DIR__."/".$fileName);

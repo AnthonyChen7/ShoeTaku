@@ -1,8 +1,8 @@
 <?php
 
 require_once(__DIR__.'/restapi.php');
-include(__DIR__.'/tokencreator.php');
-include(__DIR__.'/tokenverify.php');
+// include(__DIR__.'/tokencreator.php');
+// include(__DIR__.'/tokenverify.php');
 
 class Shoe extends Restapi
 {
@@ -106,7 +106,7 @@ class Shoe extends Restapi
 		$sql = "SELECT shoeId,title,price,created
 				FROM Sell 
 				ORDER BY created DESC LIMIT 10 OFFSET ". $start;
-
+		
 		$this->connect();
 		$stmt = $this->conn->prepare($sql);
 		$stmt->execute();

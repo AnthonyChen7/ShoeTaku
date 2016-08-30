@@ -39,7 +39,8 @@ var accountController = (function(){
                         error: function(data){
                             var data=data;
                             console.log(data);
-                            document.getElementById('save_message').innerHTML = "Error: Unable to retrieve account information!";
+                            document.getElementById('save_message').innerHTML = data.responseJSON;
+                            nonFBController.sessionExpired(data.responseJSON,'save_message');
                         }
                         
                     }
@@ -96,7 +97,8 @@ var accountController = (function(){
                     error: function(data) {
                         var data = data;
                         console.log(data);
-                        document.getElementById('save_message').innerHTML = data.responseJSON;; 
+                        document.getElementById('save_message').innerHTML = data.responseJSON;
+                        nonFBController.sessionExpired(data.responseJSON,'save_message');
                     }
                 });
                     
@@ -152,7 +154,8 @@ var accountController = (function(){
                         error:function(data){
                             var data = data;
                             console.log(data);
-                            document.getElementById('error_save_password').innerHTML = data.responseJSON;;   
+                            document.getElementById('error_save_password').innerHTML = data.responseJSON;
+                            nonFBController.sessionExpired(data.responseJSON,'error_save_password');   
                         }
                     });
                     
@@ -187,6 +190,13 @@ var clearErrorDivs = (function(){
                 document.getElementById('city_account_error').innerHTML="";
                 document.getElementById('country_account_error').innerHTML="";
                 document.getElementById('save_message').innerHTML ="";
+        },
+
+        passwordLabels : function(){
+                document.getElementById('error_old_password').innerHTML = "";
+                document.getElementById('error_new_password').innerHTML="";
+                document.getElementById('error_confirm_password').innerHTML="";
+                document.getElementById('error_save_password').innerHTML=""; 
         }
     }
 })();

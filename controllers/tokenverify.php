@@ -4,13 +4,16 @@
 
 require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '/vendor/autoload.php' );
 include_once __DIR__.'/tokencreator.php';
-require_once(__DIR__.'/restapi.php');
+// require_once(__DIR__.'/restapi.php');
+//require_once(__DIR__.'/rest.inc.php');
+require_once(__DIR__.'/sql-builder.php');
 
 use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\ValidationData;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 
-class TokenVerify extends Restapi{
+// class TokenVerify extends Restapi{
+class TokenVerify extends SqlQueryBuilder{
 
 private $token;
 private $signer;

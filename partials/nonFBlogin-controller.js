@@ -194,14 +194,7 @@ var clearErrorDivs = (function(){
 			document.getElementById('error_email').innerHTML = "";
 			document.getElementById('error_password').innerHTML = "";
 		},
-		        
-        passwordLabels : function(){
-                document.getElementById('error_old_password').innerHTML = "";
-                document.getElementById('error_new_password').innerHTML="";
-                document.getElementById('error_confirm_password').innerHTML="";
-                document.getElementById('error_save_password').innerHTML=""; 
-        },
-		
+
 		resetPassword : function(){
 			 document.getElementById('error_reset_new_password').innerHTML="";
              document.getElementById('error_reset_confirm_new_password').innerHTML="";
@@ -357,6 +350,18 @@ var nonFBController = (function(){
 					}
 				});
 			});
+		},
+
+		sessionExpired : function(errorMsg, errorDivID){
+			
+			if(errorMsg === "Session timed out!"){
+				document.getElementById(errorDivID).innerHTML = "Session has expired! Redirecting...";
+
+				setTimeout(function () {
+       				window.location.href = "http://localhost:8080";
+    			}, 2000); //will call the function after 2 secs.
+			}
+			
 		}
 	}
 })();
