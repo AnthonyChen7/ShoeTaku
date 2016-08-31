@@ -99,7 +99,7 @@ function bringFirstSellPage(){
 						shoeId = rawArticleList[i]["shoeId"];
 						postTitle = rawArticleList[i]["title"];
 						$(this).html(postTitle);
-						newUrl = "#/posts?id=" + shoeId;
+						newUrl = "/partials/sellPost.php?id=" + shoeId;
 						$(this).attr("href", newUrl);
 					} 
 			});	

@@ -56,7 +56,10 @@
 
 
 <div id="postInfo">
-	<div>  
+	<div>
+		<?php
+			echo $_GET["id"];
+		?>
 		price size condition date-created goes here
 	</div>
 	<div>
