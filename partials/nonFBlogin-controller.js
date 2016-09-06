@@ -355,7 +355,9 @@ var nonFBController = (function(){
 		sessionExpired : function(errorMsg, errorDivID){
 			
 			if(errorMsg === "Session timed out!"){
-				document.getElementById(errorDivID).innerHTML = "Session has expired! Redirecting...";
+
+				// document.getElementById(errorDivID).innerHTML = "Session has expired! Redirecting...";
+				alert("Session has expired! Redirecting...");
 
 				setTimeout(function () {
        				window.location.href = "http://localhost:8080";

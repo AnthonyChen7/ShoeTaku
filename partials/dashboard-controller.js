@@ -5,14 +5,13 @@ function renderRecentSellPost(){
 	var articleList = '';
 	var url = "/controllers/shoe";
 
-	// var data = {page:page, per_page:per_page, token: localStorage.getItem('token')};
-	var data = {page:page, per_page:per_page};
+	var data = {'page':page, 'per_page':per_page,'token': localStorage.getItem('token')};
 
 	$.ajax({
 		type: 'POST',
 		url:url,
-		 data:JSON.stringify(data),
-		//data:data,
+		 // data:JSON.stringify(data),
+		data:data,
 		dataType:'json',
 		timeout:3000,
 		success: function(data){
@@ -52,7 +51,8 @@ function renderRecentSellPost(){
 
 		},
 		error: function(data){
-			console.log(data);
+			console.log(data.responseText);
+			nonFBController.sessionExpired(data.responseJSON,'save_message');
 		}
 	});
 

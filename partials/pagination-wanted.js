@@ -5,13 +5,13 @@ function renderPagination(page){
 	var per_page = 10;
 	var url = "/controllers/shoe";
 
-	var data = {page:page, per_page: per_page};
+	var data = {'page':page, 'per_page':per_page,'token': localStorage.getItem('token')};
 
 	$.ajax({
 
 		type: 'POST',
 		url:url,
-		data:JSON.stringify(data),
+		data:data,
 		dataType:'json',
 		timeout:3000,
 		success: function(data){
@@ -63,7 +63,8 @@ function renderPagination(page){
 
 		},
 		error: function(data){
-			console.log("error is " + data);
+			console.log(data.responseText);
+			nonFBController.sessionExpired(data.responseJSON,'save_message');
 		}
 	});
 }
@@ -80,12 +81,12 @@ function bringFirstWantedPage(){
 	var articleList = '';
 	var url = "/controllers/shoe";
 
-	var data = {page:page, per_page:per_page};
+	var data = {'page':page, 'per_page':per_page,'token': localStorage.getItem('token')};
 
 	$.ajax({
 		type: 'POST',
 		url:url,
-		data:JSON.stringify(data),
+		data:data,
 		dataType:'json',
 		timeout:3000,
 		success: function(data){
@@ -137,7 +138,8 @@ function bringFirstWantedPage(){
 
 		},
 		error: function(data){
-			console.log("error is " + data);
+			console.log(data.responseText);
+			nonFBController.sessionExpired(data.responseJSON,'save_message');
 		}
 	});
 }

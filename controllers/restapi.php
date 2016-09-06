@@ -23,8 +23,8 @@ class Restapi extends Rest
 		$requestArray = explode("/", $_REQUEST['x']);
 		$cont = $requestArray[0];
 		$fileName = $cont.".php";
-
-		if($cont == 'accountSettings'){
+		// if($cont == 'accountSettings'){
+		if($cont != 'authentication'){
 			//check token validation here
 			$token = $_POST['token'];
 

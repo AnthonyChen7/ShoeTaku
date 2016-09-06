@@ -20,21 +20,20 @@ class Shoe extends Restapi
 		$requestArray = explode("/", $_REQUEST['x']);
 		$length = count($requestArray);
 		$json = file_get_contents("php://input");
-		// $this->response($json,200);
+		
 		$elementCount;
 		$data;
-		if ($json){
-			$data = json_decode($json, TRUE);
-			$elementCount  = count($data);
-		}
+		$dataRes;
+		$data = $_POST;
+		$elementCount  = count($data);
 		
 		if ($method == 'POST'){
 			// Base case: /controllers/shoe   Create a new Shoe
-
 			if ($length == 1){
 				// handles pagination
-				if($elementCount == 2){
+				if($elementCount == 3){
 					$page = $data['page'];
+
 					$per_page = $data['per_page'];
 					// if($page!=1){
 					// 	$this->response($page,200);
@@ -186,7 +185,7 @@ class Shoe extends Restapi
 			return false;
 		}
 		// get userID
-		$ownerId = 3;//$data["ownerId"];
+		$ownerId = $userID;
 
 		// 1 is for sell
 		// 0 is for buy
