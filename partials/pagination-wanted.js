@@ -5,7 +5,9 @@ function renderPagination(page){
 	var per_page = 10;
 	var url = "/controllers/shoe";
 
-	var data = {'page':page, 'per_page':per_page,'token': localStorage.getItem('token')};
+	var isWanted = 0;
+
+	var data = {'page':page, 'per_page':per_page,'token': localStorage.getItem('token'), 'isWanted' : isWanted};
 
 	$.ajax({
 
@@ -25,10 +27,10 @@ function renderPagination(page){
 						shoeId = rawArticleList[i]["shoeId"];
 						postTitle = rawArticleList[i]["title"];
 						$(this).html(postTitle);
-						newUrl = "#/posts?id=" + shoeId;
+						newUrl = "/partials/wantedPost.php?id=" + shoeId;
 						$(this).attr("href", newUrl);
 					} 
-			});	
+			});		
 
 			$(".postPrice").each(function(i){
 				if(i < per_page && i >= rawArticleList.length){
@@ -81,7 +83,9 @@ function bringFirstWantedPage(){
 	var articleList = '';
 	var url = "/controllers/shoe";
 
-	var data = {'page':page, 'per_page':per_page,'token': localStorage.getItem('token')};
+	var isWanted = 0;
+
+	var data = {'page':page, 'per_page':per_page,'token': localStorage.getItem('token'), 'isWanted' : isWanted};
 
 	$.ajax({
 		type: 'POST',
@@ -100,7 +104,7 @@ function bringFirstWantedPage(){
 						shoeId = rawArticleList[i]["shoeId"];
 						postTitle = rawArticleList[i]["title"];
 						$(this).html(postTitle);
-						newUrl = "#/posts?id=" + shoeId;
+						newUrl = "/partials/wantedPost.php?id=" + shoeId;
 						$(this).attr("href", newUrl);
 					} 
 			});	

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 
@@ -8,17 +7,12 @@
     <link href="/components/layout.css" rel="stylesheet">
     <script src="/components/bootstrap-3.3.6-dist 2/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="/components/font-awesome-4.6.3/css/font-awesome.min.css">
-    
-    <script src="/partials/fblogin-controller.js" type="text/javascript" charset="utf-8"></script>
+
+	<script src="/partials/fblogin-controller.js" type="text/javascript" charset="utf-8"></script>
     <script src="/partials/nonFBlogin-controller.js" type="text/javascript" charset="utf-8"></script>
     <script src="/partials/authentication.js" type="text/javascript" charset="utf-8"></script>
 
     <title>ShoeTaku</title>
-    <style>
-    	#sellPostList{
-    		list-style-type: none;
-    	}
-    </style>
 
 </head>
 <body> 
@@ -41,10 +35,9 @@
 	            <ul class="nav navbar-nav">
 	                <li><a id="sellPage" class="page" data-page="sell" href="sell.html">Sell <span class="sr-only">(current)</span></a></li>
 	                <li><a id="wantedPage" class="page" data-page="wanted" href="wanted.html">Wanted</a></li>
-	                <!--<li><a id="accountPage" class="page" data-page="account" href="account-settings.html">Account Settings</a></li>-->
-					<li><a id="accountPage" class="page" data-page="account" href="account.html">Account</a></li>
+	                <li><a id="accountPage" class="page" data-page="account" href="account.html">Account Settings</a></li>
 	            </ul>
-	          
+
 	            <ul class="nav navbar-nav navbar-right">
 	                <li><a id="logout">Logout</a></li>
 	            </ul>
@@ -53,58 +46,25 @@
 
 	</nav>
 
-	<div class="row">
-		<div id="welcome" class="col-md-6">
-			<h1>Hello this is the dashboard</h1>
-		</div>
-		<div id="messageNotification" class="col-md-6">
-			<div id="messageHeader">
-				<h3>Messages</h3>
-			</div>
-			<div id="recentMessage">
-				<ul>
-					<li>1</li>
-					<li>2</li>
-					<li>3</li>
-					<li>4</li>
-					<li>5</li>
-				</ul>
-			</div>
-		</div>
+
+<div id="postInfo">
+	<div>
+		<?php
+			echo $_GET["id"];
+		?>
+		price size condition date-created goes here
 	</div>
-	<div class="row">
-		<div id="recentWantedPost" class="col-md-6">
-			<div id="wantedPosts">
-				<h2>Recent Wanted Posts</h2>
-				<div id="wantedPosts">
-					<ul id="wantedPostList">
-						<li><a>1</a></li>
-						<li><a>2</a></li>
-						<li><a>3</a></li>
-						<li><a>4</a></li>
-						<li><a>5</a></li>
-					</ul>
-				</div>
-			</div> 
-			<div id="recentSellPost">
-				<h2>Recent Sell Posts</h2>
-				<div id="sellPosts">
-					<ul id="sellPostList">
-						<li><a>1</a></li>
-						<li><a>2</a></li>
-						<li><a>3</a></li>
-						<li><a>4</a></li>
-						<li><a>5</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div id="newAds" class="col-md-6">
-			<div id="adContainer">
-				<h1>New Kicks Release</h1>
-			</div>
-		</div>
+	<div>
+		pictures go here (3 max)
 	</div>
-	<script src="/partials/dashboard-controller.js" type="text/javascript" charset="utf-8"></script>
+	<div>
+		description goes here
+	</div>
+	<div>
+		<div id="likeButton">LikeButton comes here</div>
+		<div id="messageOwner">Message Owner comes here</div>
+	</div>
+</div>
+<script src="/partials/wantedPost-controller.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

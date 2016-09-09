@@ -140,165 +140,113 @@
 	<a href="#" id="1"></a>
 </div>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadChoice">I want to sell my shoes!</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadChoice">I want to buy shoes!</button>
 <div class="modal fade" id="uploadChoice" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
-		<div class="center">
-			<button type="button" class="btn btn-glyphicon jumbotron" data-toggle="modal" data-target="#new_wanted_img">
-				<div class="glyphicon glyphicon-file glyphicon-big" aria-hidden="true"></div>
-	            <div class="row">Image Upload</div>
-			</button>
-			<button type="button" class="btn btn-glyphicon jumbotron" data-toggle="modal" data-target="#new_wanted_url">
-				<div class="glyphicon glyphicon-globe glyphicon-big" aria-hidden="true"></div>
-	            <div class="row">Url Upload</div>
-			</button>
-		</div>	
-	</div>
-</div>
-<div class="modal fade" id="new_wanted_img" role="dialog">
-	<div class="modal-dialog">
-		<!-- Modal content-->
 		<div class="modal-content">
-			<form action="/controllers/shoe" method="POST">
-				<div class="modal-body">
-					<div class="form-group">
-						<label for="image">Shoe Image:</label>
-						<div class="input-group col-xs-12">
-							<input class="form-control" type="file" name="image" id="image">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="brandImg">Shoe Brand:</label>
-						<div class="input-group col-xs-12">
-						  <input class="form-control" name="brand" type="text" id="brandImg">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="modelImg">Shoe Model:</label>
-						<div class="input-group col-xs-12">
-						  <input class="form-control" name="model" type="text" id="modelImg">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="sizeImg">Shoe Size:</label>
-						<select class="form-control" name="size" id="sizeImg" required>
-							<option disabled selected value> -- Select a Size -- </option>
-							<option value=14>US 14</option>
-							<option value=13>US 13</option>
-							<option value=12>US 12</option>
-							<option value=11>US 11</option>
-							<option value=10>US 10</option>
-							<option value=9>US 9</option>
-							<option value=8>US 8</option>
-							<option value=7>US 7</option>
-							<option value=6>US 6</option>
-							<option value=5>US 5</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="itemConditionImg">Select Quality:</label>
-						<select class="form-control" name="itemCondition" id="itemConditionImg">
-							<option disabled selected value> -- Select a Quality -- </option>
-								<option value=5>Brand New</option>
-								<option value=4>Passed as Deadstock / worn once or twice</option>
-								<option value=3>Worn less than 10 times</option>
-								<option value=2>Used</option>
-								<option value=1>Beaters</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="descriptionImg">Shoe Description:</label>
-						<div class="input-group col-xs-12">
-						  <input class="form-control" name="description" type="text" id="descriptionImg">
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
+			<div class="modal-header">
+		          	<button type="button" class="close" data-dismiss="modal">&times;</button>
+		          	<h4 class="modal-title">Please provide us the details about the shoes you want to buy</h4>
+		    </div>
+			<form id="wantedPostSubmit" action="/controllers/shoe" method="POST">
+		        	<div class="modal-body">
+		        		<div class="form-group">
+		          			<label for="wantedPostImage">Image:</label>
+		          			<div class="input-group col-xs-12">
+		          				<input class="form-control" type="file" name="title" id="wantedPostImage">
+		          				<div id="image_wanted_error" class="wanted_error"></div>
+		          			</div>
+		          		</div>
+		          		<div class="form-group">
+		          			<label for="wantedPostTitle">Title:</label>
+		          			<div class="input-group col-xs-12">
+		          				<input class="form-control" type="text" name="title" id="wantedPostTitle">
+		          				<div id="title_wanted_error" class="wanted_error"></div>
+		          			</div>
+		          		</div>
+		          		<div class="form-group">
+		          			<label for="wantedShoeBrand">Shoe Brand:</label>
+		          			<div class="input-group col-xs-12">
+		          				<select class="form-control" name="brand" id="wantedShoeBrand" required>
+		          					<option value="-- Select a Brand --"> -- Select a Brand -- </option>
+		          					<option value="Nike">Nike</option>
+		          					<option value="Jordan">Jordan</option>
+		          					<option value="Adidas">Adidas</option>
+		          					<option value="Puma">Puma</option>
+		          					<option value="etc">Etc</option>
+		          				</select>
+		          				<div id="brand_wanted_error" class="wanted_error"></div>
+		          			</div>
+		          		</div>
+		          		<div class="form-group">
+		          			<label for="wantedShoeModel">Shoe Model:</label>
+		          			<div class="input-group col-xs-12">
+		          				<input class="form-control" type="text" name="model" id="wantedShoeModel">
+		          				<div id="model_wanted_error" class="wanted_error"></div>
+		          			</div>
+		          		</div>
+		          		<div class="form-group">
+		          			<label for="wantedShoeSize">Shoe Size: (IN US)</label>
+		          			<div class="input-group col-xs-12">
+		          				<select class="form-control" name="size" id="wantedShoeSize" required>
+		          					<option value=15> -- Select a Size -- </option>
+									<option value=14>US 14</option>
+									<option value=13>US 13</option>
+									<option value=12>US 12</option>
+									<option value=11>US 11</option>
+									<option value=10>US 10</option>
+									<option value=9>US 9</option>
+									<option value=8>US 8</option>
+									<option value=7>US 7</option>
+									<option value=6>US 6</option>
+		          				</select>
+		          				<div id="size_wanted_error" class="wanted_error"></div>
+		          			</div>
+		          		</div>
+		          		<div class="form-group">
+		          			<label for="wantedShoeCond">Shoes Condition:</label>
+		          			<div class="input-group col-xs-12">
+		          				<select class="form-control" name="cond" id="wantedShoeCond" required>
+		          					<option value=6> -- Select a Quality -- </option>
+									<option value=5>Brand New</option>
+									<option value=4>Passed as Deadstock / worn once or twice</option>
+									<option value=3>Worn less than 10 times</option>
+									<option value=2>Used</option>
+									<option value=1>Beaters</option>
+		          				</select>
+		          				<div id="condition_wanted_error" class="wanted_error"></div>
+		          			</div>
+		          		</div>
+		          		<div class="form-group">
+		          			<label for="wantedShoeDescription">Shoe Description:</label>
+		          			<div class="input-group col-xs-12">
+		          				<input class="form-control" type="text" name="description" id="wantedShoeDescription">
+		          				<div id="description_wanted_error" class="wanted_error"></div>
+		          			</div>
+		          		</div>
+		          		<div class="form-group">
+		          			<label for="wantedShoePrice">Price:</label>
+		          			<div class="input-group col-xs-12">
+		          			<input class="form-control" type="text" name="price" id="wantedShoePrice">
+		          			<div id="price_wanted_error" class="wanted_error"></div>
+		          		</div>
+		          	</div>
+		        </div>
+		        <div class="modal-footer">
 					<button type="button" class="btn btn-blog pull-left" data-dismiss="modal">
-					Close
+						Close
 					</button>
-					<button type="submit" class="btn btn-blog pull-right">
-					Upload
-					</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-<div class="modal fade" id="new_wanted_url" role="dialog">
-	<div class="modal-dialog">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<form action="/controllers/shoe" method="POST">
-				<div class="modal-body">
-					<div class="form-group">
-						<label for="imageUrl">Shoe Url:</label>
-						<div class="input-group col-xs-12">
-						  <input class="form-control" name="url" type="text" id="imageUrl">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="brandUrl">Shoe Brand:</label>
-						<div class="input-group col-xs-12">
-						  <input class="form-control" name="brand" type="text" id="brandUrl">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="modelUrl">Shoe Model:</label>
-						<div class="input-group col-xs-12">
-						  <input class="form-control" name="model" type="text" id="modelUrl">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="sizeUrl">Shoe Size:</label>
-						<select class="form-control" name="size" id="sizeUrl" required>
-							<option disabled selected value> -- Select a Size -- </option>
-							<option value=14>US 14</option>
-							<option value=13>US 13</option>
-							<option value=12>US 12</option>
-							<option value=11>US 11</option>
-							<option value=10>US 10</option>
-							<option value=9>US 9</option>
-							<option value=8>US 8</option>
-							<option value=7>US 7</option>
-							<option value=6>US 6</option>
-							<option value=5>US 5</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="itemConditionUrl">Select Quality:</label>
-						<select class="form-control" name="itemCondition" id="itemConditionUrl" required>
-							<option disabled selected value> -- Select a Quality -- </option>
-							<option value=5>Mint Condition</option>
-							<option value=4>New</option>
-							<option value=3>Worn Once or Twice</option>
-							<option value=2>2nd Hand</option>
-							<option value=1>Don't care about the quality, as long as I got it</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="descriptionUrl">Shoe Description:</label>
-						<div class="input-group col-xs-12">
-						  <input class="form-control" name="description" type="text" id="descriptionUrl">
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-blog pull-left" data-dismiss="modal">
-					Close
-					</button>
-					<button type="submit" class="btn btn-blog pull-right">
-					Upload
+					<button id="createWantedShoeButton" type="submit" class="btn btn-blog pull-right">
+						Create
 					</button>
 				</div>
-			</form>
+		    </form>
 		</div>
 	</div>
 </div>
 
-
-
+<script src="/partials/wantedPage-controller.js" type="text/javascript" charset="utf-8"></script>
 <script src="/partials/pagination-wanted.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

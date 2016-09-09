@@ -75,6 +75,17 @@ isFound TINYINT NOT NULL DEFAULT 0,
 FOREIGN KEY (shoeId) REFERENCES Shoe (shoeId) ON DELETE CASCADE
 );
 
+INSERT INTO Wanted(title,price,shoeId,created) VALUES("testingWanted",8,1,"");
+INSERT INTO Wanted(title,price,shoeId,created) VALUES("testingWanted2",9,2,"");
+INSERT INTO Wanted(title,price,shoeId,created) VALUES("testingWanted3",10,3,"");
+INSERT INTO Wanted(title,price,shoeId,created) VALUES("testingWanted4",11,4,"");
+INSERT INTO Wanted(title,price,shoeId,created) VALUES("testingWanted5",12,5,"");
+INSERT INTO Wanted(title,price,shoeId,created) VALUES("testingWanted6",13,6,"");
+INSERT INTO Wanted(title,price,shoeId,created) VALUES("testingWanted7",14,7,"");
+INSERT INTO Wanted(title,price,shoeId,created) VALUES("testingWanted8",15,8,"");
+INSERT INTO Wanted(title,price,shoeId,created) VALUES("testingWanted9",16,9,"");
+INSERT INTO Wanted(title,price,shoeId,created) VALUES("testingWanted10",17,10,"");
+
 CREATE TABLE Sell
 (
 postId INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,

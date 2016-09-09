@@ -4,8 +4,9 @@ function renderPagination(page){
 	var articleList = '';
 	var per_page = 10;
 	var url = "/controllers/shoe";
+	var isWanted = 1;
 
-	var data = {'page':page, 'per_page':per_page,'token': localStorage.getItem('token')};
+	var data = {'page':page, 'per_page':per_page,'token': localStorage.getItem('token'), 'isWanted' : isWanted};
 
 	$.ajax({
 
@@ -25,7 +26,7 @@ function renderPagination(page){
 						shoeId = rawArticleList[i]["shoeId"];
 						postTitle = rawArticleList[i]["title"];
 						$(this).html(postTitle);
-						newUrl = "#/posts?id=" + shoeId;
+						newUrl = "/partials/sellPost.php?id=" + shoeId;
 						$(this).attr("href", newUrl);
 					} 
 			});	
@@ -81,7 +82,9 @@ function bringFirstSellPage(){
 	var articleList = '';
 	var url = "/controllers/shoe";
 
-	var data = {'page':page, 'per_page':per_page,'token': localStorage.getItem('token')};
+	var isWanted = 1;
+
+	var data = {'page':page, 'per_page':per_page,'token': localStorage.getItem('token'), 'isWanted' : isWanted};
 
 	$.ajax({
 		type: 'POST',

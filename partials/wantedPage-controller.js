@@ -1,49 +1,51 @@
 function clearForm(){
-	$('#sellPostSubmit').each(function(){
+	$('#wantedPostSubmit').each(function(){
     	this.reset();
 	});
 }
 
 function createSellPost(){
-	var title = $('#sellPostTitle').val();
-	var brand = $('#sellShoeBrand').val();
-	var model = $('#sellShoeModel').val();
-	var size = $('#sellShoeSize').val();
-	var itemCondition = $('#sellShoeCond').val();
-	var description = $('#sellShoeDescription').val();
-	var price = $('#sellShoePrice').val();
+	var title = $('#wantedPostTitle').val();
+	var brand = $('#wantedShoeBrand').val();
+	var model = $('#wantedShoeModel').val();
+	var size = $('#wantedShoeSize').val();
+	var itemCondition = $('#wantedShoeCond').val();
+	var description = $('#wantedShoeDescription').val();
+	var price = $('#wantedShoePrice').val();
 	price = parseInt(price);
+
 	// 1 is for sell
-	var isWanted = 1;
+	// 0 for wanted
+	var isWanted = 0;
 
 	var isPostValid = true;
 
 	if(title =='' || title.length > 30){
-		document.getElementById("title_sell_error").innerHTML = "Title cannot be left empty or exceed 30 chars!";
+		document.getElementById("title_wanted_error").innerHTML = "Title cannot be left empty or exceed 30 chars!";
 		isPostValid =  false;
 	}
 	if(brand =='' || brand =='-- Select a Brand --'){
-		document.getElementById("brand_sell_error").innerHTML = "You must choose a brand!";
+		document.getElementById("brand_wanted_error").innerHTML = "You must choose a brand!";
 		isPostValid =  false;
 	}
 	if(model =='' || model.length > 25){
-		document.getElementById("model_sell_error").innerHTML = "Model cannot be left empty or exceeh 25 chars!";
+		document.getElementById("model_wanted_error").innerHTML = "Model cannot be left empty or exceeh 25 chars!";
 		isPostValid = false;
 	}
 	if(size == 15){
-		document.getElementById("size_sell_error").innerHTML = "You must choose the size of the shoes!";
+		document.getElementById("size_wanted_error").innerHTML = "You must choose the size of the shoes!";
 		isPostValid = false;
 	}	
 	if(itemCondition == 6 || itemCondition == ''){
-		document.getElementById("condition_sell_error").innerHTML = "You must choose item condition!";
+		document.getElementById("condition_wanted_error").innerHTML = "You must choose item condition!";
 		isPostValid = false;
 	}
 	if(description == ''){
-		document.getElementById("description_sell_error").innerHTML = "Description must be filled!";
+		document.getElementById("description_wanted_error").innerHTML = "Description must be filled!";
 		isPostValid = false;
 	}
 	if(price < 0 || isNaN(price)){
-		document.getElementById("price_sell_error").innerHTML = "Price cannot be a negative value or word(s)!"
+		document.getElementById("price_wanted_error").innerHTML = "Price cannot be a negative value or word(s)!"
 		isPostValid = false;
 	}
 
@@ -76,7 +78,7 @@ function createSellPost(){
 			clearForm();
 			if(data){
 				closeModal();
-				$('.sell_error').html('');
+				$('.wanted_error').html('');
 			}
 			var data = data;
 			console.log(data);
@@ -94,18 +96,18 @@ function createSellPost(){
 }
 
 function closeModal(){
-    $('#createSellPost').modal('hide');
+    $('#createWantedPost').modal('hide');
 }
 
 $(document).ready(function() {
-	$('#sellPostSubmit').submit(function(event){
+	$('#wantedPostSubmit').submit(function(event){
 		event.preventDefault();
 		if(!createSellPost()){
 			// create another css modal for this
 			alert("Post Registration not successful, try again.");
 			return false;
 		}else{
-			// location.reload();
+			location.reload();
 		}
 		
 	});

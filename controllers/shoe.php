@@ -31,7 +31,7 @@ class Shoe extends Restapi
 			// Base case: /controllers/shoe   Create a new Shoe
 			if ($length == 1){
 				// handles pagination
-				if($elementCount == 3){
+				if($elementCount == 4){
 					$page = $data['page'];
 
 					$per_page = $data['per_page'];
@@ -48,11 +48,11 @@ class Shoe extends Restapi
 					}else{
 						$start = 0;
 					}
-
+						
 					$numArticles = $this->getTotalNumberOfPosts($data);
 					$totalNumPage = ceil($numArticles[0] / $per_page); // Total number of page
 
-					$result['articleList'] = $this->getListofSellPosts($data,$start);
+					$result['articleList'] = $this->getListofPosts($data,$start);
 					$result['totalNumPage'] = $totalNumPage;
 
  				}
@@ -100,10 +100,18 @@ class Shoe extends Restapi
 
 	}
 
-	private function getListofSellPosts($data,$start){
+	private function getListofPosts($data,$start){
 		
+		if($data['isWanted']==1){
+			$table = "Sell";	
+		}else if($data['isWanted'] == 0){
+			$table = "Wanted";
+		}else{
+			$this->response("Error, is wanted is not passed as either of 1 or 0",200);
+		}
+
 		$sql = "SELECT shoeId,title,price,created
-				FROM Sell 
+				FROM ".$table." 
 				ORDER BY created DESC LIMIT 10 OFFSET ". $start;
 		
 		$this->connect();
@@ -132,7 +140,14 @@ class Shoe extends Restapi
 
 	private function getTotalNumberOfPosts($data){
 
-		$table = "Sell";
+		if($data['isWanted']==1){
+			$table = "Sell";	
+		}else if($data['isWanted'] == 0){
+			$table = "Wanted";
+		}else{
+			$this->response("Error, is wanted is not passed as either of 1 or 0",200);
+		}
+		
 		$columns = array("count(*)");
 		$where = array();
 		$limOff = array();

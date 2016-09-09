@@ -153,6 +153,13 @@
 		        </div>
 		        <form id="sellPostSubmit" action="/controllers/shoe" method="POST">
 		        	<div class="modal-body">
+		        		<div class="form-group">
+		          			<label for="sellPostImage">Image:</label>
+		          			<div class="input-group col-xs-12">
+		          				<input class="form-control" type="file" name="title" id="sellPostImage">
+		          				<div id="image_sell_error" class="sell_error"></div>
+		          			</div>
+		          		</div>
 		          		<div class="form-group">
 		          			<label for="sellPostTitle">Title:</label>
 		          			<div class="input-group col-xs-12">
@@ -163,7 +170,7 @@
 		          		<div class="form-group">
 		          			<label for="sellShoeBrand">Shoe Brand:</label>
 		          			<div class="input-group col-xs-12">
-		          				<select class="form-control" name="brand" id="sellShoeBrand" required>>
+		          				<select class="form-control" name="brand" id="sellShoeBrand" required>
 		          					<option value="-- Select a Brand --"> -- Select a Brand -- </option>
 		          					<option value="Nike">Nike</option>
 		          					<option value="Jordan">Jordan</option>
