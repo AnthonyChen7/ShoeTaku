@@ -270,28 +270,32 @@ class Shoe extends Restapi
 		// SELL shoe creation
 		if($isWanted == 1){
 			$table = "Sell";
-			$limOff = array();
-			$created = date("Y-m-d H:i:s"); ;
-			$columns = array("title", "price", "shoeId","created");
-			$values = array($title, $price, $shoeId, $created);
-			$sql = $this->prepareInsertSql($table, $columns, $limOff);
-
-			try
-			{
-				$this->connect();
-				$stmt = $this->conn->prepare($sql);
-				$result = $stmt->execute($values);
-				//$this->redirect($_SERVER['SERVER_NAME']);
-
-			} catch (Exception $e) {
-				error_log("db exception");
-				$result = FALSE;
-				//c$this->redirect($_SERVER['SERVER_NAME']);
-			}
-			$this->disconnect();
+		}else if($isWanted == 0){
+			$table = "Wanted";
+		}else{
+			$this->response("Invalid number for isWanted",200);
 		}
-				
-		// }
+		
+		$limOff = array();
+		$created = date("Y-m-d H:i:s"); ;
+		$columns = array("title", "price", "shoeId","created");			
+		$values = array($title, $price, $shoeId, $created);
+		$sql = $this->prepareInsertSql($table, $columns, $limOff);
+
+		try
+		{
+			$this->connect();
+			$stmt = $this->conn->prepare($sql);
+			$result = $stmt->execute($values);
+			//$this->redirect($_SERVER['SERVER_NAME']);
+
+		} catch (Exception $e) {
+			error_log("db exception");
+			$result = FALSE;
+			//c$this->redirect($_SERVER['SERVER_NAME']);
+		}
+		$this->disconnect();	
+
 		
 		return $sql;
 	}
