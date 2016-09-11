@@ -262,12 +262,12 @@ class Shoe extends Restapi
 		} catch (Exception $e) {
 			error_log("db exception");
 			$result = FALSE;
-			//c$this->redirect($_SERVER['SERVER_NAME']);
+			//$this->redirect($_SERVER['SERVER_NAME']);
 		}
 		
 		$this->disconnect();
 
-		// SELL shoe creation
+		// shoe creation
 		if($isWanted == 1){
 			$table = "Sell";
 		}else if($isWanted == 0){
