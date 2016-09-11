@@ -14,14 +14,6 @@
 
     <title>ShoeTaku</title>
 
-	<style>
-		#listofPages div { 
-			display: inline-block;
-			margin-left: 5px;
-			margin-right: 5px;
-		}
-	</style>
-
 </head>
 <body> 
 	<nav class="navbar navbar-default">
@@ -135,18 +127,20 @@
 
 </div>
 
-<div id="listofPages">
-	<h4> Display pagination </h4>
-	<a href="#" id="1"></a>
-</div>
+<nav aria-label="Page navigation">
+	<ul class="pagination" id="listofPages">
+		<a href="#" id="1"></a>
+	</ul>
+</nav>
 
 
-	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#createSellPost">I want to sell my shoes!</button>
+
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#createSellPost">I want to sell my shoes!</button>
 	<!-- Modal -->
 	<div class="modal fade" id="createSellPost" role="dialog">
-	    <div class="modal-dialog">
-		    <!-- Modal content-->
-		    <div class="modal-content">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
 		        <div class="modal-header">
 		          	<button type="button" class="close" data-dismiss="modal">&times;</button>
 		          	<h4 class="modal-title">Please provide us the details about the shoes you want to sell</h4>
