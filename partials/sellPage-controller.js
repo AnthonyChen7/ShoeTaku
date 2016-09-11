@@ -68,7 +68,7 @@ function createSellPost(){
 	$.ajax({
 		type:'POST',
 		url : url,
-		data : JSON.stringify(data),
+		data : data,
 		dataType : 'json',
 		timeout : 3000,
 		success: function(data){
@@ -105,7 +105,7 @@ $(document).ready(function() {
 			alert("Post Registration not successful, try again.");
 			return false;
 		}else{
-			// location.reload();
+			location.reload();
 		}
 		
 	});

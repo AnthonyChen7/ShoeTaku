@@ -70,7 +70,7 @@ function createSellPost(){
 	$.ajax({
 		type:'POST',
 		url : url,
-		data : JSON.stringify(data),
+		data : data,
 		dataType : 'json',
 		timeout : 3000,
 		success: function(data){
